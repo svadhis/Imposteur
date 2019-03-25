@@ -1,0 +1,44 @@
+{
+  "name": "wfi",
+  "version": "1.0.0",
+  "description": "Small fun game",
+  "main": "main.js",
+  "scripts": {
+    "build": "webpack --progress --colors",
+    "dev": "nodemon client/server.js --exec babel-node"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/imeian/whoFakesIt.git"
+  },
+  "keywords": [
+    "game",
+    "javascript",
+    "multiplayer",
+    "fun"
+  ],
+  "author": "imeian",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/imeian/whoFakesIt/issues"
+  },
+  "homepage": "https://github.com/imeian/whoFakesIt#readme",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "colyseus.js": "^0.10.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "socket.io": "^2.2.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-loader": "^8.0.5",
+    "babel-preset-env": "^1.7.0",
+    "babel-register": "^6.26.0",
+    "html-webpack-plugin": "^3.2.0",
+    "nodemon": "^1.18.10",
+    "uglifyjs-webpack-plugin": "^1.1.6",
+    "webpack": "^4.29.6"
+  }
+}
