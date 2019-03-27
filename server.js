@@ -32,6 +32,7 @@ setInterval(function() {
 
 var players = {};
 io.on('connection', function(socket) {
+	socket.join('room1');
 	socket.on('new player', function() {
 		players[socket.id] = {
 			x: 300,
@@ -50,11 +51,12 @@ io.on('connection', function(socket) {
 			player.x += 5;
 		}
 		if (data.down) {
-			player.y += 5;
+			// player.y += 5;
+			player.y = 25;
 		}
 	});
 });
 
 setInterval(function() {
-	io.sockets.emit('state', players);
+	io.to('room1').emit('state', players);
 }, 1000 / 60);

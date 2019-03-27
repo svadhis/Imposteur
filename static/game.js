@@ -60,5 +60,9 @@ socket.on('state', function(players) {
 		context.beginPath();
 		context.arc(player.x, player.y, 10, 0, 2 * Math.PI);
 		context.fill();
+
+		if (player.y === 25) {
+			document.querySelector('.test').innerHTML = 'ohohohohoh';
+		}
 	}
 });
