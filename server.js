@@ -32,7 +32,21 @@ setInterval(function() {
 
 var players = {};
 io.on('connection', function(socket) {
-	socket.join('room1');
+	
+	// Créer room
+
+	socket.on('create room', function() {
+	socket.join(room);
+	});
+
+
+	// Rejoindre room
+
+	socket.on('join room', function() {
+		socket.join(room);
+	});
+
+
 	socket.on('new player', function() {
 		players[socket.id] = {
 			x: 300,

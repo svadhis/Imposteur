@@ -1,71 +1,79 @@
 <html>
 
 <head>
+
   <title>A Multiplayer Game</title>
-  <!--Import Google Icon Font-->
+
+  <!--Google Icon & Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <!-- Compiled and minified CSS -->
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+
+  <!-- Materialize -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" type="text/css" href="/style.css">
+
   <script src="/socket.io/socket.io.js"></script>
+
 </head>
 
 <body>
 
-  <div class="test brown lighten-4">
-    <div class="row ">
-      <form class="col s12">
-        <div class="row center-align">
-            <h5>Choose your nickname</h5>
+  <main class="test purple lighten-4">
+    <form>
+      <div class="row">
+        <div class="col s12 m4 center-align">
           <div class="input-field col s12">
             <input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate">
-            <label for="text">Nickname</label>
+            <label for="text">Your nickname</label>
             <span class="helper-text" data-error="Only letters and numbers, at least 3 characters"
               data-success=""></span>
           </div>
         </div>
-        <div class="row white center-align">
-          <h5>Join an existing room</h5>
+        <div class="col s12 m4 white center-align">
+          <h5 class="purple-text text-darken-1">Join an existing room</h5>
           <div class="input-field col s12">
             <input id="room" type="text" pattern="[0-9]{6}" class="validate">
             <label for="text">Room #</label>
             <span class="helper-text" data-error="A room number is composed of 6 digits" data-success=""></span>
           </div>
           <div class="input-field col s12 center-align">
-            <a class="btn disabled">JOIN</a>
+            <a class="btn purple lighten-1 disabled">JOIN</a>
           </div>
         </div>
-        <div class="row center-align">
-            <h5>Or create a new one</h5>
-            <div class="input-field col s12">
-                <select>
-                  <option value="1" selected>French</option>
-                  <option value="2">English</option>
-                  <option value="3">Spanish</option>
-                </select>
-                <label>Language</label>
-              </div>
+        <div class="col s12 m4 center-align">
+          <h5 class="purple-text text-darken-2">Or create a new one</h5>
+          <div class="input-field col s12 select">
+            <select>
+              <option value="1" selected>French</option>
+              <option value="2">English</option>
+              <option value="3">Spanish</option>
+            </select>
+            <label>Language</label>
+          </div>
           <div class="input-field col s12">
-            <a class="btn disabled">CREATE</a>
+            <a class="btn purple disabled">CREATE</a>
           </div>
         </div>
-      </form>
-    </div>
-  </div>
+      </div>
+    </form>
+  </main>
 
+  <footer class="footer purple darken-2 center-align">
+    <span class="grey-text text-lighten-4">whoFakesIt</span>
+  </footer>
 
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-
-  <script
-  src="https://code.jquery.com/jquery-3.3.1.min.js"
-  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-  crossorigin="anonymous"></script>
-
-  <!-- Compiled and minified JavaScript -->
+  <!-- Materialize -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
   <script src="/static/game.js"></script>
+
 </body>
 
 </html>
