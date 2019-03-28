@@ -31,19 +31,33 @@ setInterval(function() {
 */
 
 var players = {};
+let activeRooms = [];
 io.on('connection', function(socket) {
 	
 	// Créer room
 
 	socket.on('create room', function() {
-	socket.join(room);
+		let roomNumber = Math.floor(Math.random() * 99999) + 10000;
+		let newRoom {
+			number: roomNumber,
+			owner: players[socket.id],
+			players: [],
+			language: roomLanguage
+		};
+		activeRooms.push(newRoom);
+		socket.join(roomNumber);
 	});
 
 
 	// Rejoindre room
 
 	socket.on('join room', function() {
-		socket.join(room);
+		for (x in activeRooms) {
+			if (x.number === roomToJoin) {
+				x.players.push(players[socket.id]);
+				socket.join(roomToJoin);
+			}
+		}
 	});
 
 

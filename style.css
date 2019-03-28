@@ -5,10 +5,26 @@
 
 footer span {
 	font-family: 'Indie Flower', cursive;
-	font-size: 2rem;
+	font-size: 2.2rem;
 }
 
+.help {
+	width: 90 vw;
+	height: 90 vh;
+	margin: auto;
+}
 
+.fixed-action-btn {
+	margin-bottom: -6px;
+}
+
+.copyright {
+	margin-top: 25px;
+}
+
+.bottom-sheet {
+	height: 50vh;
+}
 
 
 body {

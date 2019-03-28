@@ -22,47 +22,76 @@
 <body>
 
   <main class="test purple lighten-4">
-    <form>
-      <div class="row">
-        <div class="col s12 m4 center-align">
+    <div class="row">
+      <div class="col s12 l6 white">
+        <form>
+          <h5 class="purple-text text-darken-1 center-align">Join a game</h5>
           <div class="input-field col s12">
-            <input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate">
+            <input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate" required=""
+              aria-required="true">
             <label for="text">Your nickname</label>
-            <span class="helper-text" data-error="Only letters and numbers, at least 3 characters"
+            <span class="helper-text" data-error="3 characters minimum. Only letters and/or numbers"
               data-success=""></span>
           </div>
-        </div>
-        <div class="col s12 m4 white center-align">
-          <h5 class="purple-text text-darken-1">Join an existing room</h5>
           <div class="input-field col s12">
-            <input id="room" type="text" pattern="[0-9]{6}" class="validate">
-            <label for="text">Room #</label>
-            <span class="helper-text" data-error="A room number is composed of 6 digits" data-success=""></span>
+            <input id="room" type="text" pattern="[0-9]{6}" class="validate" required="" aria-required="true">
+            <label for="text">The room number</label>
+            <span class="helper-text" data-error="6 characters. Only numbers" data-success=""></span>
           </div>
           <div class="input-field col s12 center-align">
-            <a class="btn purple lighten-1 disabled">JOIN</a>
+            <button class="btn purple lighten-1" type="submit" name="action">JOIN
+            </button>
           </div>
-        </div>
-        <div class="col s12 m4 center-align">
-          <h5 class="purple-text text-darken-2">Or create a new one</h5>
+        </form>
+      </div>
+      <div class="col s12 l6">
+        <form>
+          <h5 class="purple-text text-darken-2 center-align">Start a new game</h5>
           <div class="input-field col s12 select">
-            <select>
-              <option value="1" selected>French</option>
-              <option value="2">English</option>
+            <select required="" aria-required="true">
+              <option value="1" selected>English</option>
+              <option value="2">French</option>
               <option value="3">Spanish</option>
             </select>
             <label>Language</label>
           </div>
-          <div class="input-field col s12">
-            <a class="btn purple disabled">CREATE</a>
+          <div class="input-field col s12 center-align">
+            <button class="btn purple lighten-1" type="submit" name="action">CREATE
+            </button>
           </div>
-        </div>
+        </form>
       </div>
-    </form>
+    </div>
+
+    <!-- Modal Trigger -->
+    <div class="fixed-action-btn">
+      <a class="btn-floating btn-large purple modal-trigger" href="#modal1">
+        <i class="large material-icons">help</i>
+      </a>
+    </div>
+
+    <!-- Modal Structure -->
+    <div id="modal1" class="modal bottom-sheet">
+      <div class="modal-content">
+        <h5>How to play WhoFakesIt</h5>
+        <p>A bunch of text</p>
+        <h5>How to add content</h5>
+        <p>A bunch of text</p>
+      </div>
+      <div class="modal-footer">
+        <a href="#!" class="modal-close waves-effect waves-green btn-flat">back</a>
+      </div>
+    </div>
+
   </main>
 
-  <footer class="footer purple darken-2 center-align">
-    <span class="grey-text text-lighten-4">whoFakesIt</span>
+  <footer class="footer purple darken-2">
+    <div class="row">
+      <div class="copyright col offset-s1">
+          <span class="grey-text text-lighten-4">whoFakesIt</span>
+      </div>
+    </div>
+    
   </footer>
 
   <!-- JQuery -->
@@ -73,6 +102,13 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
   <script src="/static/game.js"></script>
+
+  <script>
+    $(document).ready(function () {
+      $('.modal').modal();
+    });
+    var instance = M.Modal.getInstance(elem);
+  </script>
 
 </body>
 
