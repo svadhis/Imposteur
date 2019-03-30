@@ -39,8 +39,8 @@ var rooms = TAFFY();
 	
 var joueurs = TAFFY();
 
-var rtId = 0;
-var jtId = 0;
+var rtId = 1;
+var jtId = 1;
 
 var players = {};
 let activeRooms = [];
@@ -64,9 +64,11 @@ io.on('connection', function(socket) {
 		let roomNumber = Math.floor(Math.random() * 89999) + 10000;
 		rooms.insert({"id":rtId,"number":roomNumber,"owner":data[1],"language":lang});
 		joueurs.insert({"id":jtId,"number":roomNumber,"owner":data[1],"language":lang});
+
 		console.log(rooms({id:0}).first().owner);
-		socket.join(roomNumber);
+
 		rtId++;
+		socket.join(roomNumber);
 		socket.emit('invite owner', roomNumber);
 
 	});
