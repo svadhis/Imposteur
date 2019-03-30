@@ -13,9 +13,11 @@
 
   <!--Let browser know website is optimized for mobile-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" type="text/css" href="/style.css">
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
 
   <script src="/socket.io/socket.io.js"></script>
+
+  <script src="https://github.com/typicaljoe/taffydb/raw/master/taffy.js"></script>
 
 </head>
 
@@ -34,13 +36,13 @@
               data-success=""></span>
           </div>
           <div class="input-field col s12">
-            <input id="room" type="text" pattern="[0-9]{6}" class="validate" required="" aria-required="true">
+            <input id="room" type="text" pattern="[0-9]{5}" class="validate" required="" aria-required="true">
             <label for="text">The room number</label>
-            <span class="helper-text" data-error="6 characters. Only numbers" data-success=""></span>
+            <span class="helper-text" data-error="5 characters. Only numbers" data-success=""></span>
           </div>
           <div class="input-field col s12 center-align">
-            <button class="btn purple lighten-1" type="submit" name="action">JOIN
-            </button>
+            <a id="rejoindre" class="waves-effect waves-light btn-small purple lighten-1 disabled"
+              onClick="joinRoom();">JOIN</a>
           </div>
         </form>
       </div>
@@ -48,27 +50,26 @@
         <form>
           <h5 class="purple-text text-darken-2 center-align">Start a new game</h5>
           <div class="input-field col s12 select">
-            <select required="" aria-required="true">
-              <option value="1" selected>English</option>
+            <select id="language" required="" aria-required="true" onchange="selectLanguage();">
+              <option value="" disabled selected>Choose a language</option>
+              <option value="1">English</option>
               <option value="2">French</option>
               <option value="3">Spanish</option>
             </select>
-            <label>Language</label>
           </div>
           <div class="input-field col s12 center-align">
-            <button class="btn purple lighten-1" type="submit" name="action">CREATE
-            </button>
+            <a id="creation" class="waves-effect waves-light btn-small purple disabled" onClick="createRoom();">CREATE</a>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Modal Trigger -->
-    <div class="fixed-action-btn">
-      <a class="btn-floating btn-large purple modal-trigger" href="#modal1">
-        <i class="large material-icons">help</i>
+   <!--  <div class="fixed-action-btn">
+      <a class="btn-floating btn purple darken-2 modal-trigger z-depth-0" href="#modal1">
+        <i class="large material-icons">help_outline</i>
       </a>
-    </div>
+    </div> -->
 
     <!-- Modal Structure -->
     <div id="modal1" class="modal bottom-sheet">
@@ -83,20 +84,26 @@
       </div>
     </div>
 
+    <!-- Tests -->
+    <div id="message"></div>
+
   </main>
 
   <footer class="footer purple darken-2">
-    <div class="row">
-      <div class="copyright col offset-s1">
-          <span class="grey-text text-lighten-4">whoFakesIt</span>
+    <div class="row valign-wrapper">
+      <div class="copyright col s12 center-align">
+        <a class="grey-text text-lighten-4 modal-trigger" href="#modal1">WhoFakesIt</a>
       </div>
     </div>
-    
+
   </footer>
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+  <!-- JS Cookie -->
+  <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 
   <!-- Materialize -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
@@ -104,10 +111,37 @@
   <script src="/static/game.js"></script>
 
   <script>
+
     $(document).ready(function () {
       $('.modal').modal();
     });
-    var instance = M.Modal.getInstance(elem);
+    //var instance = M.Modal.getInstance(elem);
+
+    // Join form filters
+    var filterN = /^[A-Za-z0-9]{3,}$/;
+    var filterR = /^\d{5}$/;
+    $("form").keyup(function () {
+
+      if (filterN.test($("input[id=nickname]").val()) && filterR.test($("input[id=room]").val())) {
+        $("a[id=rejoindre]").removeClass('disabled');
+        initRoom();
+      }
+      else {
+        $("a[id=rejoindre]").addClass('disabled');
+      }   
+    });
+
+    // Create form filters
+    function selectLanguage() {
+      if ($("select[id=language]").val !== 0) {
+        $("a[id=creation]").removeClass('disabled');
+      }
+      else {
+        $("a[id=creation]").addClass('disabled');
+      }
+    };
+
+
   </script>
 
 </body>

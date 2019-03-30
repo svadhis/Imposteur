@@ -1,9 +1,22 @@
-$(document).ready(function(){
-    $('select').formSelect();
-  });
-  var socket = io();
 
-socket.on('message', function(data) {
+
+$(document).ready(function () {
+	$('select').formSelect();
+});
+var socket = io();
+
+//my ID
+let userid = "";
+
+if (!Cookies.get('userid')) {
+	userid = Math.floor(Math.random() * 899999999999) + 100000000000;
+	Cookies.set('userid', userid, { expires: 7 });
+}
+else {
+	userid = Cookies.get('userid');
+}
+
+/* socket.on('message', function(data) {
 	console.log(data);
 });
 
@@ -44,14 +57,50 @@ document.addEventListener('keyup', function(event) {
 			movement.down = false;
 			break;
 	}
-});
+}); */
 
 socket.emit('new player');
-setInterval(function() {
+/* setInterval(function() {
 	socket.emit('movement', movement);
-}, 1000 / 60);
+}, 1000 / 60); */
 
-var canvas = document.getElementById('canvas');
+
+
+
+function joinRoom() {
+	rooms({ number: "Boston" }).count()
+	for (x of roomlist) {
+		if (x.number === document.querySelector("#room").value) {
+			let roomToJoin = x.number;
+			x.participants.push(document.querySelector("#nickname").value);
+			console.log(roomlist);
+			break;
+		}
+	}
+	M.toast({ html: "<h5>This room doesn't exist !</h5>", classes: "red z-depth-3" });
+}
+
+
+
+
+function createRoom() {
+	createData = [document.querySelector("#language").value, userid]
+	socket.emit('create room', createData);
+}
+
+
+
+socket.on('invite owner', function(room) {
+
+	document.querySelector("main").innerHTML = "Your room : " + room;
+
+});
+
+
+
+
+
+/* var canvas = document.getElementById('canvas');
 canvas.width = 800;
 canvas.height = 600;
 var context = canvas.getContext('2d');
@@ -68,4 +117,4 @@ socket.on('state', function(players) {
 			document.querySelector('.test').innerHTML = 'ohohohohoh';
 		}
 	}
-});
+}); */

@@ -3,23 +3,26 @@
 	margin-top: 30px;
 }
 
-footer span {
+footer a {
 	font-family: 'Indie Flower', cursive;
 	font-size: 2.2rem;
+	margin-top: auto;
+	margin-bottom: auto;
 }
 
-.help {
+/* .help {
 	width: 90 vw;
 	height: 90 vh;
 	margin: auto;
-}
+} */
 
 .fixed-action-btn {
-	margin-bottom: -6px;
+	/* margin-bottom: 0px; */
 }
 
 .copyright {
-	margin-top: 25px;
+	margin-top: 4px;
+	height: 28px;
 }
 
 .bottom-sheet {
