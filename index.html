@@ -118,6 +118,18 @@
     });
     //var instance = M.Modal.getInstance(elem);
 
+    //Set default nickname
+    if (Cookies.get('username')) {
+      $("input[id=nickname]").val(Cookies.get('username'));
+    }
+    
+    //Set default language
+    if (Cookies.get('language')) {
+      $("select[id=language]").val(Cookies.get('language'));
+      $("a[id=creation]").removeClass('disabled');
+        init("interface");
+    }
+
     // Join form filters
     var filterN = /^[A-Za-z0-9]{3,}$/;
     var filterR = /^\d{6}$/;

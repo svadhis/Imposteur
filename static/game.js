@@ -90,8 +90,9 @@ document.addEventListener('keyup', function(event) {
 	}
 }); */
 
-socket.emit('new player');
-/* setInterval(function() {
+
+/* socket.emit('new player');
+setInterval(function() {
 	socket.emit('movement', movement);
 }, 1000 / 60); */
 
@@ -104,6 +105,15 @@ function joinRoom() {
 		"nickname": document.querySelector("#nickname").value,
 		"userid": userid
 	};
+
+	if (!Cookies.get('username')) {
+		Cookies.set('username', joinData.nickname, { expires: 7 });
+	}
+	else if (Cookies.get('username') !== joinData.nickname) {
+		Cookies.remove('username');
+		Cookies.set('username', joinData.nickname, { expires: 7 });
+	}
+
 	socket.emit('join room', joinData);
 }
 
@@ -114,6 +124,15 @@ function createRoom() {
 		"language": document.querySelector("#language").value,
 		"userid": userid
 	};
+
+	if (!Cookies.get('language')) {
+		Cookies.set('language', createData.language, { expires: 7 });
+	}
+	else if (Cookies.get('language') !== createData.language) {
+		Cookies.remove('language');
+		Cookies.set('language', createData.language, { expires: 7 });
+	}
+
 	socket.emit('create room', createData);
 }
 

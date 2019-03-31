@@ -91,17 +91,6 @@ io.on('connection', function(socket) {
 			socket.emit('no room');
 		}
 
-
-		/* let joinRoom = document.querySelector("#room").value;
-		for (x in activeRooms) {
-			if (x.number === joinRoom) {
-				x.players.push(players[socket.id]);
-				socket.join(joinRoom);
-			}
-			else {
-				document.querySelector("#message").innerHTML = "non bah non";
-			}
-		} */
 	});
 
 
