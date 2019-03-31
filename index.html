@@ -25,16 +25,20 @@
 
   <main class="test purple lighten-4">
     <div class="row">
-      <div class="col s12 l6 white">
-        <form>
-          <h5 class="purple-text text-darken-1 center-align">Join a game</h5>
+      <form>
+      <div class="col s12">
+        
           <div class="input-field col s12">
-            <input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate" required=""
-              aria-required="true">
-            <label for="text">Your nickname</label>
-            <span class="helper-text" data-error="3 characters minimum. Only letters and/or numbers"
-              data-success=""></span>
+              <input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate" required=""
+                aria-required="true">
+              <label for="text">Your nickname</label>
+              <span class="helper-text" data-error="3 characters minimum. Only letters and/or numbers"
+                data-success=""></span>
+            </div>
           </div>
+          <div class="col s12 l6 white">
+              <h5 class="purple-text text-darken-1 center-align">Join a game</h5>
+ 
           <div class="input-field col s12">
             <input id="room" type="text" pattern="[0-9]{6}" class="validate" required="" aria-required="true">
             <label for="text">The room number</label>
@@ -44,13 +48,13 @@
             <a id="rejoindre" class="waves-effect waves-light btn-small purple lighten-1 disabled"
               onClick="joinRoom();">JOIN</a>
           </div>
-        </form>
+        
       </div>
       <div class="col s12 l6">
-        <form>
+        
           <h5 class="purple-text text-darken-2 center-align">Start a new game</h5>
           <div class="input-field col s12 select">
-            <select id="language" required="" aria-required="true" onchange="selectLanguage();">
+            <select id="language" required="" aria-required="true" onchange="createChecks();">
               <option value="" disabled selected>Choose a language</option>
               <option value="english">English</option>
               <option value="french">French</option>
@@ -61,8 +65,9 @@
             <a id="creation" class="waves-effect waves-light btn-small purple disabled"
             onClick="createRoom();">CREATE</a>
           </div>
-        </form>
+        
       </div>
+    </form>
     </div>
 
     <!-- Modal Trigger -->
@@ -130,9 +135,22 @@
         init("interface");
     }
 
-    // Join form filters
     var filterN = /^[A-Za-z0-9]{3,}$/;
     var filterR = /^\d{6}$/;
+
+    // Create form filters
+    function createChecks() {
+      if (filterN.test($("input[id=nickname]").val()) && $("select[id=language]").val !== "") {
+        $("a[id=creation]").removeClass('disabled');
+        init("interface");
+      }
+      else {
+        $("a[id=creation]").addClass('disabled');
+      }
+    };
+
+    // Join form filters
+    
     $("form").keyup(function () {
 
       if (filterN.test($("input[id=nickname]").val()) && filterR.test($("input[id=room]").val())) {
@@ -142,18 +160,11 @@
       else {
         $("a[id=rejoindre]").addClass('disabled');
       }   
+
+      createChecks(); 
     });
 
-    // Create form filters
-    function selectLanguage() {
-      if ($("select[id=language]").val !== "") {
-        $("a[id=creation]").removeClass('disabled');
-        init("interface");
-      }
-      else {
-        $("a[id=creation]").addClass('disabled');
-      }
-    };
+
 
 
   </script>
