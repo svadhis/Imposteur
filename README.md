@@ -76,13 +76,13 @@ We use [SemVer](http://semver.org/) for versioning. For the versions available, 
 
 ## Authors
 
-* **Nicolas Miquel** - [imeian](https://github.com/imeian)
+* **Nicolas Miquel** - [svadhis](https://github.com/svadhis)
 
 <!-- See also the list of [contributors](https://github.com/your/project/contributors) who participated in this project. -->
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE) file for details
 
 <!-- ## Acknowledgments
 
