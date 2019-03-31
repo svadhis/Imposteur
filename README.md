@@ -60,8 +60,8 @@ Add additional notes about how to deploy this on a live system -->
 
 * [Socket.io](https://socket.io/) - Node.js Realtime application framework
 * [jQuery](https://jquery.com/) - JavaScript library
-* [JS cookie](https://github.com/js-cookie/js-cookie) - Cookie handling JavaScript API
 * [Taffy](http://taffydb.com/) - JavaScript in-memory database
+* [JS cookie](https://github.com/js-cookie/js-cookie) - Cookie handling JavaScript API
 * [Materialize](https://materializecss.com/) - CSS framework
 * [PurpleBooth's README-Template.md](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2) - README template
 
