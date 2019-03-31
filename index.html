@@ -36,9 +36,9 @@
               data-success=""></span>
           </div>
           <div class="input-field col s12">
-            <input id="room" type="text" pattern="[0-9]{5}" class="validate" required="" aria-required="true">
+            <input id="room" type="text" pattern="[0-9]{6}" class="validate" required="" aria-required="true">
             <label for="text">The room number</label>
-            <span class="helper-text" data-error="5 characters. Only numbers" data-success=""></span>
+            <span class="helper-text" data-error="6 characters. Only numbers" data-success=""></span>
           </div>
           <div class="input-field col s12 center-align">
             <a id="rejoindre" class="waves-effect waves-light btn-small purple lighten-1 disabled"
@@ -52,13 +52,14 @@
           <div class="input-field col s12 select">
             <select id="language" required="" aria-required="true" onchange="selectLanguage();">
               <option value="" disabled selected>Choose a language</option>
-              <option value="1">English</option>
-              <option value="2">French</option>
-              <option value="3">Spanish</option>
+              <option value="english">English</option>
+              <option value="french">French</option>
+              <option value="spanish">Spanish</option>
             </select>
           </div>
           <div class="input-field col s12 center-align">
-            <a id="creation" class="waves-effect waves-light btn-small purple disabled" onClick="createRoom();">CREATE</a>
+            <a id="creation" class="waves-effect waves-light btn-small purple disabled"
+            onClick="createRoom();">CREATE</a>
           </div>
         </form>
       </div>
@@ -92,7 +93,7 @@
   <footer class="footer purple darken-2">
     <div class="row valign-wrapper">
       <div class="copyright col s12 center-align">
-        <a class="grey-text text-lighten-4 modal-trigger" href="#modal1">WhoFakesIt</a>
+        <a class="font2 grey-text text-lighten-4 modal-trigger" href="#modal1">WhoFakesIt</a>
       </div>
     </div>
 
@@ -119,12 +120,12 @@
 
     // Join form filters
     var filterN = /^[A-Za-z0-9]{3,}$/;
-    var filterR = /^\d{5}$/;
+    var filterR = /^\d{6}$/;
     $("form").keyup(function () {
 
       if (filterN.test($("input[id=nickname]").val()) && filterR.test($("input[id=room]").val())) {
         $("a[id=rejoindre]").removeClass('disabled');
-        initRoom();
+        init("interface");
       }
       else {
         $("a[id=rejoindre]").addClass('disabled');
@@ -133,8 +134,9 @@
 
     // Create form filters
     function selectLanguage() {
-      if ($("select[id=language]").val !== 0) {
+      if ($("select[id=language]").val !== "") {
         $("a[id=creation]").removeClass('disabled');
+        init("interface");
       }
       else {
         $("a[id=creation]").addClass('disabled');

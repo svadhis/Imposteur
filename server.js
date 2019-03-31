@@ -11,6 +11,7 @@ var io = socketIO(server);
 app.set('port', 5000);
 app.use('/static', express.static(__dirname + '/static'));
 app.use('/css', express.static('css'));
+app.use('/db', express.static('db'));
 
 TAFFY = require( 'taffy' );
 
@@ -49,35 +50,49 @@ io.on('connection', function(socket) {
 	// Créer room
 
 	socket.on('create room', function(data) {
-		//data[0] language
-		//data[1] userid
-		let lang = "";
-		if (data[0] === "1") {
-			lang = "english";
-		}
-		else if (data[0] === "2") {
-			lang = "french";
-		}
-		else {
-			lang = "spanish";
-		}
-		let roomNumber = Math.floor(Math.random() * 89999) + 10000;
-		rooms.insert({"id":rtId,"number":roomNumber,"owner":data[1],"language":lang});
-		joueurs.insert({"id":jtId,"number":roomNumber,"owner":data[1],"language":lang});
-
-		console.log(rooms({id:0}).first().owner);
+		let roomNumber = Math.floor(Math.random() * 899999) + 100000;
+		rooms.insert({"id":rtId,"number":roomNumber,"owner":data.userid,"language":data.language,"players":0});
+		console.log("----------------------------------");
+		console.log("New room(" + rtId + ") created #" + roomNumber);
+		console.log("Owner: " + rooms({id:rtId}).first().owner);
+		console.log("Language : " + rooms({id:rtId}).first().language);
 
 		rtId++;
+
+		let newRoomData = {
+			language: data.language,
+			number: roomNumber
+		};
+
 		socket.join(roomNumber);
-		socket.emit('invite owner', roomNumber);
+		socket.emit('invite owner', newRoomData);
 
 	});
 
 
 	// Rejoindre room
 
-	socket.on('join room', function() {
-		let joinRoom = document.querySelector("#room").value;
+	socket.on('join room', function(data) {
+		let roomNumber = parseInt(data.number, 10)
+		if (rooms({ number: roomNumber }).count() > 0) {
+			let playerNumber = rooms({ number: roomNumber }).first().players;
+			rooms({ number: roomNumber }).update({players: playerNumber + 1});
+			joueurs.insert({"userid":data.userid,"nickname":data.nickname,"activeroom":roomNumber});
+
+			let joinRoomData = {
+				language: rooms({ number: roomNumber }).first().language,
+				number: roomNumber
+			};
+
+			socket.join(roomNumber);
+			socket.emit('invite player', joinRoomData);
+		}
+		else {
+			socket.emit('no room');
+		}
+
+
+		/* let joinRoom = document.querySelector("#room").value;
 		for (x in activeRooms) {
 			if (x.number === joinRoom) {
 				x.players.push(players[socket.id]);
@@ -86,17 +101,18 @@ io.on('connection', function(socket) {
 			else {
 				document.querySelector("#message").innerHTML = "non bah non";
 			}
-		}
+		} */
 	});
 
 
-	socket.on('new player', function() {
+	/* socket.on('new player', function() {
 		players[socket.id] = {
 			x: 300,
 			y: 300
 		};
 	});
-	/* socket.on('movement', function(data) {
+	
+	socket.on('movement', function(data) {
 		var player = players[socket.id] || {};
 		if (data.left) {
 			player.x -= 5;
@@ -114,6 +130,7 @@ io.on('connection', function(socket) {
 	}); */
 });
 
-setInterval(function() {
+
+/* setInterval(function() {
 	io.to('room1').emit('state', players);
-}, 1000 / 60);
+}, 1000 / 60); */

@@ -16,6 +16,37 @@ else {
 	userid = Cookies.get('userid');
 }
 
+
+//Loading JSON files
+const jsonDB = {};
+var actual_JSON = "";
+
+function loadJSON(callback, jsonfile) {
+
+	var xobj = new XMLHttpRequest();
+	xobj.overrideMimeType("application/json");
+	xobj.open('GET', '/db/' + jsonfile + '.json', true); // Replace 'my_data' with the path to your file
+	xobj.onreadystatechange = function () {
+		if (xobj.readyState == 4 && xobj.status == "200") {
+			// Required use of an anonymous callback as .open will NOT return a value but simply returns undefined in asynchronous mode
+			callback(xobj.responseText);
+		}
+	};
+	xobj.send(null);
+}
+
+function init(jsonfile) {
+	loadJSON(function (response) {
+		// Parse JSON string into object
+		actual_JSON = JSON.parse(response);
+		jsonDB[jsonfile] = JSON.parse(response);
+	}, jsonfile);
+}
+
+
+
+
+
 /* socket.on('message', function(data) {
 	console.log(data);
 });
@@ -68,31 +99,73 @@ socket.emit('new player');
 
 
 function joinRoom() {
-	rooms({ number: "Boston" }).count()
-	for (x of roomlist) {
-		if (x.number === document.querySelector("#room").value) {
-			let roomToJoin = x.number;
-			x.participants.push(document.querySelector("#nickname").value);
-			console.log(roomlist);
-			break;
-		}
-	}
-	M.toast({ html: "<h5>This room doesn't exist !</h5>", classes: "red z-depth-3" });
+	var joinData = {
+		"number": document.querySelector("#room").value,
+		"nickname": document.querySelector("#nickname").value,
+		"userid": userid
+	};
+	socket.emit('join room', joinData);
 }
 
 
 
-
 function createRoom() {
-	createData = [document.querySelector("#language").value, userid]
+	var createData = {
+		"language": document.querySelector("#language").value,
+		"userid": userid
+	};
 	socket.emit('create room', createData);
 }
 
 
 
-socket.on('invite owner', function(room) {
+socket.on('invite owner', function (data) {
 
-	document.querySelector("main").innerHTML = "Your room : " + room;
+	document.querySelector("main").innerHTML = `
+		<div class="row">
+			<div class="col s12 center-align">
+				<h3 class="font2 purple-text text-darken-2">${jsonDB.interface.joinroomtitle[data.language]}</h3>
+			</div>
+			<div class="col s12 center-align white">
+				<h1 class="font2 purple-text text-darken-2">${data.number}</h1>
+			</div>
+			<div class="col s9 offset-s3 playerlist">
+				<ul class="font2 purple-text text-darken-2">
+				</ul>
+			</div>
+		</div>
+	`;
+
+});
+
+socket.on('invite player', function (data) {
+
+	document.querySelector("main").innerHTML = `
+		<div class="row">
+			<div class="col s12 center-align">
+				<h3 class="font2 purple-text text-darken-2">${jsonDB.interface.welcometoroom[data.language]}</h3>
+			</div>
+			<div class="col s12 center-align white">
+				<h1 class="font2 purple-text text-darken-2">${data.number}</h1>
+			</div>
+			<div class="col s9 offset-s3 playerlist">
+				<ul class="font2 purple-text text-darken-2">
+				</ul>
+			</div>
+		</div>
+	`;
+
+});
+
+socket.on('no room', function () {
+
+	M.toast({ html: "<h5>This room doesn't exist !</h5>", classes: "red z-depth-3" });
+
+});
+
+socket.on('hello', function () {
+
+	M.toast({ html: "<h5>COUCOU !</h5>", classes: "red z-depth-3" });
 
 });
 
