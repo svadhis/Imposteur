@@ -114,6 +114,14 @@
   <!-- Materialize -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+  <!-- Load db vars -->
+  <script src="/db/interface.js"></script>
+  <script src="/db/cards_face.js"></script>
+  <script src="/db/cards_fingers.js"></script>
+  <script src="/db/cards_point.js"></script>
+  <script src="/db/cards_questions.js"></script>
+  <script src="/db/cards_raise.js"></script>
+
   <script src="/static/game.js"></script>
 
   <script>
@@ -132,7 +140,6 @@
     if (Cookies.get('language')) {
       $("select[id=language]").val(Cookies.get('language'));
       $("a[id=creation]").removeClass('disabled');
-        init("interface");
     }
 
     var filterN = /^[A-Za-z0-9]{3,}$/;
@@ -142,7 +149,6 @@
     function createChecks() {
       if (filterN.test($("input[id=nickname]").val()) && $("select[id=language]").val !== "") {
         $("a[id=creation]").removeClass('disabled');
-        init("interface");
       }
       else {
         $("a[id=creation]").addClass('disabled');
@@ -155,7 +161,6 @@
 
       if (filterN.test($("input[id=nickname]").val()) && filterR.test($("input[id=room]").val())) {
         $("a[id=rejoindre]").removeClass('disabled');
-        init("interface");
       }
       else {
         $("a[id=rejoindre]").addClass('disabled');
@@ -163,9 +168,6 @@
 
       createChecks(); 
     });
-
-
-
 
   </script>
 
@@ -175,8 +177,6 @@
 
 <!-- ToDo
 
-- Merge les ecrans owner / player; l'owner etant un joueur
-- Interagir avec les JSON sur le serveur, et passer les données en string aux clients directement
 
 
 -->
