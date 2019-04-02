@@ -1,4 +1,3 @@
-
 .select {
 	margin-top: 30px;
 }
@@ -12,7 +11,7 @@ a.font2 {
 }
 
 h1.font2 {
-	font-size: 7rem;
+	font-size: 6rem;
 }
 
 ul.font2 {
@@ -38,13 +37,12 @@ ul.font2 {
 	height: 50vh;
 }
 
-
 body {
-    display: flex;
-    min-height: 100vh;
-    flex-direction: column;
-  }
+	display: flex;
+	min-height: 100vh;
+	flex-direction: column;
+}
 
 main {
-    flex: 1 0 auto;
-  }
+	flex: 1 0 auto;
+}

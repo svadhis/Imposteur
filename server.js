@@ -44,14 +44,37 @@ var rtId = 1;
 var jtId = 1;
 
 var players = {};
-let activeRooms = [];
+var activeRooms = {};
+
+function roomView(socket, roomNumber, language, view, owner, header, main, footer) {
+	let roomViewData = {
+		view: view,
+		header: header,
+		main: main,
+		footer: footer,
+		language: language,
+		number: roomNumber,
+		players: '',
+		owner: owner
+	};
+
+	socket.join(roomNumber);
+	socket.emit(view, roomViewData);
+}
 
 io.on('connection', function(socket) {
-	// Créer room
+	// Create room
 
 	socket.on('create room', function(data) {
 		let roomNumber = Math.floor(Math.random() * 899999) + 100000;
-		rooms.insert({ id: rtId, number: roomNumber, owner: data.userid, language: data.language, players: 0 });
+		rooms.insert({
+			id: rtId,
+			number: roomNumber,
+			owner: data.userid,
+			language: data.language,
+			state: 'inlobby',
+			players: 1
+		});
 		console.log('----------------------------------');
 		console.log('New room(' + rtId + ') created #' + roomNumber);
 		console.log('Owner: ' + rooms({ id: rtId }).first().owner);
@@ -59,20 +82,10 @@ io.on('connection', function(socket) {
 
 		rtId++;
 
-		let newRoomData = {
-			header: 'joinroomtitle',
-			main: roomNumber,
-			footer: '',
-			language: data.language,
-			number: roomNumber,
-			players: ''
-		};
-
-		socket.join(roomNumber);
-		socket.emit('invite player', newRoomData);
+		roomView(socket, roomNumber, data.language, 'inviteplayer', data.userid, '', roomNumber, '');
 	});
 
-	// Rejoindre room
+	// Join room
 
 	socket.on('join room', function(data) {
 		let roomNumber = parseInt(data.number, 10);
@@ -81,17 +94,10 @@ io.on('connection', function(socket) {
 			rooms({ number: roomNumber }).update({ players: playerNumber + 1 });
 			joueurs.insert({ userid: data.userid, nickname: data.nickname, activeroom: roomNumber });
 
-			let joinRoomData = {
-				header: 'welcometoroom',
-				main: roomNumber,
-				footer: '',
-				language: rooms({ number: roomNumber }).first().language,
-				number: roomNumber,
-				players: ''
-			};
+			let language = rooms({ number: roomNumber }).first().language;
+			let owner = rooms({ number: roomNumber }).first().owner;
 
-			socket.join(roomNumber);
-			socket.emit('invite player', joinRoomData);
+			roomView(socket, roomNumber, language, 'inviteplayer', owner, '', roomNumber, '');
 		} else {
 			socket.emit('no room');
 		}
