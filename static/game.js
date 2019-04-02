@@ -59,58 +59,30 @@ function createRoom() {
 	socket.emit('create room', createData);
 }
 
-function mainTemplate(data) {
-	let ownerOnly = '';
-
+function lobbyTemplate(data) {
+	let ownerOnly = "";
 	if (owner === 1) {
-		ownerOnly = `
-		<${interface[data.view].owner.htmltag}
-		class="${interface[data.view].owner.htmlclass}">
-		${interface[data.view].owner[data.language]}
-		</${interface[data.view].owner.htmltag}>
-		`;
+	ownerOnly = `
+		<div class="col s12 center-align">
+			<a class="waves-effect waves-light btn-small purple lighten-1">${interface[data.view].owner[data.language]}</a>
+		</div>
+	`;
 	}
 
 	document.querySelector('main').innerHTML = `
 		<div class="row">
-
-			<div class="col s12 center-align bodyheader">
-				<${interface[data.view].header.htmltag}
-				class="${interface[data.view].header.htmlclass}">
-				${interface[data.view].header[data.language]}
-				</${interface[data.view].header.htmltag}>
-
-				<${interface[data.view].header.htmltag}
-				class="${interface[data.view].header.htmlclass}">
-				${data.header}
-				</${interface[data.view].header.htmltag}>
+			<div class="col s12 center-align">
+				<h3 class="font2 purple-text text-darken-2">${interface[data.view].header[data.language]}</h3>
 			</div>
-
-			<div class="col s12 center-align white bodymain">
-				<${interface[data.view].main.htmltag}
-				class="${interface[data.view].main.htmlclass}">
-				${interface[data.view].main[data.language]}
-				</${interface[data.view].main.htmltag}>
-
-				<${interface[data.view].main.htmltag}
-				class="${interface[data.view].main.htmlclass}">
-				${data.main}
-				</${interface[data.view].main.htmltag}>
+			<div class="col s12 center-align white">
+				<h1 class="font2 purple-text text-darken-2">${data.main}</h1>
 			</div>
-
-			<div class="col s12 center-align bodyfooter">
-				<${interface[data.view].footer.htmltag}
-				class="${interface[data.view].footer.htmlclass}">
-				${interface[data.view].footer[data.language]}
-				</${interface[data.view].footer.htmltag}>
-
-				<${interface[data.view].footer.htmltag}
-				class="${interface[data.view].footer.htmlclass}">
-				${data.footer}
-				</${interface[data.view].footer.htmltag}>
-				${ownerOnly}
+			<div class="col s9 offset-s3 playerlist">
+				<ul class="font2 purple-text text-darken-2">
+					${data.footer}
+				</ul>
 			</div>
-
+			${ownerOnly}
 		</div>
 	`;
 }
@@ -119,7 +91,7 @@ socket.on('inviteplayer', function(data) {
 	if (data.owner === userid) {
 		owner = 1;
 	}
-	mainTemplate(data);
+	lobbyTemplate(data);
 });
 
 socket.on('no room', function() {

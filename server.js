@@ -46,7 +46,7 @@ var jtId = 1;
 var players = {};
 var activeRooms = {};
 
-function roomView(socket, roomNumber, language, view, owner, header, main, footer) {
+function roomView(client, roomNumber, language, view, owner, header, main, footer) {
 	let roomViewData = {
 		view: view,
 		header: header,
@@ -58,8 +58,7 @@ function roomView(socket, roomNumber, language, view, owner, header, main, foote
 		owner: owner
 	};
 
-	socket.join(roomNumber);
-	socket.emit(view, roomViewData);
+	client.emit(view, roomViewData);
 }
 
 io.on('connection', function(socket) {
@@ -82,7 +81,8 @@ io.on('connection', function(socket) {
 
 		rtId++;
 
-		roomView(socket, roomNumber, data.language, 'inviteplayer', data.userid, '', roomNumber, '');
+		socket.join(roomNumber);
+		roomView(socket, roomNumber, data.language, 'inviteplayer', data.userid, '', roomNumber, '');	
 	});
 
 	// Join room
@@ -97,6 +97,7 @@ io.on('connection', function(socket) {
 			let language = rooms({ number: roomNumber }).first().language;
 			let owner = rooms({ number: roomNumber }).first().owner;
 
+			socket.join(roomNumber);
 			roomView(socket, roomNumber, language, 'inviteplayer', owner, '', roomNumber, '');
 		} else {
 			socket.emit('no room');
