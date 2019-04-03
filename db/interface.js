@@ -1,5 +1,5 @@
 var interface = {
-	inviteplayer: {
+	viewlobby: {
 		header: {
 			french: 'Rejoignez le salon',
 			english: 'Join the room',

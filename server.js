@@ -13,8 +13,6 @@ app.use('/static', express.static(__dirname + '/static'));
 app.use('/css', express.static('css'));
 app.use('/db', express.static('db'));
 
-TAFFY = require('taffy');
-
 // Routing
 app.get('/', function(request, response) {
 	response.sendFile(path.join(__dirname, 'index.html'));
@@ -34,17 +32,13 @@ setInterval(function() {
 }, 1000);
 */
 
-//Creation des bases Taffy
+var rooms = {};
+var users = {};
 
-var rooms = TAFFY();
+// var rtId = 1;
 
-var joueurs = TAFFY();
-
-var rtId = 1;
-var jtId = 1;
-
-var players = {};
-var activeRooms = {};
+/* var players = {};
+var activeRooms = {}; */
 
 function roomView(client, roomNumber, language, view, owner, header, main, footer) {
 	let roomViewData = {
@@ -66,41 +60,98 @@ io.on('connection', function(socket) {
 
 	socket.on('create room', function(data) {
 		let roomNumber = Math.floor(Math.random() * 899999) + 100000;
-		rooms.insert({
-			id: rtId,
+		rooms[roomNumber] = {
 			number: roomNumber,
-			owner: data.userid,
 			language: data.language,
 			state: 'inlobby',
+			playerlist: [ data.nickname ],
 			players: 1
-		});
-		console.log('----------------------------------');
-		console.log('New room(' + rtId + ') created #' + roomNumber);
-		console.log('Owner: ' + rooms({ id: rtId }).first().owner);
-		console.log('Language : ' + rooms({ id: rtId }).first().language);
+		};
 
-		rtId++;
+		users[data.nickname] = {
+			nickname: data.nickname,
+			room: roomNumber,
+			socketid: socket.id
+		};
+
+		console.log('#' + rooms[roomNumber].number + ' - New room created :');
+		console.log('-- Owner: ' + rooms[roomNumber].playerlist[0]);
+		console.log('-- Language : ' + rooms[roomNumber].language);
+
+		//rtId++;
 
 		socket.join(roomNumber);
-		roomView(socket, roomNumber, data.language, 'inviteplayer', data.userid, '', roomNumber, '');	
+		roomView(socket, roomNumber, data.language, 'viewlobby', data.nickname, '', roomNumber, '');
 	});
 
 	// Join room
 
 	socket.on('join room', function(data) {
 		let roomNumber = parseInt(data.number, 10);
-		if (rooms({ number: roomNumber }).count() > 0) {
-			let playerNumber = rooms({ number: roomNumber }).first().players;
-			rooms({ number: roomNumber }).update({ players: playerNumber + 1 });
-			joueurs.insert({ userid: data.userid, nickname: data.nickname, activeroom: roomNumber });
+		if (rooms[roomNumber]) {
+			rooms[roomNumber].playerlist.push(data.nickname);
+			rooms[roomNumber].players += 1;
 
-			let language = rooms({ number: roomNumber }).first().language;
-			let owner = rooms({ number: roomNumber }).first().owner;
+			users[data.nickname] = {
+				nickname: data.nickname,
+				room: roomNumber,
+				socketid: socket.id
+			};
+			console.log(
+				'#' +
+					rooms[roomNumber].number +
+					' - New player : ' +
+					data.nickname +
+					' (' +
+					rooms[roomNumber].players +
+					')'
+			);
+
+			//joueurs.insert({ userid: data.userid, nickname: data.nickname, activeroom: roomNumber });
+
+			let language = rooms[roomNumber].language;
+			let owner = rooms[roomNumber].playerlist[0];
 
 			socket.join(roomNumber);
-			roomView(socket, roomNumber, language, 'inviteplayer', owner, '', roomNumber, '');
+			roomView(socket, roomNumber, language, 'viewlobby', owner, '', roomNumber, '');
 		} else {
 			socket.emit('no room');
+		}
+	});
+
+	socket.on('disconnect', () => {
+		for (x in users) {
+			//If user was in a room...
+			if (users[x].socketid === socket.id) {
+				rooms[users[x].room].players -= 1;
+				//if no more players in room, delete the room, else decrease number of players
+				if (rooms[users[x].room].players === 0) {
+					console.log('#' + rooms[users[x].room].number + ' - Room deleted, no more players');
+					delete rooms[users[x].room];
+				} else {
+					console.log(
+						'#' +
+							rooms[users[x].room].number +
+							' - Player left : ' +
+							users[x].nickname +
+							' (' +
+							rooms[users[x].room].players +
+							')'
+					);
+					// Delete from playerlist, send new owner if list[0] changed
+					let pList = rooms[users[x].room].playerlist;
+					for (i = 0; i < pList.length; i++) {
+						if (pList[i] === users[x].nickname) {
+							pList.splice(i, 1);
+							if (i === 0) {
+								console.log('-- New owner : ' + pList[0]);
+							}
+						}
+					}
+				}
+				//Delete the user
+				delete users[x];
+			}
 		}
 	});
 });

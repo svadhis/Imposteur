@@ -5,6 +5,7 @@ var socket = io();
 
 //my ID
 let userid = '';
+let username = '';
 let owner = 0;
 
 if (!Cookies.get('userid')) {
@@ -32,6 +33,8 @@ function joinRoom() {
 		Cookies.remove('username');
 		Cookies.set('username', joinData.nickname, { expires: 7 });
 	}
+
+	username = Cookies.get('username');
 	socket.emit('join room', joinData);
 }
 
@@ -56,13 +59,14 @@ function createRoom() {
 		Cookies.set('language', createData.language, { expires: 7 });
 	}
 
+	username = Cookies.get('username');
 	socket.emit('create room', createData);
 }
 
 function lobbyTemplate(data) {
-	let ownerOnly = "";
+	let ownerOnly = '';
 	if (owner === 1) {
-	ownerOnly = `
+		ownerOnly = `
 		<div class="col s12 center-align">
 			<a class="waves-effect waves-light btn-small purple lighten-1">${interface[data.view].owner[data.language]}</a>
 		</div>
@@ -87,8 +91,8 @@ function lobbyTemplate(data) {
 	`;
 }
 
-socket.on('inviteplayer', function(data) {
-	if (data.owner === userid) {
+socket.on('viewlobby', function(data) {
+	if (data.owner === username) {
 		owner = 1;
 	}
 	lobbyTemplate(data);
