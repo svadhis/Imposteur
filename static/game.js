@@ -63,7 +63,7 @@ function createRoom() {
 	socket.emit('create room', createData);
 }
 
-function lobbyTemplate(data) {
+/* function lobbyTemplate(data) {
 	let ownerOnly = '';
 	if (owner === 1) {
 		ownerOnly = `
@@ -89,13 +89,38 @@ function lobbyTemplate(data) {
 			${ownerOnly}
 		</div>
 	`;
-}
+} */
 
 socket.on('viewlobby', function(data) {
-	if (data.owner === username) {
-		owner = 1;
+	let elem = interface[data.room.view];
+	let lang = data.room.language;
+
+	let ownerOnly = '';
+
+	if (data.room.playerlist[0] === username) {
+		ownerOnly = `
+		<div class="col s12 center-align">
+			<a class="waves-effect waves-light btn-small purple lighten-1">${elem.startbutton[lang]}</a>
+		</div>
+	`;
 	}
-	lobbyTemplate(data);
+
+	document.querySelector('main').innerHTML = `
+		<div class="row">
+			<div class="col s12 center-align">
+				<h3 class="font2 purple-text text-darken-2">${elem.title[lang]}</h3>
+			</div>
+			<div class="col s12 center-align white">
+				<h1 class="font2 purple-text text-darken-2">${elem.room[lang] + data.elements[0]}</h1>
+			</div>
+			<div class="col s9 offset-s3 playerlist">
+				<ul class="font2 purple-text text-darken-2">
+				${elem.playerlist[lang] + data.elements[1]}
+				</ul>
+			</div>
+			${ownerOnly}
+		</div>
+	`;
 });
 
 socket.on('no room', function() {

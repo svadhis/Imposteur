@@ -1,21 +1,21 @@
 var interface = {
 	viewlobby: {
-		header: {
+		title: {
 			french: 'Rejoignez le salon',
 			english: 'Join the room',
 			spanish: 'Entra en el salon'
 		},
-		main: {
+		room: {
 			french: '',
 			english: '',
 			spanish: ''
 		},
-		footer: {
+		playerlist: {
 			french: 'Rejoignez le salon',
 			english: 'Join the room',
 			spanish: 'Entra en el salon'
 		},
-		owner: {
+		startbutton: {
 			french: 'Démarrer la partie',
 			english: 'Start the game',
 			spanish: 'Empezar el juego'
