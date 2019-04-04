@@ -70,13 +70,6 @@
     </form>
     </div>
 
-    <!-- Modal Trigger -->
-   <!--  <div class="fixed-action-btn">
-      <a class="btn-floating btn purple darken-2 modal-trigger z-depth-0" href="#modal1">
-        <i class="large material-icons">help_outline</i>
-      </a>
-    </div> -->
-
     <!-- Modal Structure -->
     <div id="modal1" class="modal bottom-sheet">
       <div class="modal-content">
@@ -131,6 +124,9 @@
     });
     //var instance = M.Modal.getInstance(elem);
 
+    var filterN = /^[A-Za-z0-9]{3,}$/;
+    var filterR = /^\d{6}$/;
+
     //Set default nickname
     if (Cookies.get('username')) {
       $("input[id=nickname]").val(Cookies.get('username'));
@@ -139,11 +135,10 @@
     //Set default language
     if (Cookies.get('language')) {
       $("select[id=language]").val(Cookies.get('language'));
-      $("a[id=creation]").removeClass('disabled');
+      if (filterN.test($("input[id=nickname]").val())) {
+        $("a[id=creation]").removeClass('disabled');
+      }
     }
-
-    var filterN = /^[A-Za-z0-9]{3,}$/;
-    var filterR = /^\d{6}$/;
 
     // Create form filters
     function createChecks() {
@@ -177,6 +172,6 @@
 
 <!-- ToDo
 
-  - Rendre les appels roomView neutres (changer header main footer ??)
+  - 
 
 -->

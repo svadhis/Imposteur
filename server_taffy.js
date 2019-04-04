@@ -82,7 +82,7 @@ io.on('connection', function(socket) {
 		rtId++;
 
 		socket.join(roomNumber);
-		roomView(socket, roomNumber, data.language, 'inviteplayer', data.userid, '', roomNumber, '');	
+		roomView(socket, roomNumber, data.language, 'inviteplayer', data.userid, '', roomNumber, '');
 	});
 
 	// Join room

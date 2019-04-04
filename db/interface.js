@@ -1,14 +1,9 @@
 var interface = {
-	viewlobby: {
+	lobby: {
 		title: {
 			french: 'Rejoignez le salon',
 			english: 'Join the room',
 			spanish: 'Entra en el salon'
-		},
-		room: {
-			french: '',
-			english: '',
-			spanish: ''
 		},
 		playerlist: {
 			french: 'Rejoignez le salon',

@@ -26,72 +26,10 @@ server.listen(5000, function() {
 // Add the WebSocket handlers
 io.on('connection', function(socket) {});
 
-/* test
-setInterval(function() {
-	io.sockets.emit('message', 'hi!');
-}, 1000);
-*/
-
 var rooms = {};
 var users = {};
-var views = {};
-
-// var rtId = 1;
-
-/* var players = {};
-var activeRooms = {}; */
-
-/* function roomView(client, roomNumber, language, view, owner, header, main, footer) {
-
-
-	let roomViewData = {
-		view: view,
-		header: header,
-		main: main,
-		footer: footer,
-		language: language,
-		number: roomNumber,
-		players: '',
-		owner: owner
-	};
-
-	client.emit(view, roomViewData);
-} */
-
-/* function roomView(client, roomNumber, language, view, owner, header, main, footer) {
-
-
-	let roomViewData = {
-		view: view,
-		header: header,
-		main: main,
-		footer: footer,
-		language: language,
-		number: roomNumber,
-		players: '',
-		owner: owner
-	};
-
-	client.emit(view, roomViewData);
-} */
 
 io.on('connection', function(socket) {
-	// All views data emit
-	function viewClient(client, view, room) {
-		let elements = [];
-
-		if ((view = 'viewlobby')) {
-			elements = [ room.number, 'blablabla' ];
-		}
-
-		let dataTo = {
-			room: room,
-			elements: elements
-		};
-
-		client.emit(view, dataTo);
-	}
-
 	// Create room
 
 	socket.on('create room', function(data) {
@@ -99,7 +37,7 @@ io.on('connection', function(socket) {
 		rooms[roomNumber] = {
 			number: roomNumber,
 			language: data.language,
-			view: 'viewlobby',
+			view: 'lobby',
 			playerlist: [ data.nickname ],
 			players: 1
 		};
@@ -117,21 +55,7 @@ io.on('connection', function(socket) {
 		//rtId++;
 
 		socket.join(roomNumber);
-
-		viewClient(socket, rooms[roomNumber].view, rooms[roomNumber]);
-
-		/* 		let elements = [roomNumber, 'blablabla'];
-
-		let dataTo = {
-			room: rooms[roomNumber],
-			elements: elements
-		}
-
-		socket.join(roomNumber);
-		socket.emit('viewlobby', dataTo); */
-
-		//roomView(rooms[roomNumber], 'viewlobby');
-		//roomView(socket, roomNumber, data.language, 'viewlobby', data.nickname, '', roomNumber, '');
+		socket.emit('viewclient', rooms[roomNumber]);
 	});
 
 	// Join room
@@ -158,26 +82,7 @@ io.on('connection', function(socket) {
 			);
 
 			socket.join(roomNumber);
-
-			viewClient(socket, rooms[roomNumber].view, rooms[roomNumber]);
-
-			//joueurs.insert({ userid: data.userid, nickname: data.nickname, activeroom: roomNumber });
-
-			// let language = rooms[roomNumber].language;
-			// let owner = rooms[roomNumber].playerlist[0];
-
-			/* let elements = [roomNumber, 'blablabla'];
-
-			let dataTo = {
-				room: rooms[roomNumber],
-				elements: elements
-			}
-
-			socket.join(roomNumber);
-			socket.emit('viewlobby', dataTo); */
-
-			// socket.join(roomNumber);
-			// roomView(socket, roomNumber, language, 'viewlobby', owner, '', roomNumber, '');
+			socket.emit('viewclient', rooms[roomNumber]);
 		} else {
 			socket.emit('no room');
 		}
@@ -210,8 +115,7 @@ io.on('connection', function(socket) {
 						if (pList[i] === users[x].nickname) {
 							pList.splice(i, 1);
 							if (i === 0) {
-								viewClient(io.to(currentRoom.number), currentRoom.view, currentRoom);
-								//roomView(io.to(currentRoom.number), currentRoom.number, currentRoom.language, currentRoom.view, pList[0], '', currentRoom.number, '');
+								io.to(currentRoom.number).emit('viewclient', currentRoom);
 								console.log('-- New owner : ' + pList[0]);
 							}
 						}

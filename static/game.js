@@ -15,11 +15,6 @@ if (!Cookies.get('userid')) {
 	userid = Cookies.get('userid');
 }
 
-/* socket.emit('new player');
-setInterval(function() {
-	socket.emit('movement', movement);
-}, 1000 / 60); */
-
 function joinRoom() {
 	var joinData = {
 		number: document.querySelector('#room').value,
@@ -63,70 +58,42 @@ function createRoom() {
 	socket.emit('create room', createData);
 }
 
-/* function lobbyTemplate(data) {
-	let ownerOnly = '';
-	if (owner === 1) {
-		ownerOnly = `
-		<div class="col s12 center-align">
-			<a class="waves-effect waves-light btn-small purple lighten-1">${interface[data.view].owner[data.language]}</a>
-		</div>
-	`;
-	}
-
-	document.querySelector('main').innerHTML = `
-		<div class="row">
-			<div class="col s12 center-align">
-				<h3 class="font2 purple-text text-darken-2">${interface[data.view].header[data.language]}</h3>
-			</div>
-			<div class="col s12 center-align white">
-				<h1 class="font2 purple-text text-darken-2">${data.main}</h1>
-			</div>
-			<div class="col s9 offset-s3 playerlist">
-				<ul class="font2 purple-text text-darken-2">
-					${data.footer}
-				</ul>
-			</div>
-			${ownerOnly}
-		</div>
-	`;
-} */
-
-socket.on('viewlobby', function(data) {
-	let elem = interface[data.room.view];
-	let lang = data.room.language;
+// Templates
+socket.on('viewclient', function(room) {
+	let elem = interface[room.view];
+	let lang = room.language;
 
 	let ownerOnly = '';
 
-	if (data.room.playerlist[0] === username) {
-		ownerOnly = `
+	// Lobby
+	if (room.view === 'lobby') {
+		if (room.playerlist[0] === username) {
+			ownerOnly = `
 		<div class="col s12 center-align">
 			<a class="waves-effect waves-light btn-small purple lighten-1">${elem.startbutton[lang]}</a>
 		</div>
 	`;
-	}
+		}
 
-	document.querySelector('main').innerHTML = `
+		document.querySelector('main').innerHTML = `
 		<div class="row">
 			<div class="col s12 center-align">
 				<h3 class="font2 purple-text text-darken-2">${elem.title[lang]}</h3>
 			</div>
 			<div class="col s12 center-align white">
-				<h1 class="font2 purple-text text-darken-2">${elem.room[lang] + data.elements[0]}</h1>
+				<h1 class="font2 purple-text text-darken-2">${room.number}</h1>
 			</div>
 			<div class="col s9 offset-s3 playerlist">
 				<ul class="font2 purple-text text-darken-2">
-				${elem.playerlist[lang] + data.elements[1]}
+				${elem.playerlist[lang]}
 				</ul>
 			</div>
 			${ownerOnly}
 		</div>
 	`;
+	}
 });
 
 socket.on('no room', function() {
 	M.toast({ html: "<h5>This room doesn't exist !</h5>", classes: 'red z-depth-3' });
 });
-
-/* socket.on('state', function(data) {
-	console.log(data.owner);
-}); */
