@@ -7,6 +7,7 @@ var socket = io();
 let userid = '';
 let username = '';
 let owner = 0;
+let lang = '';
 
 if (!Cookies.get('userid')) {
 	userid = Math.floor(Math.random() * 899999999999) + 100000000000;
@@ -60,19 +61,32 @@ function createRoom() {
 
 // Templates
 socket.on('viewclient', function(room) {
-	let elem = interface[room.view];
-	let lang = room.language;
+	let elem = ifc[room.view];
+	lang = room.language;
 
 	let ownerOnly = '';
 
 	// Lobby
 	if (room.view === 'lobby') {
 		if (room.playerlist[0] === username) {
+			let canStart = 'disabled';
+			if (room.playerlist.length > 2) {
+				canStart = '';
+			}
 			ownerOnly = `
 		<div class="col s12 center-align">
-			<a class="waves-effect waves-light btn-small purple lighten-1">${elem.startbutton[lang]}</a>
+			<a class="waves-effect waves-light btn-small purple lighten-1 ${canStart}">${elem.startbutton[lang]}</a>
 		</div>
 	`;
+		}
+
+		let allPlayers = '';
+		for (i = 0; i < room.playerlist.length; i++) {
+			allPlayers += `
+			<li>
+			${i + 1} - ${room.playerlist[i]}
+			</li>
+			`;
 		}
 
 		document.querySelector('main').innerHTML = `
@@ -85,7 +99,7 @@ socket.on('viewclient', function(room) {
 			</div>
 			<div class="col s9 offset-s3 playerlist">
 				<ul class="font2 purple-text text-darken-2">
-				${elem.playerlist[lang]}
+				${allPlayers}
 				</ul>
 			</div>
 			${ownerOnly}
@@ -94,6 +108,20 @@ socket.on('viewclient', function(room) {
 	}
 });
 
-socket.on('no room', function() {
-	M.toast({ html: "<h5>This room doesn't exist !</h5>", classes: 'red z-depth-3' });
+socket.on('noroom', function() {
+	M.toast({ html: '<h5>' + ifc.modals.noroom.english + '</h5>', classes: 'red z-depth-3' });
+	console.log(lang);
+});
+
+socket.on('playerjoined', function(name) {
+	if (name !== username) {
+		M.toast({ html: '<h5>' + name + ifc.modals.joined[lang] + '</h5>', classes: 'blue z-depth-3' });
+	}
+});
+
+socket.on('playerleft', function(data) {
+	M.toast({ html: '<h5>' + data.nickname + ifc.modals.left[lang] + '</h5>', classes: 'red z-depth-3' });
+	if (data.owner === username) {
+		M.toast({ html: '<h5>' + ifc.modals.newowner[lang] + '</h5>', classes: 'green z-depth-3' });
+	}
 });
