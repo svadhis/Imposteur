@@ -11,7 +11,7 @@ var io = socketIO(server);
 app.set('port', 5000);
 app.use('/static', express.static(__dirname + '/static'));
 app.use('/css', express.static('css'));
-app.use('/db', express.static('db'));
+app.use('/js', express.static('js'));
 
 // Routing
 app.get('/', function(request, response) {
@@ -31,13 +31,14 @@ var users = {};
 
 io.on('connection', function(socket) {
 	// Create room
-	socket.on('create room', function(data) {
+	socket.on('createroom', function(data) {
 		let roomNumber = Math.floor(Math.random() * 899999) + 100000;
 		rooms[roomNumber] = {
 			number: roomNumber,
 			language: data.language,
 			view: 'lobby',
-			playerlist: [ data.nickname ]
+			playerlist: [ data.nickname ],
+			open: 1
 			//players: 1
 		};
 
@@ -58,33 +59,48 @@ io.on('connection', function(socket) {
 	});
 
 	// Join room
-	socket.on('join room', function(data) {
+	socket.on('joinroom', function(data) {
 		let roomNumber = parseInt(data.number, 10);
 		if (rooms[roomNumber]) {
-			rooms[roomNumber].playerlist.push(data.nickname);
-			//rooms[roomNumber].players += 1;
+			if (rooms[roomNumber].open === 1) {
+				rooms[roomNumber].playerlist.push(data.nickname);
+				//rooms[roomNumber].players += 1;
 
-			users[data.nickname] = {
-				nickname: data.nickname,
-				room: roomNumber,
-				socketid: socket.id
-			};
-			console.log(
-				'#' +
-					rooms[roomNumber].number +
-					' - New player : ' +
-					data.nickname +
-					' (' +
-					rooms[roomNumber].playerlist.length +
-					')'
-			);
+				users[data.nickname] = {
+					nickname: data.nickname,
+					room: roomNumber,
+					socketid: socket.id
+				};
+				console.log(
+					'#' +
+						rooms[roomNumber].number +
+						' - New player : ' +
+						data.nickname +
+						' (' +
+						rooms[roomNumber].playerlist.length +
+						')'
+				);
 
-			socket.join(roomNumber);
-			io.to(roomNumber).emit('playerjoined', data.nickname);
-			io.to(roomNumber).emit('viewclient', rooms[roomNumber]);
+				socket.join(roomNumber);
+				io.to(roomNumber).emit('playerjoined', data.nickname);
+				io.to(roomNumber).emit('viewclient', rooms[roomNumber]);
+			} else {
+				socket.emit('closed');
+			}
 		} else {
 			socket.emit('noroom');
 		}
+	});
+
+	//Start room
+	socket.on('startroom', function(data) {
+		console.log(data.number);
+		rooms[data.number].view = 'start';
+		io.to(data.number).emit('viewclient', rooms[data.number]);
+		setTimeout(function() {
+			rooms[data.number].view = 'lobby';
+			io.to(data.number).emit('viewclient', rooms[data.number]);
+		}, 5000);
 	});
 
 	// User disconnect

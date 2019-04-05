@@ -5,6 +5,11 @@ var ifc = {
 			english: "This room doesn't exist !",
 			spanish: 'Este salon no existe !'
 		},
+		closed: {
+			french: 'Ce salon est fermé',
+			english: 'This room is closed',
+			spanish: 'Este salon esta cerrado'
+		},
 		joined: {
 			french: ' a rejoint le salon',
 			english: ' has joined the room',
@@ -32,5 +37,10 @@ var ifc = {
 			english: 'Start the game',
 			spanish: 'Empezar el juego'
 		}
+	},
+	start: {
+		french: 'La partie va commencer !',
+		english: 'The game is about to start !',
+		spanish: 'El juego va a empezar !'
 	}
 };

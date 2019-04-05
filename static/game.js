@@ -8,12 +8,28 @@ let userid = '';
 let username = '';
 let owner = 0;
 let lang = '';
+let myRoom = '';
 
 if (!Cookies.get('userid')) {
 	userid = Math.floor(Math.random() * 899999999999) + 100000000000;
 	Cookies.set('userid', userid, { expires: 7 });
 } else {
 	userid = Cookies.get('userid');
+}
+
+//Timer bar
+function timerBar(s) {
+	var elem = document.getElementById('myBar');
+	var width = 1;
+	var id = setInterval(frame, s * 10);
+	function frame() {
+		if (width >= 100) {
+			clearInterval(id);
+		} else {
+			width++;
+			elem.style.width = width + '%';
+		}
+	}
 }
 
 function joinRoom() {
@@ -31,7 +47,7 @@ function joinRoom() {
 	}
 
 	username = Cookies.get('username');
-	socket.emit('join room', joinData);
+	socket.emit('joinroom', joinData);
 }
 
 function createRoom() {
@@ -56,12 +72,17 @@ function createRoom() {
 	}
 
 	username = Cookies.get('username');
-	socket.emit('create room', createData);
+	socket.emit('createroom', createData);
+}
+
+function startRoom() {
+	socket.emit('startroom', myRoom);
 }
 
 // Templates
 socket.on('viewclient', function(room) {
 	let elem = ifc[room.view];
+	myRoom = room;
 	lang = room.language;
 
 	let ownerOnly = '';
@@ -70,23 +91,21 @@ socket.on('viewclient', function(room) {
 	if (room.view === 'lobby') {
 		if (room.playerlist[0] === username) {
 			let canStart = 'disabled';
-			if (room.playerlist.length > 2) {
+			if (room.playerlist.length > 0) {
 				canStart = '';
 			}
 			ownerOnly = `
 		<div class="col s12 center-align">
-			<a class="waves-effect waves-light btn-small purple lighten-1 ${canStart}">${elem.startbutton[lang]}</a>
+			<a class="waves-effect waves-light btn-small purple lighten-1 ${canStart}" onClick="startRoom();">${elem.startbutton[
+				lang
+			]}</a>
 		</div>
 	`;
 		}
 
 		let allPlayers = '';
 		for (i = 0; i < room.playerlist.length; i++) {
-			allPlayers += `
-			<li>
-			${i + 1} - ${room.playerlist[i]}
-			</li>
-			`;
+			allPlayers += `<li>${i + 1} - ${room.playerlist[i]}</li>`;
 		}
 
 		document.querySelector('main').innerHTML = `
@@ -106,11 +125,41 @@ socket.on('viewclient', function(room) {
 		</div>
 	`;
 	}
+
+	// Start
+	if (room.view === 'start') {
+		let allPlayers = '';
+		for (i = 0; i < room.playerlist.length; i++) {
+			allPlayers += `<li>${i + 1} - ${room.playerlist[i]}</li>`;
+		}
+
+		document.querySelector('main').innerHTML = `
+		<div class="row">
+			<div class="col s12 center-align white">
+				<div id="myProgress" class="purple lighten-5">
+					<div id="myBar" class="purple lighten-3"></div>
+				</div>
+			</div>
+			<div class="col s12 center-align white">
+				<h2 class="font2 purple-text text-darken-2">${elem[lang]}</h2>
+			</div>
+			<div class="col s9 offset-s3 playerlist">
+				<ul class="font2 purple-text text-darken-2">
+				${allPlayers}
+				</ul>
+			</div>
+		</div>
+	`;
+		timerBar(5);
+	}
 });
 
 socket.on('noroom', function() {
 	M.toast({ html: '<h5>' + ifc.modals.noroom.english + '</h5>', classes: 'red z-depth-3' });
-	console.log(lang);
+});
+
+socket.on('closed', function() {
+	M.toast({ html: '<h5>' + ifc.modals.closed.english + '</h5>', classes: 'red z-depth-3' });
 });
 
 socket.on('playerjoined', function(name) {

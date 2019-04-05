@@ -24,6 +24,7 @@
 <body>
 
   <main class="test purple lighten-4">
+    <div id="main">
     <div class="row">
       <form>
       <div class="col s12">
@@ -69,7 +70,7 @@
       </div>
     </form>
     </div>
-
+</div>
   </main>
 
    <!-- Modal Structure -->
@@ -105,62 +106,22 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
   <!-- Load db vars -->
-  <script src="/db/interface.js"></script>
-  <script src="/db/cards_face.js"></script>
-  <script src="/db/cards_fingers.js"></script>
-  <script src="/db/cards_point.js"></script>
-  <script src="/db/cards_questions.js"></script>
-  <script src="/db/cards_raise.js"></script>
+  <script src="/js/interface.js"></script>
+  <script src="/js/cards_face.js"></script>
+  <script src="/js/cards_fingers.js"></script>
+  <script src="/js/cards_point.js"></script>
+  <script src="/js/cards_questions.js"></script>
+  <script src="/js/cards_raise.js"></script>
+
+  <script src="/js/forms.js"></script>
 
   <script src="/static/game.js"></script>
 
   <script>
-
-    $(document).ready(function () {
-      $('.modal').modal();
+    $(document).ready(function() {
+	    $('.modal').modal();
     });
     //var instance = M.Modal.getInstance(elem);
-
-    var filterN = /^[A-Za-z0-9]{3,}$/;
-    var filterR = /^\d{6}$/;
-
-    //Set default nickname
-    if (Cookies.get('username')) {
-      $("input[id=nickname]").val(Cookies.get('username'));
-    }
-    
-    //Set default language
-    if (Cookies.get('language')) {
-      $("select[id=language]").val(Cookies.get('language'));
-      if (filterN.test($("input[id=nickname]").val())) {
-        $("a[id=creation]").removeClass('disabled');
-      }
-    }
-
-    // Create form filters
-    function createChecks() {
-      if (filterN.test($("input[id=nickname]").val()) && $("select[id=language]").val !== "") {
-        $("a[id=creation]").removeClass('disabled');
-      }
-      else {
-        $("a[id=creation]").addClass('disabled');
-      }
-    };
-
-    // Join form filters
-    
-    $("form").keyup(function () {
-
-      if (filterN.test($("input[id=nickname]").val()) && filterR.test($("input[id=room]").val())) {
-        $("a[id=rejoindre]").removeClass('disabled');
-      }
-      else {
-        $("a[id=rejoindre]").addClass('disabled');
-      }   
-
-      createChecks(); 
-    });
-
   </script>
 
 </body>
@@ -169,6 +130,6 @@
 
 <!-- ToDo
 
-  - 
+  - Start view template
 
 -->
