@@ -29,78 +29,150 @@ io.on('connection', function(socket) {});
 var rooms = {};
 var users = {};
 
+// Socket on
 io.on('connection', function(socket) {
 	// Create room
 	socket.on('createroom', function(data) {
-		let roomNumber = Math.floor(Math.random() * 899999) + 100000;
-		rooms[roomNumber] = {
-			number: roomNumber,
-			language: data.language,
-			view: 'lobby',
-			playerlist: [ data.nickname ],
-			open: 1
-			//players: 1
-		};
+		if (data.nickname !== 'toplay') {
+			let i = 0;
+			let roomNumber = '';
+			// Check if room id is taken
+			while (i < 1) {
+				roomNumber = [ ...Array(4) ].map((i) => (~~(Math.random() * 26 + 10)).toString(36)).join('');
+				if (!rooms[roomNumber]) i = 1;
+			}
+			rooms[roomNumber] = {
+				number: roomNumber,
+				language: data.language,
+				view: 'lobby',
+				playerlist: [ data.nickname ],
+				open: 1,
+				round: 1,
+				streak: 1,
+				randomq: 0,
+				toplay: 0
+			};
 
-		users[data.nickname] = {
-			nickname: data.nickname,
-			room: roomNumber,
-			socketid: socket.id
-		};
+			users[data.nickname] = {
+				nickname: data.nickname,
+				room: roomNumber,
+				socketid: socket.id
+			};
 
-		console.log('#' + rooms[roomNumber].number + ' - New room created :');
-		console.log('-- Owner: ' + rooms[roomNumber].playerlist[0]);
-		console.log('-- Language : ' + rooms[roomNumber].language);
+			console.log('#' + rooms[roomNumber].number + ' - New room created :');
+			console.log('-- Owner: ' + rooms[roomNumber].playerlist[0]);
+			console.log('-- Language : ' + rooms[roomNumber].language);
 
-		//rtId++;
+			//rtId++;
 
-		socket.join(roomNumber);
-		socket.emit('viewclient', rooms[roomNumber]);
+			socket.join(roomNumber);
+			socket.emit('viewclient', rooms[roomNumber]);
+		} else {
+			socket.emit('noname');
+		}
 	});
 
 	// Join room
 	socket.on('joinroom', function(data) {
-		let roomNumber = parseInt(data.number, 10);
-		if (rooms[roomNumber]) {
-			if (rooms[roomNumber].open === 1) {
-				rooms[roomNumber].playerlist.push(data.nickname);
-				//rooms[roomNumber].players += 1;
+		if (data.nickname !== 'toplay') {
+			let roomNumber = data.number;
+			if (rooms[roomNumber]) {
+				if (rooms[roomNumber].open === 1) {
+					if (rooms[roomNumber].playerlist.length < 6) {
+						rooms[roomNumber].playerlist.push(data.nickname);
+						//rooms[roomNumber].players += 1;
 
-				users[data.nickname] = {
-					nickname: data.nickname,
-					room: roomNumber,
-					socketid: socket.id
-				};
-				console.log(
-					'#' +
-						rooms[roomNumber].number +
-						' - New player : ' +
-						data.nickname +
-						' (' +
-						rooms[roomNumber].playerlist.length +
-						')'
-				);
+						users[data.nickname] = {
+							nickname: data.nickname,
+							room: roomNumber,
+							socketid: socket.id
+						};
+						console.log(
+							'#' +
+								rooms[roomNumber].number +
+								' - New player : ' +
+								data.nickname +
+								' (' +
+								rooms[roomNumber].playerlist.length +
+								')'
+						);
 
-				socket.join(roomNumber);
-				io.to(roomNumber).emit('playerjoined', data.nickname);
-				io.to(roomNumber).emit('viewclient', rooms[roomNumber]);
+						socket.join(roomNumber);
+						io.to(roomNumber).emit('playerjoined', data.nickname);
+						io.to(roomNumber).emit('viewclient', rooms[roomNumber]);
+					} else {
+						socket.emit('full');
+					}
+				} else {
+					socket.emit('closed');
+				}
 			} else {
-				socket.emit('closed');
+				socket.emit('noroom');
 			}
 		} else {
-			socket.emit('noroom');
+			socket.emit('noname');
 		}
 	});
 
 	//Start room
 	socket.on('startroom', function(data) {
-		console.log(data.number);
+		rooms[data.number].playerscore = [];
+		// Randomize playerlist and create object playerscore
+		let playerRand = [];
+		rooms[data.number].playerlist.forEach((player) => {
+			playerRand.push(player);
+		});
+		playerRand.sort(function() {
+			return 0.5 - Math.random();
+		});
+
+		playerRand.forEach((player) => {
+			rooms[data.number].playerscore.push({
+				nickname: player,
+				score: 0
+			});
+		});
+
+		// Randomize player order for faker and reader
+		rooms[data.number].fakerrand = [ ...Array(9) ].map(
+			(i) => ~~(Math.random() * rooms[data.number].playerlist.length)
+		);
+
+		rooms[data.number].readerrand = [ ...Array(9) ].map(
+			(i) => ~~(Math.random() * rooms[data.number].playerlist.length)
+		);
+
 		rooms[data.number].view = 'start';
 		io.to(data.number).emit('viewclient', rooms[data.number]);
+		//Then chosing game for first player
 		setTimeout(function() {
-			rooms[data.number].view = 'lobby';
+			rooms[data.number].view = 'choosegame';
 			io.to(data.number).emit('viewclient', rooms[data.number]);
-		}, 5000);
+		}, 500); //5000
+	});
+
+	// Current game
+	socket.on('currentgame', function(data) {
+		// Prepare next player to choose game
+		if (rooms[data.number].toplay < rooms[data.number].playerlist.length) {
+			rooms[data.number].toplay++;
+		} else {
+			rooms[data.number].toplay === 0;
+		}
+
+		rooms[data.number].view = data.view;
+		io.to(data.number).emit('viewclient', rooms[data.number]);
+		//Then sending the question
+		setTimeout(function() {
+			rooms[data.number].view = data.view + 'q';
+			io.to(data.number).emit('viewclient', rooms[data.number]);
+			setTimeout(function() {
+				io.to(data.number).emit('countdown', rooms[data.number]);
+				setTimeout(function() {
+					io.to(data.number).emit('viewclient', rooms[data.number]);
+				}, 1000); //10400
+			}, 1000); //8000
+		}, 1000); //3000
 	});
 
 	// User disconnect

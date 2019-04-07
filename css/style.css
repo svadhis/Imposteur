@@ -1,24 +1,36 @@
-.select {
-	margin-top: 30px;
+.input-field {
+	margin-top: 5px;
 }
 
 .font2 {
-	font-family: 'Indie Flower', cursive;
+	font-family: 'Patrick Hand', cursive;
 }
 
-a.font2 {
+.footer a {
 	font-size: 2.2rem;
 }
 
-h1.font2 {
+.font2 h1 {
 	font-size: 6rem;
 }
 
 h5 {
-	font-size: 1.3rem;
+	font-size: 1.4rem;
 }
 
-ul.font2 {
+span {
+	font-size: 1.2rem;
+}
+
+span.bigger {
+	font-size: 20rem;
+}
+
+span.big {
+	font-size: 15rem;
+}
+
+.font2 ul {
 	font-size: 1.6rem;
 }
 
@@ -43,7 +55,8 @@ ul.font2 {
 
 body {
 	display: flex;
-	min-height: 100vh;
+	min-height: 100vh; /* Fallback for browsers that do not support Custom Properties */
+	min-height: var(--vh, 100vh);
 	flex-direction: column;
 }
 
@@ -59,7 +72,7 @@ main {
 }
 
 #myProgress {
-	margin: 5vh;
+	margin: 2vh 5vh 2vh 5vh;
 	width: 80%;
 	background-color: #eee;
 	border-radius: 10px;
@@ -69,4 +82,27 @@ main {
 	width: 1%;
 	height: 15px;
 	border-radius: 10px;
+}
+
+.game {
+	margin-top: 5vh;
+}
+
+.poster {
+	margin-top: 5vh;
+	border: 6px solid purple;
+}
+
+.normal {
+	margin-top: 5vh;
+	border: 4px solid purple;
+}
+
+.thumbnail {
+	margin-top: 5vh;
+	border: 2px solid purple;
+}
+
+#timer {
+	height: 6vh;
 }

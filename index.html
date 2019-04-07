@@ -6,7 +6,7 @@
 
   <!--Google Icon & Font-->
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Patrick+Hand" rel="stylesheet">
 
   <!-- Materialize -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
@@ -17,13 +17,11 @@
 
   <script src="/socket.io/socket.io.js"></script>
 
-  <script src="https://github.com/typicaljoe/taffydb/raw/master/taffy.js"></script>
-
 </head>
 
 <body>
 
-  <main class="test purple lighten-4">
+  <main class="purple lighten-4 font2">
     <div id="main">
     <div class="row">
       <form>
@@ -41,9 +39,9 @@
               <h5 class="purple-text text-darken-1 center-align">Join a game</h5>
  
           <div class="input-field col s12">
-            <input id="room" type="text" pattern="[0-9]{6}" class="validate" required="" aria-required="true">
+            <input id="room" type="text" pattern="[A-Za-z]{4}" class="validate" required="" aria-required="true">
             <label for="text">The room number</label>
-            <span class="helper-text" data-error="6 characters. Only numbers" data-success=""></span>
+            <span class="helper-text" data-error="4 characters. Only letters" data-success=""></span>
           </div>
           <div class="input-field col s12 center-align">
             <a id="rejoindre" class="waves-effect waves-light btn-small purple lighten-1 disabled"
@@ -74,26 +72,31 @@
   </main>
 
    <!-- Modal Structure -->
-   <div id="modal1" class="modal bottom-sheet">
+   <div id="modal1" class="modal bottom-sheet purple-text text-darken-2 font2 ">
     <div class="modal-content">
       <h5>How to play WhoFakesIt</h5>
       <p>A bunch of text</p>
       <h5>How to add content</h5>
       <p>A bunch of text</p>
     </div>
-    <div class="modal-footer">
+<!-- <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">back</a>
-    </div>
+    </div> -->
   </div>
 
-  <footer class="footer purple darken-2">
+  <footer class="footer purple darken-2 font2">
     <div class="row valign-wrapper">
       <div class="copyright col s12 center-align">
-        <a class="font2 grey-text text-lighten-4 modal-trigger" href="#modal1">WhoFakesIt</a>
+        <a class="grey-text text-lighten-4 modal-trigger" href="#modal1">WhoFakesIt</a>
       </div>
     </div>
 
   </footer>
+
+  <script>
+  let vh = window.innerHeight;
+  document.documentElement.style.setProperty('--vh', `${vh}px`);
+  </script>
 
   <!-- JQuery -->
   <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -106,9 +109,9 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
   <!-- Load db vars -->
-  <script src="/js/interface.js"></script>
+  <script src="/js/views.js"></script>
   <script src="/js/cards_face.js"></script>
-  <script src="/js/cards_fingers.js"></script>
+  <script src="/js/cards_count.js"></script>
   <script src="/js/cards_point.js"></script>
   <script src="/js/cards_questions.js"></script>
   <script src="/js/cards_raise.js"></script>
@@ -130,6 +133,9 @@
 
 <!-- ToDo
 
-  - Start view template
+  - Leader doit pouvoir skip un joueur si deco pour continuer la partie sans lui
+  - ordre playerscore random (ordre de choix de jeu)
+  - ordre faker random (tableau long du nombre de questions)
+  - ordre reader random ( // // )
 
 -->

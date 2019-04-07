@@ -1,5 +1,5 @@
 var filterN = /^[A-Za-z0-9]{3,}$/;
-var filterR = /^\d{6}$/;
+var filterR = /^[A-Za-z]{4}$/;
 
 //Set default nickname
 if (Cookies.get('username')) {
@@ -16,7 +16,8 @@ if (Cookies.get('language')) {
 
 // Create form filters
 function createChecks() {
-	if (filterN.test($('input[id=nickname]').val()) && $('select[id=language]').val !== '') {
+	if (filterN.test($('input[id=nickname]').val()) && $('select[id=language]').val() !== null) {
+		console.log($('select[id=language]').val());
 		$('a[id=creation]').removeClass('disabled');
 	} else {
 		$('a[id=creation]').addClass('disabled');

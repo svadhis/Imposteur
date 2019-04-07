@@ -1,9 +1,9 @@
 var cardsRaise = [
 	{
 		id: 1,
-		french: 'tu as 4 ans ?',
-		english: 'you are 4 years old',
-		spanish: 'tienes 4 años'
+		french: 'si tu as 4 ans',
+		english: 'if you are 4 yo',
+		spanish: 'si tienes 4 años'
 	},
 	{
 		id: 2,

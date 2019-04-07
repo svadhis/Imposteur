@@ -1,4 +1,4 @@
-var cardsFingers = [
+var cardsCount = [
 	{
 		id: 1,
 		french: "d'enfants as-tu ?",
