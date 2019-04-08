@@ -1,9 +1,23 @@
 var ifc = {
+	config: {
+		maincolor: 4, //from 0 to 8
+		playercolors: [
+			'purple',
+			'pink',
+			'indigo',
+			'light-blue',
+			'teal',
+			'light-green',
+			'amber',
+			'deep-orange',
+			'brown'
+		]
+	},
 	faker: {
 		youare: {
-			french: 'BLA BLA BLA BLA',
-			english: 'BL BL BL BL BL',
-			spanish: 'RA RA RA RA RA'
+			french: "Tu es l'imposteur !",
+			english: 'You are the faker !',
+			spanish: 'Eres el impostor !'
 		}
 	},
 	footerlobby: {
@@ -137,6 +151,16 @@ var ifc = {
 			french: 'Lis pour les autres',
 			english: 'Read for the others',
 			spanish: 'Lee para los otros'
+		},
+		votebutton: {
+			french: 'VOTER',
+			english: 'VOTE',
+			spanish: 'VOTAR'
+		},
+		votetitle: {
+			french: "Qui est l'imposteur ?",
+			english: 'Whos is the faker ?',
+			spanish: 'Quien es el impostor ?'
 		}
 	}
 };

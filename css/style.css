@@ -90,19 +90,27 @@ main {
 
 .poster {
 	margin-top: 5vh;
-	border: 6px solid purple;
+	border: 6px solid var(--maincolor);
 }
 
 .normal {
 	margin-top: 5vh;
-	border: 4px solid purple;
+	border: 4px solid var(--maincolor);
 }
 
 .thumbnail {
 	margin-top: 5vh;
-	border: 2px solid purple;
+	border: 2px solid var(--maincolor);
 }
 
 #timer {
 	height: 6vh;
+}
+
+.mtop1 {
+	margin-top: 5vh;
+}
+
+.mtop2 {
+	margin-top: 2vh;
 }

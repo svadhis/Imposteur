@@ -9,9 +9,19 @@ let username = '';
 let owner = 0;
 let lang = '';
 let myRoom = '';
+
+let mainColor = ifc.config.playercolors[ifc.config.maincolor] || 'purple';
+let mainText = mainColor + '-text text-darken-2 font2';
+let playerColors = [];
+ifc.config.playercolors.forEach((color, i) => {
+	if (i !== ifc.config.maincolor) {
+		playerColors.push(color);
+	}
+});
+
 let baseTimer;
-let divTimer = `<div id="myProgress" class="purple lighten-5">
-<div id="myBar" class="purple lighten-3"></div>
+let divTimer = `<div id="myProgress" class="${mainColor} lighten-5">
+<div id="myBar" class="${mainColor} lighten-3"></div>
 </div>`;
 
 let questions = {
@@ -26,6 +36,33 @@ if (!Cookies.get('userid')) {
 	Cookies.set('userid', userid, { expires: 7 });
 } else {
 	userid = Cookies.get('userid');
+}
+
+//Apply main color
+document
+	.querySelector('main')
+	.classList.add(mainColor, mainColor + '-text', 'lighten-4', 'font2', 'purple-text', 'text-darken-2');
+document.querySelector('#rejoindre').classList.add(mainColor);
+document.querySelector('#creation').classList.add(mainColor);
+document.querySelector('#modal1').classList.add(mainColor + '-text', 'text-darken-2', 'font2');
+document.querySelector('footer').classList.add(mainColor, 'darken-2', 'font2');
+
+let cssColor = '';
+if (mainColor === 'purple' || mainColor === 'pink') {
+	cssColor = 'purple';
+	document.documentElement.style.setProperty('--maincolor', cssColor);
+} else if (mainColor === 'indigo' || mainColor === 'light-blue') {
+	cssColor = 'indigo';
+	document.documentElement.style.setProperty('--maincolor', cssColor);
+} else if (mainColor === 'teal' || mainColor === 'light-green') {
+	cssColor = 'teal';
+	document.documentElement.style.setProperty('--maincolor', cssColor);
+} else if (mainColor === 'amber' || mainColor === 'deep-orange') {
+	cssColor = 'orange';
+	document.documentElement.style.setProperty('--maincolor', cssColor);
+} else {
+	cssColor = 'grey';
+	document.documentElement.style.setProperty('--maincolor', cssColor);
 }
 
 // Timer bar
@@ -98,7 +135,7 @@ function chooseGame(e) {
 	document.querySelectorAll('.game').forEach((game) => {
 		game.style.outline = '';
 	});
-	e.style.outline = '4px solid purple';
+	e.style.outline = '4px solid ' + cssColor;
 	document.querySelector('#choice').innerText = ifc.gamelist[e.id + 'q'][lang] + '...';
 	document.querySelector('#timer').innerHTML = divTimer;
 	timerBar(2);
@@ -112,7 +149,7 @@ function countdown(data) {
 	document.querySelector('main').innerHTML = `
 		<div class="center-align row">
 			<div class="col s12 fullv">
-				<span class="font2 purple-text text-darken-2 bigger">3</span>
+				<span class="${mainText} bigger">3</span>
 			</div>
 		</div>
 	`;
@@ -120,7 +157,7 @@ function countdown(data) {
 		document.querySelector('main').innerHTML = `
 		<div class="center-align row">
 			<div class="col s12 fullv">
-				<span class="font2 purple-text text-darken-2 bigger">2</span>
+				<span class="${mainText} bigger">2</span>
 			</div>
 		</div>
 		`;
@@ -128,7 +165,7 @@ function countdown(data) {
 			document.querySelector('main').innerHTML = `
 			<div class="center-align row">
 				<div class="col s12 fullv">
-					<span class="font2 purple-text text-darken-2 bigger">1</span>
+					<span class="${mainText} bigger">1</span>
 				</div>
 			</div>
 			`;
@@ -139,7 +176,7 @@ function countdown(data) {
 						${divTimer}
 					</div>
 					<div class="col s12">
-						<span class="font2 purple-text text-darken-2 big">GO</span>
+						<span class="${mainText} big">GO</span>
 					</div>
 				</div>
 				`;
@@ -150,25 +187,27 @@ function countdown(data) {
 					if (data.playerscore[roomReader].nickname === username) {
 						readQuestion = `
 						<div class="col s12 white">
-							<h4 class="purple-text text-darken-2 big">${ifc.ingame.readq[lang]}</h4>
+							<h4 class="${mainText} big">${ifc.ingame.readq[lang]}</h4>
 						</div>
 						<div class="col s12">
 							<h3 class="big">${ifc.gamelist[data.view][lang]}</h3>
 							<h4 class="big">${questions[data.view][data.randomq][lang]}</h4>
+						</div>
+						<div class="col s12 center-align">
+							<a class="waves-effect waves-light btn-small ${mainColor} lighten-1 mtop1" onClick="ioSend('startvote');">${ifc
+							.ingame.votebutton[lang]}</a>
 						</div>
 						`;
 					} else {
 						readQuestion = '';
 					}
 					document.querySelector('main').innerHTML = `
-					<div class="center-align row font2 purple-text text-darken-2">
+					<div class="center-align row ${mainText}">
 						<div id="timer" class="col s12 center-align white">
-						${divTimer}
 						</div>
 						${readQuestion}
 					</div>
 					`;
-					timerBar(5);
 				}, 3000); // 3000
 			}, 800); // 800
 		}, 800); // 800
@@ -194,7 +233,7 @@ socket.on('viewclient', function(room) {
 			}
 			ownerOnly = `
 		<div class="col s12 center-align">
-			<a class="waves-effect waves-light btn-small purple lighten-1 ${canStart}" onClick="ioSend('startroom');">${elem
+			<a class="waves-effect waves-light btn-small ${mainColor} lighten-1 ${canStart}" onClick="ioSend('startroom');">${elem
 				.startbutton[lang]}</a>
 		</div>
 	`;
@@ -202,21 +241,25 @@ socket.on('viewclient', function(room) {
 
 		let allPlayers = '';
 		for (i = 0; i < room.playerlist.length; i++) {
-			allPlayers += `<li><h5>${i + 1} - ${room.playerlist[i]}</h5></li>`;
+			allPlayers += `
+			<div class="col s6">
+			<h5>${i + 1} - ${room.playerlist[i]}</h5>
+			</div>
+			`;
 		}
 
 		document.querySelector('main').innerHTML = `
-		<div class="row font2 purple-text text-darken-2">
+		<div class="row ${mainText}">
 			<div class="col s12 center-align">
 				<h3>${elem.title[lang]}</h3>
 			</div>
 			<div class="col s12 center-align white">
 				<h1>#${room.number.toUpperCase()}</h1>
 			</div>
-			<div class="col s9 offset-s3 playerlist">
-				<ul >
-				${allPlayers}
-				</ul>
+			<div class="col s12 playerlist">
+				<div class="row">
+					${allPlayers}
+				</div>
 			</div>
 			${ownerOnly}
 		</div>
@@ -244,10 +287,10 @@ socket.on('viewclient', function(room) {
 				${divTimer}
 			</div>
 			<div class="col s12 center-align white">
-				<h2 class="purple-text text-darken-2">${elem[lang]}</h2>
+				<h2 class="${mainText}">${elem[lang]}</h2>
 			</div>
 			<div class="col s9 offset-s3 playerlist">
-				<ul class="purple-text text-darken-2">
+				<ul class="${mainText}">
 				${allPlayers}
 				</ul>
 			</div>
@@ -301,7 +344,7 @@ socket.on('viewclient', function(room) {
 		});
 
 		document.querySelector('main').innerHTML = `
-		<div class="row font2 purple-text text-darken-2">
+		<div class="row ${mainText}">
 			<div id="timer" class="col s12 center-align white">		
 			</div>
 			<div class="col s12 center-align white">
@@ -313,7 +356,7 @@ socket.on('viewclient', function(room) {
 	`;
 		document.querySelector('footer a').innerHTML = '#' + room.number.toUpperCase();
 		document.querySelector('.modal-content').innerHTML = `
-		<div class="row font2 purple-text text-darken-2">
+		<div class="row ${mainText}">
 			<div class="col s3">
 				<ul>${rankingPos}</ul>
 			</div>
@@ -330,7 +373,7 @@ socket.on('viewclient', function(room) {
 	// Starting game template
 	if (room.view === 'raise' || room.view === 'point' || room.view === 'count' || room.view === 'face') {
 		document.querySelector('main').innerHTML = `
-			<div class="row font2 purple-text text-darken-2">
+			<div class="row ${mainText}">
 				<div id="timer" class="col s12 center-align white">		
 				</div>
 				<div class="col s12 center-align">
@@ -354,7 +397,7 @@ socket.on('viewclient', function(room) {
 			question = questions[room.view][room.randomq][lang];
 		}
 		document.querySelector('main').innerHTML = `
-			<div class="row font2 purple-text text-darken-2">
+			<div class="row ${mainText}">
 				<div id="timer" class="col s12 center-align white">
 					${divTimer}
 				</div>
@@ -370,6 +413,32 @@ socket.on('viewclient', function(room) {
 			</div>
 		`;
 		timerBar(8);
+	}
+	// Vote for faker
+	if (room.view === 'vote') {
+		let playerButtons = '';
+		room.playerscore.forEach((player, i) => {
+			if (player.nickname !== username) {
+				playerButtons += `
+				<div class="col s6 center-align">
+					<a class="waves-effect waves-light btn ${ifc.config.playercolors[
+						i
+					]} lighten-1 mtop1" onClick="ioSend('startroom');"><h5>${player.nickname}</h5></a>
+				</div>
+				`;
+			}
+		});
+
+		document.querySelector('main').innerHTML = `
+		<div class="row ${mainText}">
+			<div id="timer" class="col s12 center-align white">
+			</div>
+			<div class="col s12 center-align white">
+			<h4>${ifc.ingame.votetitle[lang]}...</h4>
+			</div>
+			${playerButtons}
+		</div>
+	`;
 	}
 });
 

@@ -77,7 +77,7 @@ io.on('connection', function(socket) {
 		if (data.nickname !== 'toplay') {
 			let roomNumber = data.number;
 			if (rooms[roomNumber]) {
-				if (rooms[roomNumber].open === 1) {
+				if (rooms[roomNumber].open === 1 || rooms[roomNumber].players.includes(data.nickname)) {
 					if (rooms[roomNumber].playerlist.length < 6) {
 						rooms[roomNumber].playerlist.push(data.nickname);
 						//rooms[roomNumber].players += 1;
@@ -117,6 +117,7 @@ io.on('connection', function(socket) {
 	//Start room
 	socket.on('startroom', function(data) {
 		rooms[data.number].playerscore = [];
+		rooms[data.number].players = [];
 		// Randomize playerlist and create object playerscore
 		let playerRand = [];
 		rooms[data.number].playerlist.forEach((player) => {
@@ -131,6 +132,7 @@ io.on('connection', function(socket) {
 				nickname: player,
 				score: 0
 			});
+			rooms[data.number].players.push(player);
 		});
 
 		// Randomize player order for faker and reader
@@ -142,6 +144,7 @@ io.on('connection', function(socket) {
 			(i) => ~~(Math.random() * rooms[data.number].playerlist.length)
 		);
 
+		rooms[data.number].open = 0;
 		rooms[data.number].view = 'start';
 		io.to(data.number).emit('viewclient', rooms[data.number]);
 		//Then chosing game for first player
@@ -173,6 +176,12 @@ io.on('connection', function(socket) {
 				}, 1000); //10400
 			}, 1000); //8000
 		}, 1000); //3000
+	});
+
+	//Start vote
+	socket.on('startvote', function(data) {
+		rooms[data.number].view = 'vote';
+		io.to(data.number).emit('viewclient', rooms[data.number]);
 	});
 
 	// User disconnect

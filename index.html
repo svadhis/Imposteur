@@ -21,7 +21,7 @@
 
 <body>
 
-  <main class="purple lighten-4 font2">
+  <main>
     <div id="main">
     <div class="row">
       <form>
@@ -36,7 +36,7 @@
             </div>
           </div>
           <div class="col s12 l6 white">
-              <h5 class="purple-text text-darken-1 center-align">Join a game</h5>
+              <h5 class="center-align">Join a game</h5>
  
           <div class="input-field col s12">
             <input id="room" type="text" pattern="[A-Za-z]{4}" class="validate" required="" aria-required="true">
@@ -44,14 +44,14 @@
             <span class="helper-text" data-error="4 characters. Only letters" data-success=""></span>
           </div>
           <div class="input-field col s12 center-align">
-            <a id="rejoindre" class="waves-effect waves-light btn-small purple lighten-1 disabled"
+            <a id="rejoindre" class="waves-effect waves-light btn-small disabled"
               onClick="joinRoom();">JOIN</a>
           </div>
         
       </div>
       <div class="col s12 l6">
         
-          <h5 class="purple-text text-darken-2 center-align">Start a new game</h5>
+          <h5 class="center-align">Start a new game</h5>
           <div class="input-field col s12 select">
             <select id="language" required="" aria-required="true" onchange="createChecks();">
               <option value="" disabled selected>Choose a language</option>
@@ -61,7 +61,7 @@
             </select>
           </div>
           <div class="input-field col s12 center-align">
-            <a id="creation" class="waves-effect waves-light btn-small purple disabled"
+            <a id="creation" class="waves-effect waves-light btn-small disabled"
             onClick="createRoom();">CREATE</a>
           </div>
         
@@ -72,7 +72,7 @@
   </main>
 
    <!-- Modal Structure -->
-   <div id="modal1" class="modal bottom-sheet purple-text text-darken-2 font2 ">
+   <div id="modal1" class="modal bottom-sheet">
     <div class="modal-content">
       <h5>How to play WhoFakesIt</h5>
       <p>A bunch of text</p>
@@ -84,7 +84,7 @@
     </div> -->
   </div>
 
-  <footer class="footer purple darken-2 font2">
+  <footer class="footer">
     <div class="row valign-wrapper">
       <div class="copyright col s12 center-align">
         <a class="grey-text text-lighten-4 modal-trigger" href="#modal1">WhoFakesIt</a>
