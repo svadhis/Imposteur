@@ -50,7 +50,8 @@ io.on('connection', function(socket) {
 				round: 1,
 				streak: 1,
 				randomq: 0,
-				toplay: 0
+				toplay: 0,
+				vote: []
 			};
 
 			users[data.nickname] = {
@@ -182,6 +183,40 @@ io.on('connection', function(socket) {
 	socket.on('startvote', function(data) {
 		rooms[data.number].view = 'vote';
 		io.to(data.number).emit('viewclient', rooms[data.number]);
+	});
+
+	//Log votes
+	socket.on('vote', function(data) {
+		let actualRoom = rooms[data.room.number];
+		let alreadyVoted = 0;
+		actualRoom.vote.forEach((vote) => {
+			if (vote.voter === data.voter) {
+				alreadyVoted = 1;
+			}
+		});
+		if (alreadyVoted === 0) {
+			actualRoom.vote.push({
+				voter: data.voter,
+				faker: data.faker
+			});
+		}
+		if (actualRoom.vote.length === actualRoom.players.length - 1) {
+			let roomFaker = actualRoom.fakerrand[actualRoom.round];
+
+			/* actualRoom.vote.forEach((vote) => {
+				if (vote.faker === actualRoom.playerscore[roomFaker].nickname) {
+					console.log('tourvé');
+				} else {
+					console.log('nt');
+				}
+			}); */
+			actualRoom.view = 'reveal';
+			io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
+			setTimeout(function() {
+				actualRoom.view = 'scoreupdate';
+				io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
+			}, 1000); //4000
+		}
 	});
 
 	// User disconnect

@@ -161,6 +161,11 @@ var ifc = {
 			french: "Qui est l'imposteur ?",
 			english: 'Whos is the faker ?',
 			spanish: 'Quien es el impostor ?'
+		},
+		reveal: {
+			french: "L'imposteur était",
+			english: 'The faker was',
+			spanish: 'El impostor era'
 		}
 	}
 };

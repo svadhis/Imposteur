@@ -128,6 +128,16 @@ function ioSend(query) {
 	socket.emit(query, myRoom);
 }
 
+// Socket emit VOTE function
+function ioSendVote(faker) {
+	let voteData = {
+		room: myRoom,
+		voter: username,
+		faker: faker
+	};
+	socket.emit('vote', voteData);
+}
+
 // Choose game function
 function chooseGame(e) {
 	clearTimeout(baseTimer);
@@ -390,8 +400,9 @@ socket.on('viewclient', function(room) {
 
 	if (room.view === 'raiseq' || room.view === 'pointq' || room.view === 'countq' || room.view === 'faceq') {
 		let question = '';
-		let roomFaker = room.fakerrand[room.round];
-		if (room.playerscore[roomFaker].nickname === username) {
+		let roomFakerId = room.fakerrand[room.round];
+		let roomFaker = room.playerscore[roomFakerId].nickname;
+		if (roomFaker === username) {
 			question = ifc.faker.youare[lang];
 		} else {
 			question = questions[room.view][room.randomq][lang];
@@ -416,6 +427,8 @@ socket.on('viewclient', function(room) {
 	}
 	// Vote for faker
 	if (room.view === 'vote') {
+		let roomFakerId = room.fakerrand[room.round];
+		let roomFaker = room.playerscore[roomFakerId].nickname;
 		let playerButtons = '';
 		room.playerscore.forEach((player, i) => {
 			if (player.nickname !== username) {
@@ -423,22 +436,52 @@ socket.on('viewclient', function(room) {
 				<div class="col s6 center-align">
 					<a class="waves-effect waves-light btn ${ifc.config.playercolors[
 						i
-					]} lighten-1 mtop1" onClick="ioSend('startroom');"><h5>${player.nickname}</h5></a>
+					]} lighten-1 mtop1" onClick="ioSendVote('${player.nickname}');"><h5>${player.nickname}</h5></a>
 				</div>
 				`;
 			}
 		});
 
+		if (roomFaker !== username) {
+			document.querySelector('main').innerHTML = `
+			<div class="row ${mainText}">
+				<div id="timer" class="col s12 center-align white">
+				</div>
+				<div class="col s12 center-align white">
+				<h4>${ifc.ingame.votetitle[lang]}...</h4>
+				</div>
+				${playerButtons}
+			</div>
+		`;
+		} else {
+			document.querySelector('main').innerHTML = `
+			<div class="row ${mainText}">
+				<div id="timer" class="col s12 center-align white">
+				</div>
+				<div class="col s12 center-align white">
+				</div>
+			</div>
+		`;
+		}
+	}
+	if (room.view === 'reveal') {
+		let roomFakerId = room.fakerrand[room.round];
+		let roomFaker = room.playerscore[roomFakerId].nickname;
 		document.querySelector('main').innerHTML = `
 		<div class="row ${mainText}">
 			<div id="timer" class="col s12 center-align white">
 			</div>
 			<div class="col s12 center-align white">
-			<h4>${ifc.ingame.votetitle[lang]}...</h4>
+			<h4>${ifc.ingame.reveal[lang]}...</h4>
 			</div>
-			${playerButtons}
+			<div class="col s12 center-align">
+			<h3 id="faker"></h3>
+			</div>
 		</div>
-	`;
+		`;
+		setTimeout(function() {
+			document.querySelector('#faker').innerHTML = roomFaker;
+		}, 2000); //2000
 	}
 });
 
