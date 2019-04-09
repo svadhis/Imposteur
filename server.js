@@ -48,9 +48,10 @@ io.on('connection', function(socket) {
 				playerlist: [ data.nickname ],
 				open: 1,
 				round: 1,
-				streak: 1,
+				streak: 0,
 				randomq: 0,
 				toplay: 0,
+				foundfaker: 0,
 				vote: []
 			};
 
@@ -152,31 +153,33 @@ io.on('connection', function(socket) {
 		setTimeout(function() {
 			rooms[data.number].view = 'choosegame';
 			io.to(data.number).emit('viewclient', rooms[data.number]);
-		}, 500); //5000
+		}, 5000); //5000
 	});
 
 	// Current game
 	socket.on('currentgame', function(data) {
 		// Prepare next player to choose game
-		if (rooms[data.number].toplay < rooms[data.number].playerlist.length) {
-			rooms[data.number].toplay++;
+		if (rooms[data.room.number].toplay < rooms[data.room.number].players.length - 1) {
+			rooms[data.room.number].toplay++;
 		} else {
-			rooms[data.number].toplay === 0;
+			rooms[data.room.number].toplay === 0;
 		}
 
-		rooms[data.number].view = data.view;
-		io.to(data.number).emit('viewclient', rooms[data.number]);
+		rooms[data.room.number].randomq = Math.floor(Math.random() * (data.qlength - 1));
+
+		rooms[data.room.number].view = data.room.view;
+		io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
 		//Then sending the question
 		setTimeout(function() {
-			rooms[data.number].view = data.view + 'q';
-			io.to(data.number).emit('viewclient', rooms[data.number]);
+			rooms[data.room.number].view = data.room.view + 'q';
+			io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
 			setTimeout(function() {
-				io.to(data.number).emit('countdown', rooms[data.number]);
-				setTimeout(function() {
-					io.to(data.number).emit('viewclient', rooms[data.number]);
-				}, 1000); //10400
-			}, 1000); //8000
-		}, 1000); //3000
+				io.to(data.room.number).emit('countdown', rooms[data.room.number]);
+				/* setTimeout(function() {
+					io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
+				}, 10400); //10400 */
+			}, 8000); //8000
+		}, 3000); //3000
 	});
 
 	//Start vote
@@ -189,6 +192,7 @@ io.on('connection', function(socket) {
 	socket.on('vote', function(data) {
 		let actualRoom = rooms[data.room.number];
 		let alreadyVoted = 0;
+		let roomFaker = actualRoom.fakerrand[actualRoom.round];
 		actualRoom.vote.forEach((vote) => {
 			if (vote.voter === data.voter) {
 				alreadyVoted = 1;
@@ -199,23 +203,46 @@ io.on('connection', function(socket) {
 				voter: data.voter,
 				faker: data.faker
 			});
+			if (data.faker === actualRoom.playerscore[roomFaker].nickname) {
+				actualRoom.foundfaker++;
+			}
 		}
 		if (actualRoom.vote.length === actualRoom.players.length - 1) {
-			let roomFaker = actualRoom.fakerrand[actualRoom.round];
-
-			/* actualRoom.vote.forEach((vote) => {
-				if (vote.faker === actualRoom.playerscore[roomFaker].nickname) {
-					console.log('tourvé');
-				} else {
-					console.log('nt');
-				}
-			}); */
-			actualRoom.view = 'reveal';
-			io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
+			if (
+				actualRoom.foundfaker > (actualRoom.players.length - 1) / 2 ||
+				actualRoom.streak === actualRoom.players.length - 1
+			) {
+				actualRoom.view = 'reveal';
+				actualRoom.round++;
+				actualRoom.streak = 0;
+			} else {
+				actualRoom.view = 'noreveal';
+			}
+			actualRoom.streak++;
+			io.to(data.room.number).emit('viewclient', actualRoom);
 			setTimeout(function() {
 				actualRoom.view = 'scoreupdate';
-				io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
-			}, 1000); //4000
+				io.to(data.room.number).emit('viewclient', actualRoom);
+				setTimeout(function() {
+					let scoreMax = actualRoom.vote.length * 10;
+					console.log(actualRoom.vote);
+					actualRoom.vote.forEach((vote) => {
+						if (vote.faker === actualRoom.playerscore[roomFaker].nickname) {
+							for (i = 0; i < actualRoom.players.length; i++) {
+								if (actualRoom.players[i] === vote.voter) {
+									actualRoom.playerscore[i].score += scoreMax / 2;
+								}
+							}
+						} else {
+							actualRoom.playerscore[roomFaker].score += 6 * actualRoom.streak;
+						}
+					});
+					actualRoom.foundfaker = 0;
+					actualRoom.vote = [];
+					actualRoom.view = 'choosegame';
+					io.to(data.room.number).emit('viewclient', actualRoom);
+				}, 10000); //10000
+			}, 7000); //7000
 		}
 	});
 

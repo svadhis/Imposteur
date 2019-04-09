@@ -7,43 +7,43 @@ var cardsFace = [
 	},
 	{
 		id: 2,
-		french: '',
+		french: 'b',
 		english: '',
 		spanish: ''
 	},
 	{
 		id: 3,
-		french: '',
+		french: 'c',
 		english: '',
 		spanish: ''
 	},
 	{
 		id: 4,
-		french: '',
+		french: 'd',
 		english: '',
 		spanish: ''
 	},
 	{
 		id: 5,
-		french: '',
+		french: 'e',
 		english: '',
 		spanish: ''
 	},
 	{
 		id: 6,
-		french: '',
+		french: 'f',
 		english: '',
 		spanish: ''
 	},
 	{
 		id: 7,
-		french: '',
+		french: 'g',
 		english: '',
 		spanish: ''
 	},
 	{
 		id: 8,
-		french: '',
+		french: 'h',
 		english: '',
 		spanish: ''
 	}

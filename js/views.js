@@ -162,10 +162,25 @@ var ifc = {
 			english: 'Whos is the faker ?',
 			spanish: 'Quien es el impostor ?'
 		},
+		alreadyvoted: {
+			french: 'Vote déjà enregistré',
+			english: 'Vote already registered',
+			spanish: 'Voto ya registrado'
+		},
+		fakevote: {
+			french: 'Fais semblant de voter',
+			english: 'Pretend to vote',
+			spanish: 'Pretende que estas votando'
+		},
 		reveal: {
 			french: "L'imposteur était",
 			english: 'The faker was',
 			spanish: 'El impostor era'
+		},
+		notfound: {
+			french: "L'imposteur court toujours",
+			english: 'The faker is still running',
+			spanish: 'El impostor sigue corriendo'
 		}
 	}
 };
