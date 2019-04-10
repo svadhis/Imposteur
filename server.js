@@ -47,8 +47,8 @@ io.on('connection', function(socket) {
 				view: 'lobby',
 				playerlist: [ data.nickname ],
 				open: 1,
-				round: 1,
-				streak: 0,
+				round: 0,
+				streak: 1,
 				randomq: 0,
 				toplay: 0,
 				foundfaker: 0,
@@ -142,9 +142,19 @@ io.on('connection', function(socket) {
 			(i) => ~~(Math.random() * rooms[data.number].playerlist.length)
 		);
 
-		rooms[data.number].readerrand = [ ...Array(9) ].map(
+		rooms[data.number].readerrand = [ ...Array(30) ].map(
 			(i) => ~~(Math.random() * rooms[data.number].playerlist.length)
 		);
+
+		/* 		console.log(
+			`Player order:
+			0. ${rooms[data.number].playerscore[0].nickname}
+			1. ${rooms[data.number].playerscore[1].nickname}
+			2. ${rooms[data.number].playerscore[2].nickname}
+			`
+		);
+		console.log('Faker order: ' + rooms[data.number].fakerrand);
+		console.log('Reader order: ' + rooms[data.number].readerrand); */
 
 		rooms[data.number].open = 0;
 		rooms[data.number].view = 'start';
@@ -153,11 +163,12 @@ io.on('connection', function(socket) {
 		setTimeout(function() {
 			rooms[data.number].view = 'choosegame';
 			io.to(data.number).emit('viewclient', rooms[data.number]);
-		}, 5000); //5000
+		}, 5300); //5000
 	});
 
 	// Current game
 	socket.on('currentgame', function(data) {
+		console.log('Round: ' + rooms[data.room.number].round);
 		// Prepare next player to choose game
 		if (rooms[data.room.number].toplay < rooms[data.room.number].players.length - 1) {
 			rooms[data.room.number].toplay++;
@@ -178,8 +189,8 @@ io.on('connection', function(socket) {
 				/* setTimeout(function() {
 					io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
 				}, 10400); //10400 */
-			}, 8000); //8000
-		}, 3000); //3000
+			}, 8300); //8000
+		}, 3300); //3000
 	});
 
 	//Start vote
@@ -208,24 +219,26 @@ io.on('connection', function(socket) {
 			}
 		}
 		if (actualRoom.vote.length === actualRoom.players.length - 1) {
+			let winStreak = actualRoom.streak;
 			if (
 				actualRoom.foundfaker > (actualRoom.players.length - 1) / 2 ||
 				actualRoom.streak === actualRoom.players.length - 1
 			) {
 				actualRoom.view = 'reveal';
 				actualRoom.round++;
-				actualRoom.streak = 0;
+				actualRoom.streak = 1;
 			} else {
 				actualRoom.view = 'noreveal';
+				actualRoom.streak++;
 			}
-			actualRoom.streak++;
 			io.to(data.room.number).emit('viewclient', actualRoom);
 			setTimeout(function() {
+				console.log(actualRoom.view);
 				actualRoom.view = 'scoreupdate';
+				console.log(actualRoom.view);
 				io.to(data.room.number).emit('viewclient', actualRoom);
 				setTimeout(function() {
 					let scoreMax = actualRoom.vote.length * 10;
-					console.log(actualRoom.vote);
 					actualRoom.vote.forEach((vote) => {
 						if (vote.faker === actualRoom.playerscore[roomFaker].nickname) {
 							for (i = 0; i < actualRoom.players.length; i++) {
@@ -234,15 +247,15 @@ io.on('connection', function(socket) {
 								}
 							}
 						} else {
-							actualRoom.playerscore[roomFaker].score += 6 * actualRoom.streak;
+							actualRoom.playerscore[roomFaker].score += 6 * winStreak;
 						}
 					});
 					actualRoom.foundfaker = 0;
 					actualRoom.vote = [];
 					actualRoom.view = 'choosegame';
 					io.to(data.room.number).emit('viewclient', actualRoom);
-				}, 10000); //10000
-			}, 7000); //7000
+				}, 6300); //6300
+			}, 7300); //7300
 		}
 	});
 

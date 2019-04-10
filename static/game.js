@@ -532,6 +532,7 @@ socket.on('viewclient', function(room) {
 
 	// Show scores
 	if (room.view === 'scoreupdate') {
+		console.log('CA MARCHE LA ???');
 		voted = 0;
 		let roomFakerId = room.fakerrand[room.round];
 		let roomFaker = room.playerscore[roomFakerId].nickname;
@@ -563,7 +564,7 @@ socket.on('viewclient', function(room) {
 			</div>
 		</div>
 		`;
-		timerBar(10);
+		timerBar(6);
 	}
 });
 
