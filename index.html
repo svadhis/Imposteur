@@ -23,11 +23,11 @@
 
   <main>
     <div id="main">
-    <div class="row">
-      <form>
-      <div class="col s12">
-        
-          <div class="input-field col s12">
+      <div class="row">
+        <form>
+          <div class="col s12">
+
+            <div class="input-field col s12">
               <input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate" required=""
                 aria-required="true">
               <label for="text">Your nickname</label>
@@ -36,50 +36,53 @@
             </div>
           </div>
           <div class="col s12 l6 white">
-              <h5 class="center-align">Join a game</h5>
- 
-          <div class="input-field col s12">
-            <input id="room" type="text" pattern="[A-Za-z]{4}" class="validate" required="" aria-required="true">
-            <label for="text">The room number</label>
-            <span class="helper-text" data-error="4 characters. Only letters" data-success=""></span>
+            <h5 class="center-align">Join a game</h5>
+
+            <div class="input-field col s12">
+              <input id="room" type="text" pattern="[A-Za-z]{4}" class="validate" required="" aria-required="true">
+              <label for="text">The room number</label>
+              <span class="helper-text" data-error="4 characters. Only letters" data-success=""></span>
+            </div>
+            <div class="input-field col s12 center-align">
+              <a id="rejoindre" class="waves-effect waves-light btn-small disabled" onClick="joinRoom();">JOIN</a>
+            </div>
+
           </div>
-          <div class="input-field col s12 center-align">
-            <a id="rejoindre" class="waves-effect waves-light btn-small disabled"
-              onClick="joinRoom();">JOIN</a>
+          <div class="col s12 l6">
+
+            <h5 class="center-align">Start a new game</h5>
+            <div class="input-field col s12 select">
+              <select id="language" required="" aria-required="true" onchange="createChecks();">
+                <option value="" disabled selected>Choose a language</option>
+                <option value="english">English</option>
+                <option value="french">French</option>
+                <option value="spanish">Spanish</option>
+              </select>
+            </div>
+            <div class="input-field col s12 center-align">
+              <a id="creation" class="waves-effect waves-light btn-small disabled" onClick="createRoom();">CREATE</a>
+            </div>
+
           </div>
-        
+        </form>
       </div>
-      <div class="col s12 l6">
-        
-          <h5 class="center-align">Start a new game</h5>
-          <div class="input-field col s12 select">
-            <select id="language" required="" aria-required="true" onchange="createChecks();">
-              <option value="" disabled selected>Choose a language</option>
-              <option value="english">English</option>
-              <option value="french">French</option>
-              <option value="spanish">Spanish</option>
-            </select>
-          </div>
-          <div class="input-field col s12 center-align">
-            <a id="creation" class="waves-effect waves-light btn-small disabled"
-            onClick="createRoom();">CREATE</a>
-          </div>
-        
-      </div>
-    </form>
     </div>
-</div>
   </main>
 
-   <!-- Modal Structure -->
-   <div id="modal1" class="modal bottom-sheet">
+  <audio id="beep1" src="/sound/beep1.wav"></audio> 
+  <audio id="beep2" src="/sound/beep2.wav"></audio> 
+  <audio id="beepdouble" src="/sound/beep_double.wav"></audio> 
+  <audio id="button" src="/sound/button.wav"></audio> 
+
+  <!-- Modal Structure -->
+  <div id="modal1" class="modal bottom-sheet">
     <div class="modal-content">
       <h5>How to play WhoFakesIt</h5>
       <p>A bunch of text</p>
       <h5>How to add content</h5>
-      <p>A bunch of text</p>
+      <p>A bunch of text </p>
     </div>
-<!-- <div class="modal-footer">
+    <!-- <div class="modal-footer">
       <a href="#!" class="modal-close waves-effect waves-green btn-flat">back</a>
     </div> -->
   </div>
@@ -94,8 +97,8 @@
   </footer>
 
   <script>
-  let vh = window.innerHeight;
-  document.documentElement.style.setProperty('--vh', `${vh}px`);
+    let vh = window.innerHeight;
+    document.documentElement.style.setProperty('--vh', `${vh}px`);
   </script>
 
   <!-- JQuery -->
@@ -121,8 +124,8 @@
   <script src="/static/game.js"></script>
 
   <script>
-    $(document).ready(function() {
-	    $('.modal').modal();
+    $(document).ready(function () {
+      $('.modal').modal();
     });
     //var instance = M.Modal.getInstance(elem);
   </script>
@@ -136,5 +139,7 @@
   - Leader doit pouvoir skip un joueur si deco pour continuer la partie sans lui
   - Ajouter listener window pour capter entrée OU entrée de mobile,
     et envoyer le bon bouton en fonction du champ selectionné
+  - Gerer sons a chaque etape sur la session leader
+    (et test sur sa session avant lancement de partie)
 
 -->

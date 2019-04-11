@@ -54,7 +54,7 @@ var ifc = {
 			english: 'Point',
 			spanish: 'Enseña',
 			detail: {
-				french: '',
+				french: 'Pointe du doigt celui qui correspond le plus à la phrase',
 				english: '',
 				spanish: ''
 			}
@@ -64,7 +64,7 @@ var ifc = {
 			english: 'How many',
 			spanish: 'Cuantos',
 			detail: {
-				french: '',
+				french: 'Compte sur tes doigts',
 				english: '',
 				spanish: ''
 			}
@@ -74,7 +74,7 @@ var ifc = {
 			english: 'Your face',
 			spanish: 'Tu cara',
 			detail: {
-				french: '',
+				french: 'Fais la tête que tu aurais dans le cas suivant',
 				english: '',
 				spanish: ''
 			}
