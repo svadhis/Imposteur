@@ -147,7 +147,7 @@ io.on('connection', function(socket) {
 		});
 
 		// Randomize player order for faker and reader
-		rooms[data.number].fakerrand = [ ...Array(9) ].map(
+		rooms[data.number].fakerrand = [ ...Array(30) ].map(
 			(i) => ~~(Math.random() * rooms[data.number].playerlist.length)
 		);
 

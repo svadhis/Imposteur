@@ -42,40 +42,40 @@ var ifc = {
 		raiseq: {
 			french: 'Lève la main',
 			english: 'Raise your hand',
-			spanish: 'Levanta la mano',
+			spanish: '',
 			detail: {
-				french: 'Lève la main si la phrase suivante est vraie',
-				english: 'Raise your hand if the next sentence is true',
-				spanish: 'Levanta la mano si la siguiente frase es verdad'
+				french: 'Tu vas devoir lever la main... ou pas',
+				english: 'You will have to raise your hand... or not',
+				spanish: ''
 			}
 		},
 		pointq: {
-			french: 'Pointe',
-			english: 'Point',
-			spanish: 'Enseña',
+			french: 'Pointe la personne',
+			english: 'Point at the person',
+			spanish: '',
 			detail: {
-				french: 'Pointe du doigt celui qui correspond le plus à la phrase',
-				english: '',
+				french: "Tu vas devoir pointer quelqu'un (toi compris)...",
+				english: 'You will have to point someone (including yourself)...',
 				spanish: ''
 			}
 		},
 		countq: {
-			french: 'Combien',
-			english: 'How many',
-			spanish: 'Cuantos',
+			french: 'Lève autant de doigts',
+			english: 'Hold up as many fingers',
+			spanish: '',
 			detail: {
-				french: 'Compte sur tes doigts',
-				english: '',
+				french: 'Tu vas devoir lever un certain nombre de doigts...',
+				english: 'You will have to holding up a numbr of fingers...',
 				spanish: ''
 			}
 		},
 		faceq: {
-			french: 'Ta tête',
-			english: 'Your face',
-			spanish: 'Tu cara',
+			french: 'Fais ta tête',
+			english: 'Make the face',
+			spanish: '',
 			detail: {
-				french: 'Fais la tête que tu aurais dans le cas suivant',
-				english: '',
+				french: 'Tu vas devoir faire une tête particulière..',
+				english: 'You will have to make some facial expression...',
 				spanish: ''
 			}
 		}

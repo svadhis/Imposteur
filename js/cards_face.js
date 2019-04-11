@@ -1,49 +1,71 @@
 var cardsFace = [
 	{
-		id: 1,
 		french: 'si tu mangeais du caca',
-		english: 'if you were eating shit',
-		spanish: 'si comes mierda'
-	},
-	{
-		id: 2,
-		french: 'b',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 3,
-		french: 'c',
+		french: 'quand Léonardo meurt dans Titanic',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 4,
-		french: 'd',
+		french: 'si tu gagnais au Loto',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 5,
-		french: 'e',
+		french: "quand l'OM gagne contre le PSG",
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 6,
-		french: 'f',
+		french: 'après 3 verres de whisky',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 7,
-		french: 'g',
+		french: 'quand tu te cognes le petit orteil',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 8,
-		french: 'h',
+		french: 'quand Patrick Bruel passe à la radio',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'quand il y a Inspecteur Derrick à la télé',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'si tu passais ton bac de philo',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'si tu te retrouvais face à ta pire phobie',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'si tu te faisais spoil sur Game of Thrones',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'quand tu manges du reglisse',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'de super héros',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: '',
 		english: '',
 		spanish: ''
 	}

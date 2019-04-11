@@ -40,9 +40,7 @@ if (!Cookies.get('userid')) {
 }
 
 //Apply main color
-document
-	.querySelector('main')
-	.classList.add(mainColor, mainColor + '-text', 'lighten-4', 'font2', 'purple-text', 'text-darken-2');
+document.querySelector('main').classList.add(mainColor, mainColor + '-text', 'lighten-4', 'font2', 'text-darken-2');
 document.querySelector('#rejoindre').classList.add(mainColor);
 document.querySelector('#creation').classList.add(mainColor);
 document.querySelector('#modal1').classList.add(mainColor + '-text', 'text-darken-2', 'font2');

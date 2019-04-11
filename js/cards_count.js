@@ -1,49 +1,61 @@
 var cardsCount = [
 	{
-		id: 1,
-		french: "d'enfants as-tu ?",
-		english: 'children do you have ?',
-		spanish: 'hijos tienes ?'
-	},
-	{
-		id: 2,
-		french: '',
+		french: "que tu as d'enfants",
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 3,
-		french: '',
+		french: "que l'âge de ton dernier pipi au lit",
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 4,
-		french: '',
+		french: "que d'épisodes de Malcolm que tu pourrais voir avant que ça te saoule",
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 5,
-		french: '',
+		french: 'que de hamburgers que tu manges en un repas au Mac Do',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 6,
-		french: '',
+		french: "que d'heures de sommeil qu'il te faut par nuit",
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 7,
-		french: '',
+		french: "qu'un manchot -_-'",
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 8,
-		french: '',
+		french: 'que tu as de tatouages',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'que tu parles de langues',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'que de verres suffisants pour te rendre ivre',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'que tu bois de cafés par jour',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'que tu aimes de garnitures différentes sur ta pizza',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: "que d'heures que tu passes chez toi sur ton pc",
 		english: '',
 		spanish: ''
 	}
