@@ -12,8 +12,6 @@ app.set('port', 5000);
 app.use('/static', express.static(__dirname + '/static'));
 app.use('/css', express.static('css'));
 app.use('/js', express.static('js'));
-app.use('/img', express.static('img'));
-app.use('/sound', express.static('sound'));
 
 // Routing
 app.get('/', function(request, response) {
@@ -147,7 +145,7 @@ io.on('connection', function(socket) {
 		});
 
 		// Randomize player order for faker and reader
-		rooms[data.number].fakerrand = [ ...Array(30) ].map(
+		rooms[data.number].fakerrand = [ ...Array(9) ].map(
 			(i) => ~~(Math.random() * rooms[data.number].playerlist.length)
 		);
 
