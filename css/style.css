@@ -71,6 +71,10 @@ main {
 	*/
 }
 
+#modal1 {
+	min-height: 65vh;
+}
+
 #myProgress {
 	margin: 2vh 5vh 2vh 5vh;
 	width: 80%;
