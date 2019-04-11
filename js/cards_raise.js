@@ -1,49 +1,76 @@
 var cardsRaise = [
 	{
-		id: 1,
 		french: 'si tu as 4 ans',
 		english: 'if you are 4 yo',
 		spanish: 'si tienes 4 años'
 	},
 	{
-		id: 2,
-		french: '',
+		french: 'si tu regardes ton caca quand tu as fini',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 3,
-		french: '',
+		french: 'si tu as aimé Breaking Bad',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 4,
-		french: '',
+		french: 'si tu as déjà vomi et fait caca en même temps',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 5,
-		french: '',
+		french: 'si tu portes des lunettes',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 6,
-		french: '',
+		french: 'si tu as un animal de compagnie',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 7,
-		french: '',
+		french: 'si tu es amoureux',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 8,
-		french: '',
+		french: 'si tu as déjà envoyé un sexto',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'et fais coucou (^_^)/',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'si tu as déjà fait du nudisme',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'si tu as déjà eu une relation sur internet',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: "si tu sais jouer d'un instrument",
+		english: '',
+		spanish: ''
+	},
+	{
+		french: "si tu as déjà été collé à l'école",
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'si tu fumes',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'si tu portes des strings',
 		english: '',
 		spanish: ''
 	}

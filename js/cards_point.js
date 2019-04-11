@@ -1,49 +1,56 @@
 var cardsPoint = [
 	{
-		id: 1,
-		french: 'la personne la plus grande',
-		english: 'the tallest person',
-		spanish: 'la persona mas alta?'
-	},
-	{
-		id: 2,
-		french: '',
+		french: 'la plus grande',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 3,
-		french: '',
+		french: 'la plus bronzée',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 4,
-		french: '',
+		french: 'qui aime le plus Pokemon',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 5,
-		french: '',
+		french: 'la plus poilue',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 6,
-		french: '',
+		french: 'qui dit le plus de conneries',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 7,
-		french: '',
+		french: 'la plus geek',
 		english: '',
 		spanish: ''
 	},
 	{
-		id: 8,
-		french: '',
+		french: 'qui te pointe X_X',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'qui fait le plus de sport',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: "qui boit le plus d'alcool",
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'qui ressemble le plus à Gérard Depardieu',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'qui te fait le plus rire',
 		english: '',
 		spanish: ''
 	}

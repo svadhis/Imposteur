@@ -40,9 +40,7 @@ if (!Cookies.get('userid')) {
 }
 
 //Apply main color
-document
-	.querySelector('main')
-	.classList.add(mainColor, mainColor + '-text', 'lighten-4', 'font2', 'purple-text', 'text-darken-2');
+document.querySelector('main').classList.add(mainColor, mainColor + '-text', 'lighten-4', 'font2', 'text-darken-2');
 document.querySelector('#rejoindre').classList.add(mainColor);
 document.querySelector('#creation').classList.add(mainColor);
 document.querySelector('#modal1').classList.add(mainColor + '-text', 'text-darken-2', 'font2');
@@ -172,6 +170,10 @@ function chooseGame(e) {
 
 //Countdown
 function countdown(data) {
+	if (data.playerlist[0] === username) {
+		let sound = document.querySelector('#beep2');
+		sound.play();
+	}
 	document.querySelector('main').innerHTML = `
 		<div class="center-align row">
 			<div class="col s12 fullv">
@@ -180,6 +182,10 @@ function countdown(data) {
 		</div>
 	`;
 	setTimeout(function() {
+		if (data.playerlist[0] === username) {
+			let sound = document.querySelector('#beep2');
+			sound.play();
+		}
 		document.querySelector('main').innerHTML = `
 		<div class="center-align row">
 			<div class="col s12 fullv">
@@ -188,6 +194,10 @@ function countdown(data) {
 		</div>
 		`;
 		setTimeout(function() {
+			if (data.playerlist[0] === username) {
+				let sound = document.querySelector('#beep2');
+				sound.play();
+			}
 			document.querySelector('main').innerHTML = `
 			<div class="center-align row">
 				<div class="col s12 fullv">
@@ -196,6 +206,10 @@ function countdown(data) {
 			</div>
 			`;
 			setTimeout(function() {
+				if (data.playerlist[0] === username) {
+					let sound = document.querySelector('#button');
+					sound.play();
+				}
 				document.querySelector('main').innerHTML = `
 				<div class="center-align row white">
 					<div id="timer" class="col s12 center-align white">
@@ -226,6 +240,10 @@ function countdown(data) {
 						`;
 					} else {
 						readQuestion = '';
+					}
+					if (data.playerlist[0] === username) {
+						let sound = document.querySelector('#beep1');
+						sound.play();
 					}
 					document.querySelector('main').innerHTML = `
 					<div class="center-align row ${mainText}">
@@ -327,6 +345,10 @@ socket.on('viewclient', function(room) {
 
 	// Choose game template
 	if (room.view === 'choosegame') {
+		if (room.playerlist[0] === username) {
+			let sound = document.querySelector('#beep1');
+			sound.play();
+		}
 		let choosing = '';
 		let userChoosing = room.playerscore[room.toplay].nickname;
 		let gameList = '';
@@ -405,8 +427,8 @@ socket.on('viewclient', function(room) {
 				<div class="col s12 center-align">
 					<img class="poster" src="http://via.placeholder.com/180">
 				</div>
-				<div class="col s12 center-align">
-					<h3>${ifc.gamelist[room.view + 'q'][lang]}...</h3>
+				<div class="col offset-s1 s10 left-align">
+					<h4>${ifc.gamelist[room.view + 'q'].detail[lang]}</h4>
 				</div>
 			</div>
 		`;
@@ -416,11 +438,14 @@ socket.on('viewclient', function(room) {
 
 	if (room.view === 'raiseq' || room.view === 'pointq' || room.view === 'countq' || room.view === 'faceq') {
 		let question = '';
+		let currentGame = '';
 		let roomFakerId = room.fakerrand[room.round];
 		let roomFaker = room.playerscore[roomFakerId].nickname;
 		if (roomFaker === username) {
+			currentGame = '';
 			question = ifc.faker.youare[lang];
 		} else {
+			currentGame = ifc.gamelist[room.view][lang] + '...';
 			question = questions[room.view][room.randomq][lang];
 		}
 		document.querySelector('main').innerHTML = `
@@ -432,7 +457,7 @@ socket.on('viewclient', function(room) {
 					<img class="poster" src="http://via.placeholder.com/180">
 				</div>
 				<div class="col s12 center-align">
-					<h3>${ifc.gamelist[room.view][lang]}...</h3>
+					<h3>${currentGame}</h3>
 				</div>
 				<div class="col s12 center-align white">
 					<h3>${question}</h3>
@@ -532,6 +557,7 @@ socket.on('viewclient', function(room) {
 
 	// Show scores
 	if (room.view === 'scoreupdate') {
+		console.log('CA MARCHE LA ???');
 		voted = 0;
 		let roomFakerId = room.fakerrand[room.round];
 		let roomFaker = room.playerscore[roomFakerId].nickname;
@@ -563,7 +589,7 @@ socket.on('viewclient', function(room) {
 			</div>
 		</div>
 		`;
-		timerBar(10);
+		timerBar(6);
 	}
 });
 
