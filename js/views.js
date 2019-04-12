@@ -54,13 +54,8 @@ var ifc = {
 			english: 'Point at the person',
 			spanish: '',
 			detail: {
-<<<<<<< HEAD
 				french: "Tu vas devoir pointer quelqu'un (toi compris)...",
 				english: 'You will have to point someone (including yourself)...',
-=======
-				french: 'Pointe du doigt celui qui correspond le plus à la phrase',
-				english: '',
->>>>>>> d1ef577268c5c1cc2e0576a0879728bc259a79b9
 				spanish: ''
 			}
 		},
@@ -69,13 +64,8 @@ var ifc = {
 			english: 'Hold up as many fingers',
 			spanish: '',
 			detail: {
-<<<<<<< HEAD
 				french: 'Tu vas devoir lever un certain nombre de doigts...',
 				english: 'You will have to holding up a numbr of fingers...',
-=======
-				french: 'Compte sur tes doigts',
-				english: '',
->>>>>>> d1ef577268c5c1cc2e0576a0879728bc259a79b9
 				spanish: ''
 			}
 		},
@@ -84,13 +74,8 @@ var ifc = {
 			english: 'Make the face',
 			spanish: '',
 			detail: {
-<<<<<<< HEAD
 				french: 'Tu vas devoir faire une tête particulière..',
 				english: 'You will have to make some facial expression...',
-=======
-				french: 'Fais la tête que tu aurais dans le cas suivant',
-				english: '',
->>>>>>> d1ef577268c5c1cc2e0576a0879728bc259a79b9
 				spanish: ''
 			}
 		}

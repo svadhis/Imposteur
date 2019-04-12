@@ -12,6 +12,8 @@ app.set('port', 5000);
 app.use('/static', express.static(__dirname + '/static'));
 app.use('/css', express.static('css'));
 app.use('/js', express.static('js'));
+app.use('/img', express.static('img'));
+app.use('/sound', express.static('sound'));
 
 // Routing
 app.get('/', function(request, response) {
