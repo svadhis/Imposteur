@@ -1,6 +1,6 @@
 var ifc = {
 	config: {
-		maincolor: 4, //from 0 to 8
+		maincolor: 1, // from 0 to 8
 		playercolors: [
 			'purple',
 			'pink',
@@ -27,8 +27,7 @@ var ifc = {
 			spanish: 'Como se juega ?'
 		},
 		content: {
-			// youtube link ID
-			french: 'DLzxrzFCyOs',
+			french: 'DLzxrzFCyOs', // youtube link ID
 			english: 'DLzxrzFCyOs',
 			spanish: 'DLzxrzFCyOs'
 		}
@@ -74,8 +73,18 @@ var ifc = {
 			english: 'Make the face',
 			spanish: '',
 			detail: {
-				french: 'Tu vas devoir faire une tête particulière..',
+				french: 'Tu vas devoir faire une tête particulière...',
 				english: 'You will have to make some facial expression...',
+				spanish: ''
+			}
+		},
+		wordq: {
+			french: 'Un seul mot',
+			english: 'Only one word',
+			spanish: '',
+			detail: {
+				french: "Tu vas devoir n'exprimer qu'un seul mot, qui doit être different de celui des autres",
+				english: 'You will have to express only one word...',
 				spanish: ''
 			}
 		}

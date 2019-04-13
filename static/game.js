@@ -29,7 +29,8 @@ let questions = {
 	raiseq: cardsRaise,
 	pointq: cardsPoint,
 	countq: cardsCount,
-	faceq: cardsFace
+	faceq: cardsFace,
+	wordq: cardsWord
 };
 
 if (!Cookies.get('userid')) {
@@ -40,9 +41,7 @@ if (!Cookies.get('userid')) {
 }
 
 //Apply main color
-document
-	.querySelector('main')
-	.classList.add(mainColor, mainColor + '-text', 'lighten-4', 'font2', 'purple-text', 'text-darken-2');
+document.querySelector('main').classList.add(mainColor, mainColor + '-text', 'lighten-4', 'font2', 'text-darken-2');
 document.querySelector('#rejoindre').classList.add(mainColor);
 document.querySelector('#creation').classList.add(mainColor);
 document.querySelector('#modal1').classList.add(mainColor + '-text', 'text-darken-2', 'font2');
@@ -64,200 +63,6 @@ if (mainColor === 'purple' || mainColor === 'pink') {
 } else {
 	cssColor = 'grey';
 	document.documentElement.style.setProperty('--maincolor', cssColor);
-}
-
-// Timer bar
-function timerBar(s) {
-	var elem = document.getElementById('myBar');
-	var width = 1;
-	var id = setInterval(frame, s * 10);
-	function frame() {
-		if (width >= 100) {
-			clearInterval(id);
-		} else {
-			width++;
-			elem.style.width = width + '%';
-		}
-	}
-}
-
-function joinRoom() {
-	var joinData = {
-		number: document.querySelector('#room').value.toLowerCase(),
-		nickname: document.querySelector('#nickname').value,
-		userid: userid
-	};
-
-	if (!Cookies.get('username')) {
-		Cookies.set('username', joinData.nickname, { expires: 7 });
-	} else if (Cookies.get('username') !== joinData.nickname) {
-		Cookies.remove('username');
-		Cookies.set('username', joinData.nickname, { expires: 7 });
-	}
-
-	username = Cookies.get('username');
-	socket.emit('joinroom', joinData);
-}
-
-function createRoom() {
-	var createData = {
-		language: document.querySelector('#language').value,
-		nickname: document.querySelector('#nickname').value,
-		userid: userid
-	};
-
-	if (!Cookies.get('username')) {
-		Cookies.set('username', createData.nickname, { expires: 7 });
-	} else if (Cookies.get('username') !== createData.nickname) {
-		Cookies.remove('username');
-		Cookies.set('username', createData.nickname, { expires: 7 });
-	}
-
-	if (!Cookies.get('language')) {
-		Cookies.set('language', createData.language, { expires: 7 });
-	} else if (Cookies.get('language') !== createData.language) {
-		Cookies.remove('language');
-		Cookies.set('language', createData.language, { expires: 7 });
-	}
-
-	username = Cookies.get('username');
-	socket.emit('createroom', createData);
-}
-
-// Socket emit function
-function ioSend(query) {
-	socket.emit(query, myRoom);
-}
-
-// Socket emit VOTE function
-function ioSendVote(faker) {
-	voted++;
-	if (voted === 1) {
-		document.querySelector('#' + faker).style.outline = '4px solid ' + cssColor;
-		let voteData = {
-			room: myRoom,
-			voter: username,
-			faker: faker
-		};
-		socket.emit('vote', voteData);
-	} else if (voted === 2) {
-		document.querySelector('main').innerHTML += `
-		<div class="col s12 center-align">
-			<h4>${ifc.ingame.alreadyvoted[lang]}</h4>
-		</div>
-		`;
-	}
-}
-
-// Choose game function
-function chooseGame(e) {
-	clearTimeout(baseTimer);
-	myRoom.view = e.id;
-	document.querySelectorAll('.game').forEach((game) => {
-		game.style.outline = '';
-	});
-	e.style.outline = '4px solid ' + cssColor;
-	document.querySelector('#choice').innerText = ifc.gamelist[e.id + 'q'][lang] + '...';
-	document.querySelector('#timer').innerHTML = divTimer;
-	let qLength = questions[myRoom.view + 'q'].length;
-	timerBar(2);
-	baseTimer = setTimeout(function() {
-		let chooseData = {
-			room: myRoom,
-			qlength: qLength
-		};
-		socket.emit('currentgame', chooseData);
-	}, 2100);
-}
-
-//Countdown
-function countdown(data) {
-	if (data.playerlist[0] === username) {
-		let sound = document.querySelector('#beep2');
-		sound.play();
-	}
-	document.querySelector('main').innerHTML = `
-		<div class="center-align row">
-			<div class="col s12 fullv">
-				<span class="${mainText} bigger">3</span>
-			</div>
-		</div>
-	`;
-	setTimeout(function() {
-		if (data.playerlist[0] === username) {
-			let sound = document.querySelector('#beep2');
-			sound.play();
-		}
-		document.querySelector('main').innerHTML = `
-		<div class="center-align row">
-			<div class="col s12 fullv">
-				<span class="${mainText} bigger">2</span>
-			</div>
-		</div>
-		`;
-		setTimeout(function() {
-			if (data.playerlist[0] === username) {
-				let sound = document.querySelector('#beep2');
-				sound.play();
-			}
-			document.querySelector('main').innerHTML = `
-			<div class="center-align row">
-				<div class="col s12 fullv">
-					<span class="${mainText} bigger">1</span>
-				</div>
-			</div>
-			`;
-			setTimeout(function() {
-				if (data.playerlist[0] === username) {
-					let sound = document.querySelector('#button');
-					sound.play();
-				}
-				document.querySelector('main').innerHTML = `
-				<div class="center-align row white">
-					<div id="timer" class="col s12 center-align white">
-						${divTimer}
-					</div>
-					<div class="col s12">
-						<span class="${mainText} big">GO</span>
-					</div>
-				</div>
-				`;
-				timerBar(3);
-				setTimeout(function() {
-					let readQuestion = '';
-					let roomReader = data.readerrand[data.toplay];
-					if (data.playerscore[roomReader].nickname === username) {
-						readQuestion = `
-						<div class="col s12 white">
-							<h4 class="${mainText} big">${ifc.ingame.readq[lang]}</h4>
-						</div>
-						<div class="col s12">
-							<h3 class="big">${ifc.gamelist[data.view][lang]}</h3>
-							<h4 class="big">${questions[data.view][data.randomq][lang]}</h4>
-						</div>
-						<div class="col s12 center-align">
-							<a class="waves-effect waves-light btn-small ${mainColor} lighten-1 mtop1" onClick="ioSend('startvote');">${ifc
-							.ingame.votebutton[lang]}</a>
-						</div>
-						`;
-					} else {
-						readQuestion = '';
-					}
-					if (data.playerlist[0] === username) {
-						let sound = document.querySelector('#beep1');
-						sound.play();
-					}
-					document.querySelector('main').innerHTML = `
-					<div class="center-align row ${mainText}">
-						<div id="timer" class="col s12 center-align white">
-						</div>
-						${readQuestion}
-					</div>
-					`;
-				}, 3000); // 3000
-			}, 800); // 800
-		}, 800); // 800
-	}, 800); // 800
 }
 
 // Templates
@@ -294,22 +99,14 @@ socket.on('viewclient', function(room) {
 			`;
 		}
 
-		document.querySelector('main').innerHTML = `
-		<div class="row ${mainText}">
-			<div class="col s12 center-align">
-				<h3>${elem.title[lang]}</h3>
-			</div>
-			<div class="col s12 center-align white">
-				<h1>#${room.number.toUpperCase()}</h1>
-			</div>
-			<div class="col s12 playerlist">
-				<div class="row">
-					${allPlayers}
-				</div>
-			</div>
-			${ownerOnly}
-		</div>
-	`;
+		// templateRow(rowId, timer, custom)
+		templateRow(1, 0, 'center-align');
+
+		//templateCol(rowId, colId, size, inner, custom)
+		templateCol(1, 1, 12, `<h3>${elem.title[lang]}</h3>`);
+		templateCol(1, 2, 12, `<h1>#${room.number.toUpperCase()}</h1>`, 'white');
+		templateCol(1, 3, 12, `<div class="row">${allPlayers}</div>`, 'playerlist left-align');
+		templateCol(1, 4, 12, ownerOnly);
 
 		document.querySelector('footer a').innerHTML = ifc.footerlobby.title[lang];
 		document.querySelector('.modal-content').innerHTML = `
@@ -327,21 +124,11 @@ socket.on('viewclient', function(room) {
 			allPlayers += `<li>${i + 1} - ${room.playerlist[i]}</li>`;
 		}
 
-		document.querySelector('main').innerHTML = `
-		<div class="row">
-			<div id="timer" class="col s12 center-align white">
-				${divTimer}
-			</div>
-			<div class="col s12 center-align white">
-				<h2 class="${mainText}">${elem[lang]}</h2>
-			</div>
-			<div class="col s9 offset-s3 playerlist">
-				<ul class="${mainText}">
-				${allPlayers}
-				</ul>
-			</div>
-		</div>
-	`;
+		templateRow(1, 2, 'center-align');
+
+		templateCol(1, 1, 12, `<h2>${elem[lang]}</h2>`, 'white');
+		templateCol(1, 2, 9, `<ul>${allPlayers}</ul>`, 'offset-s3 playerlist left-align');
+
 		timerBar(5);
 	}
 
@@ -361,16 +148,16 @@ socket.on('viewclient', function(room) {
 			gameList = `
 		
 				<div class="col s6 center-align">
-					<img id="raise" class="game" src="http://via.placeholder.com/120" onClick="chooseGame(raise);">
+					<img id="raise" class="game" src="/img/raiseq.jpg" onClick="chooseGame(raise);">
 				</div>
 				<div class="col s6 center-align">
-					<img id="point" class="game" src="http://via.placeholder.com/120" onClick="chooseGame(point);">
+					<img id="point" class="game" src="/img/pointq.jpg" onClick="chooseGame(point);">
 				</div>
 				<div class="col s6 center-align">
-					<img id="count" class="game" src="http://via.placeholder.com/120" onClick="chooseGame(count);">
+					<img id="count" class="game" src="/img/countq.jpg" onClick="chooseGame(count);">
 				</div>
 				<div class="col s6 center-align">
-					<img id="face" class="game" src="http://via.placeholder.com/120" onClick="chooseGame(face);">
+					<img id="face" class="game" src="/img/faceq.jpg" onClick="chooseGame(face);">
 				</div>
 				<div class="col s12 center-align">
 				<h4 id="choice"></h4>
@@ -394,17 +181,11 @@ socket.on('viewclient', function(room) {
 			rankingScore += `<li><h5>${player.score}</h5></li>`;
 		});
 
-		document.querySelector('main').innerHTML = `
-		<div class="row ${mainText}">
-			<div id="timer" class="col s12 center-align white">		
-			</div>
-			<div class="col s12 center-align white">
-				${userChoosing}
-				<h3>${choosing}</h3>
-			</div>
-				${gameList}
-		</div>
-	`;
+		templateRow(1, 1, 'center-align');
+
+		templateCol(1, 1, 12, `${userChoosing}<h3>${choosing}</h3>`, 'white');
+		templateCol(1, 2, 12, gameList);
+
 		document.querySelector('footer a').innerHTML = '#' + room.number.toUpperCase();
 		document.querySelector('.modal-content').innerHTML = `
 		<div class="row ${mainText}">
@@ -423,23 +204,39 @@ socket.on('viewclient', function(room) {
 
 	// Starting game template
 	if (room.view === 'raise' || room.view === 'point' || room.view === 'count' || room.view === 'face') {
-		document.querySelector('main').innerHTML = `
-			<div class="row ${mainText}">
-				<div id="timer" class="col s12 center-align white">		
-				</div>
-				<div class="col s12 center-align">
-					<img class="poster" src="http://via.placeholder.com/180">
-				</div>
-				<div class="col offset-s1 s10 left-align">
-					<h4>${ifc.gamelist[room.view + 'q'].detail[lang]}</h4>
-				</div>
-			</div>
-		`;
+		templateRow(1, 1, 'center-align');
+
+		templateCol(1, 1, 12, `<img class="poster" src="/img/${room.view}q.jpg">`);
+		templateCol(1, 2, 10, `<h4>${ifc.gamelist[room.view + 'q'].detail[lang]}</h4>`, 'offset-s1 left-align');
+	}
+
+	// Starting finale template
+	if (room.view === 'word') {
+		templateRow(1, 2, 'center-align');
+
+		templateCol(1, 1, 12, `<img class="poster" src="/img/wordq.jpg">`);
+		templateCol(1, 2, 10, `<h4>${ifc.gamelist.wordq.detail[lang]}</h4>`, 'offset-s1 left-align');
+
+		timerBar(6);
+		let qLength = questions[myRoom.view + 'q'].length;
+		baseTimer = setTimeout(function() {
+			let chooseData = {
+				room: myRoom,
+				qlength: qLength
+			};
+			socket.emit('currentgame', chooseData);
+		}, 6200);
 	}
 
 	// Question template
 
-	if (room.view === 'raiseq' || room.view === 'pointq' || room.view === 'countq' || room.view === 'faceq') {
+	if (
+		room.view === 'raiseq' ||
+		room.view === 'pointq' ||
+		room.view === 'countq' ||
+		room.view === 'faceq' ||
+		room.view === 'wordq'
+	) {
 		let question = '';
 		let currentGame = '';
 		let roomFakerId = room.fakerrand[room.round];
@@ -451,22 +248,12 @@ socket.on('viewclient', function(room) {
 			currentGame = ifc.gamelist[room.view][lang] + '...';
 			question = questions[room.view][room.randomq][lang];
 		}
-		document.querySelector('main').innerHTML = `
-			<div class="row ${mainText}">
-				<div id="timer" class="col s12 center-align white">
-					${divTimer}
-				</div>
-				<div class="col s12 center-align">
-					<img class="poster" src="http://via.placeholder.com/180">
-				</div>
-				<div class="col s12 center-align">
-					<h3>${currentGame}</h3>
-				</div>
-				<div class="col s12 center-align white">
-					<h3>${question}</h3>
-				</div>
-			</div>
-		`;
+		templateRow(1, 2, 'center-align');
+
+		templateCol(1, 1, 12, `<img class="poster" src="/img/${room.view}.jpg">`);
+		templateCol(1, 2, 12, `<h3>${currentGame}</h3>`);
+		templateCol(1, 3, 12, `<h3>${question}</h3>`, 'white');
+
 		timerBar(8);
 	}
 	// Vote for faker
@@ -486,27 +273,13 @@ socket.on('viewclient', function(room) {
 			}
 		});
 
+		templateRow(1, 1, 'center-align');
+
 		if (roomFaker !== username) {
-			document.querySelector('main').innerHTML = `
-			<div class="row ${mainText}">
-				<div id="timer" class="col s12 center-align white">
-				</div>
-				<div class="col s12 center-align white">
-					<h4>${ifc.ingame.votetitle[lang]}...</h4>
-				</div>
-				${playerButtons}
-			</div>
-		`;
+			templateCol(1, 1, 12, `<h4>${ifc.ingame.votetitle[lang]}...</h4>`, 'white');
+			templateCol(1, 2, 12, `${playerButtons}`);
 		} else {
-			document.querySelector('main').innerHTML = `
-			<div class="row ${mainText}">
-				<div id="timer" class="col s12 center-align white">
-				</div>
-				<div class="col s12 center-align white">
-					<h4>${ifc.ingame.fakevote[lang]}...</h4>
-				</div>
-			</div>
-		`;
+			templateCol(1, 1, 12, `<h4>${ifc.ingame.fakevote[lang]}...</h4>`, 'white');
 		}
 	}
 
@@ -514,18 +287,12 @@ socket.on('viewclient', function(room) {
 	if (room.view === 'reveal') {
 		let roomFakerId = room.fakerrand[room.round - 1];
 		let roomFaker = room.playerscore[roomFakerId].nickname;
-		document.querySelector('main').innerHTML = `
-		<div class="row ${mainText}">
-			<div id="timer" class="col s12 center-align white">
-			</div>
-			<div class="col s12 center-align white">
-			<h4>${ifc.ingame.reveal[lang]}...</h4>
-			</div>
-			<div class="col s12 center-align">
-			<h3 id="faker"></h3>
-			</div>
-		</div>
-		`;
+
+		templateRow(1, 1, 'center-align');
+
+		templateCol(1, 1, 12, `<h4>${ifc.ingame.reveal[lang]}...</h4>`, 'white');
+		templateCol(1, 2, 12, `<h3 id="faker"></h3>`);
+
 		setTimeout(function() {
 			document.querySelector('#timer').innerHTML = divTimer;
 			document.querySelector('#faker').innerHTML = roomFaker;
@@ -535,16 +302,10 @@ socket.on('viewclient', function(room) {
 
 	// Don't reveal faker
 	if (room.view === 'noreveal') {
-		document.querySelector('main').innerHTML = `
-		<div class="row ${mainText}">
-			<div id="timer" class="col s12 center-align white">
-			${divTimer}
-			</div>
-			<div class="col s12 center-align white">
-			<h4>${ifc.ingame.notfound[lang]}</h4>
-			</div>
-		</div>
-		`;
+		templateRow(1, 2, 'center-align');
+
+		templateCol(1, 1, 12, `<h4>${ifc.ingame.notfound[lang]}</h4>`, 'white');
+
 		timerBar(6);
 	}
 
@@ -555,37 +316,19 @@ socket.on('viewclient', function(room) {
 		let fakerScore = room.bufferscore[roomFakerId].added;
 		let scorePlayer = '';
 		let scorePts = '';
-		// let scoreMax = room.vote.length * 10;
-		// let scoreFaker = 0;
+
 		room.bufferscore.forEach((player) => {
 			if (player.nickname !== roomFaker) {
 				scorePlayer += `<h4>${player.nickname}</h4>`;
 				scorePts += `<h4>+ ${player.added}</h4>`;
 			}
-
-			/* scorePlayer += `<h4>${vote.voter}</h4>`;
-			if (vote.faker === roomFaker) {
-				scorePts += `<h4>+ ${scoreMax / 2}</h4>`;
-			} else {
-				scorePts += `<h4>&nbsp;</h4>`;
-				scoreFaker += 6 * room.streakwas;
-			} */
 		});
-		document.querySelector('main').innerHTML = `
-		<div class="row ${mainText}">
-			<div id="timer" class="col s12 center-align white">
-				${divTimer}
-			</div>
-			<div class="col s6 left-align">
-				${scorePlayer}
-					<h3 class="white-text">${roomFaker}</h3>
-			</div>
-			<div class="col s6 right-align">
-				${scorePts}
-					<h3 class="white-text">+ ${fakerScore}</h3>
-			</div>
-		</div>
-		`;
+
+		templateRow(1, 2, 'center-align');
+
+		templateCol(1, 1, 6, `${scorePlayer}<h3 class="white-text">${roomFaker}</h3>`, 'left-align');
+		templateCol(1, 2, 6, `${scorePts}<h3 class="white-text">+ ${fakerScore}</h3>`, 'right-align');
+
 		timerBar(6);
 	}
 });

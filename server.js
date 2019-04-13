@@ -85,7 +85,6 @@ io.on('connection', function(socket) {
 				if (rooms[roomNumber].open === 1 || rooms[roomNumber].players.includes(data.nickname)) {
 					if (rooms[roomNumber].playerlist.length < 6) {
 						rooms[roomNumber].playerlist.push(data.nickname);
-						//rooms[roomNumber].players += 1;
 
 						users[data.nickname] = {
 							nickname: data.nickname,
@@ -195,9 +194,6 @@ io.on('connection', function(socket) {
 			io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
 			setTimeout(function() {
 				io.to(data.room.number).emit('countdown', rooms[data.room.number]);
-				/* setTimeout(function() {
-					io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
-				}, 10400); //10400 */
 			}, 8200); //8200
 		}, 3200); //3200
 	});
@@ -275,32 +271,17 @@ io.on('connection', function(socket) {
 						scoreTimer = 6200;
 					}
 					setTimeout(function() {
-						/* let scoreMax = actualRoom.vote.length * 10;
-					actualRoom.vote.forEach((vote) => {
-						if (vote.faker === actualRoom.playerscore[roomFaker].nickname) {
-							for (i = 0; i < actualRoom.players.length; i++) {
-								if (actualRoom.players[i] === vote.voter) {
-									actualRoom.bufferscore[i].score += scoreMax / 2;
-									if (actualRoom.streak === 1) {
-										actualRoom.playerscore[i].score += actualRoom.bufferscore[i].score;
-										actualRoom.bufferscore[i].score = 0;
-									}
-								}
-							}
-						} else {
-							actualRoom.bufferscore[roomFaker].score += 6 * actualRoom.streakwas;
-						}
-					});
-					if (actualRoom.streak === 1) {
-						actualRoom.playerscore[roomFaker].score += actualRoom.bufferscore[roomFaker].score;
-						actualRoom.bufferscore[roomFaker].score = 0;
-					} */
 						actualRoom.foundfaker = 0;
 						actualRoom.vote = [];
-						actualRoom.view = 'choosegame';
+						// Choose number of rounds
+						if (actualRoom.round < 0) {
+							actualRoom.view = 'choosegame';
+						} else {
+							actualRoom.view = 'word';
+						}
 						io.to(data.room.number).emit('viewclient', actualRoom);
-					}, scoreTimer); //6300 or 300
-				}, 6200); //6300
+					}, scoreTimer); //6200 or 200
+				}, 6200); //6200
 			}, 1000); //1000
 		}
 	});
@@ -314,8 +295,6 @@ io.on('connection', function(socket) {
 			let currentOwner = pList[0];
 			// If user was in a room...
 			if (users[x].socketid === socket.id) {
-				//currentRoom.players -= 1;
-
 				// Delete from playerlist, send new owner if list[0] changed
 
 				for (i = 0; i < pList.length; i++) {
@@ -357,7 +336,3 @@ io.on('connection', function(socket) {
 		}
 	});
 });
-
-/* setInterval(function() {
-	io.to('room1').emit('state', players);
-}, 1000 / 60); */

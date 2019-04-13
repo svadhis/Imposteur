@@ -82,9 +82,6 @@
       <h5>How to add content</h5>
       <p>A bunch of text </p>
     </div>
-    <!-- <div class="modal-footer">
-      <a href="#!" class="modal-close waves-effect waves-green btn-flat">back</a>
-    </div> -->
   </div>
 
   <footer class="footer">
@@ -112,12 +109,15 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
   <!-- Load db vars -->
+ 
   <script src="/js/views.js"></script>
   <script src="/js/cards_face.js"></script>
   <script src="/js/cards_count.js"></script>
   <script src="/js/cards_point.js"></script>
   <script src="/js/cards_raise.js"></script>
+  <script src="/js/cards_word.js"></script>
 
+  <script src="/js/functions.js"></script>
   <script src="/js/forms.js"></script>
 
   <script src="/static/game.js"></script>
@@ -126,7 +126,6 @@
     $(document).ready(function () {
       $('.modal').modal();
     });
-    //var instance = M.Modal.getInstance(elem);
   </script>
 
 </body>
@@ -138,7 +137,9 @@
   - Leader doit pouvoir skip un joueur si deco pour continuer la partie sans lui
   - Ajouter listener window pour capter entrée OU entrée de mobile,
     et envoyer le bon bouton en fonction du champ selectionné
-  - Gerer sons a chaque etape sur la session leader
-    (et test sur sa session avant lancement de partie)
+  - Finir apres tant de rounds, sur party draw
+  - Implementer nouveau jeu : dire un mot sur telle phrase
+  - Modifier et balancer le systeme de score
+  - Event sur clic sur toute la div au choix username et room pour selectionner le champ
 
 -->
