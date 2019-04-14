@@ -1,7 +1,7 @@
 {
 	"$jason": {
 		"head": {
-			"title": "{ ˃̵̑ᴥ˂̵̑}",
+			"title": "WhoFakesIt",
 			"actions": {
 				"$foreground": {
 					"type": "$reload"
@@ -12,7 +12,7 @@
 			"style": {
 				"background": {
 					"type": "html",
-					"url": "195.132.69.176:5000",
+					"url": "https://whofakesit.herokuapp.com/",
 					"action": {
 						"trigger": "navigate"
 					}
