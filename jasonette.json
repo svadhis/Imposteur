@@ -1,9 +1,19 @@
 {
-	"background": {
-		"type": "html",
-		"url": "192.168.0.21:5000",
-		"action": {
-			"trigger": "navigate"
+	"$jason": {
+		"head": {
+			"title": "{ ˃̵̑ᴥ˂̵̑}",
+			"actions": {
+				"$foreground": {
+					"type": "$reload"
+				}
+			}
+		},
+		"background": {
+			"type": "html",
+			"url": "192.168.0.21:5000",
+			"action": {
+				"trigger": "navigate"
+			}
 		}
 	}
 }
