@@ -11,7 +11,7 @@
 }
 
 .font2 h1 {
-	font-size: 8rem;
+	font-size: 7.5rem;
 }
 
 h5 {
@@ -112,4 +112,9 @@ main {
 
 .mtop2 {
 	margin-top: 2vh;
+}
+
+.dropdown-content li > a,
+.dropdown-content li > span {
+	color: var(--maincolor, black);
 }

@@ -1,6 +1,6 @@
 var ifc = {
 	config: {
-		maincolor: 1, // from 0 to 8
+		maincolor: 8, // from 0 to 8
 		playercolors: [
 			'purple',
 			'pink',
@@ -100,7 +100,7 @@ var ifc = {
 			english: 'This room is closed',
 			spanish: 'Este salon esta cerrado'
 		},
-		closed: {
+		full: {
 			french: 'Ce salon est complet',
 			english: 'This room is full',
 			spanish: 'Este salon esta lleno'

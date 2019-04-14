@@ -45,7 +45,7 @@ document.querySelector('main').classList.add(mainColor, mainColor + '-text', 'li
 document.querySelector('#rejoindre').classList.add(mainColor);
 document.querySelector('#creation').classList.add(mainColor);
 document.querySelector('#modal1').classList.add(mainColor + '-text', 'text-darken-2', 'font2');
-document.querySelector('footer').classList.add(mainColor, 'darken-2', 'font2');
+document.querySelector('footer').classList.add(mainColor, 'font2');
 
 let cssColor = '';
 if (mainColor === 'purple' || mainColor === 'pink') {
@@ -79,7 +79,7 @@ socket.on('viewclient', function(room) {
 			owner = 1;
 			let canStart = 'disabled';
 			// Minimum players to start the game
-			if (room.playerlist.length > 0) {
+			if (room.playerlist.length > 2) {
 				canStart = '';
 			}
 			ownerOnly = `
@@ -91,10 +91,16 @@ socket.on('viewclient', function(room) {
 		}
 
 		let allPlayers = '';
+		let evenOdd = '';
 		for (i = 0; i < room.playerlist.length; i++) {
+			if (i % 2 == 0) {
+				evenOdd = 'offset-s1 s5 left-align';
+			} else {
+				evenOdd = 's5 left-align';
+			}
 			allPlayers += `
-			<div class="col s6">
-			<h5>${i + 1} - ${room.playerlist[i]}</h5>
+			<div class="col ${evenOdd}">
+			<h5>${room.playerlist[i]}</h5>
 			</div>
 			`;
 		}
@@ -121,7 +127,7 @@ socket.on('viewclient', function(room) {
 	if (room.view === 'start') {
 		let allPlayers = '';
 		for (i = 0; i < room.playerlist.length; i++) {
-			allPlayers += `<li>${i + 1} - ${room.playerlist[i]}</li>`;
+			allPlayers += `<li>${room.playerlist[i]}</li>`;
 		}
 
 		templateRow(1, 2, 'center-align');
@@ -306,6 +312,7 @@ socket.on('viewclient', function(room) {
 		templateRow(1, 2, 'center-align');
 
 		templateCol(1, 1, 12, `<h4>${ifc.ingame.notfound[lang]}</h4>`, 'white');
+		templateCol(1, 2, 12, `<img class="poster" src="/img/faker-running.gif">`);
 
 		timerBar(6);
 	}

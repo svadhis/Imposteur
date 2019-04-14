@@ -21,7 +21,8 @@ app.get('/', function(request, response) {
 });
 
 // Starts the server.
-server.listen(5000, function() {
+const PORT = process.env.PORT || 5000;
+server.listen(PORT, function() {
 	console.log('Starting server on port 5000');
 });
 
@@ -83,7 +84,8 @@ io.on('connection', function(socket) {
 			let roomNumber = data.number;
 			if (rooms[roomNumber]) {
 				if (rooms[roomNumber].open === 1 || rooms[roomNumber].players.includes(data.nickname)) {
-					if (rooms[roomNumber].playerlist.length < 6) {
+					// Max players
+					if (rooms[roomNumber].playerlist.length < 8) {
 						rooms[roomNumber].playerlist.push(data.nickname);
 
 						users[data.nickname] = {
