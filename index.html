@@ -27,7 +27,7 @@
         <form>
           <div class="col s12">
 
-            <div class="input-field col s12">
+            <div id="nickname-area" class="input-field col s12" onClick="document.querySelector('#nickname').focus();">
               <input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate" required=""
                 aria-required="true">
               <label for="text">Your nickname</label>
@@ -38,7 +38,7 @@
           <div class="col s12 l6 white">
             <h5 class="center-align">Join a game</h5>
 
-            <div class="input-field col s12">
+            <div id="room-area" class="input-field col s12" onClick="document.querySelector('#room').focus();">
               <input id="room" type="text" pattern="[A-Za-z]{4}" class="validate" required="" aria-required="true">
               <label for="text">The room number</label>
               <span class="helper-text" data-error="4 characters. Only letters" data-success=""></span>
@@ -94,6 +94,7 @@
   </footer>
 
   <script>
+    console.log(document.querySelector('#nickname'));
     let vh = window.innerHeight;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   </script>
@@ -141,5 +142,6 @@
   - Implementer nouveau jeu : dire un mot sur telle phrase
   - Modifier et balancer le systeme de score
   - Event sur clic sur toute la div au choix username et room pour selectionner le champ
+  - Adapter la langue de l'accueil
 
 -->

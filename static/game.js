@@ -256,6 +256,7 @@ socket.on('viewclient', function(room) {
 
 		timerBar(8);
 	}
+
 	// Vote for faker
 	if (room.view === 'vote') {
 		let roomFakerId = room.fakerrand[room.round];

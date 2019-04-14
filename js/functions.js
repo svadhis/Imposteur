@@ -13,6 +13,7 @@ function timerBar(s) {
 	}
 }
 
+// Template Row
 function templateRow(rowId, timer, custom = '', inner = '') {
 	let timerDiv = '';
 	if (timer === 1) {
@@ -38,6 +39,7 @@ function templateRow(rowId, timer, custom = '', inner = '') {
 	}
 }
 
+// Template Col
 function templateCol(rowId, colId, size, inner, custom = '') {
 	document.querySelector('#row' + rowId).innerHTML += `
     <div id="col${colId}" class="col s${size} ${custom}">
