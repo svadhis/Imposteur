@@ -22,51 +22,7 @@
 <body>
 
   <main>
-    <div id="main">
-      <div class="row">
-        <form>
-          <div class="col s12">
-
-            <div id="nickname-area" class="input-field col s12" onClick="document.querySelector('#nickname').focus();">
-              <input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate" required=""
-                aria-required="true">
-              <label for="text">Your nickname</label>
-              <span class="helper-text" data-error="3 characters minimum. Only letters and/or numbers"
-                data-success=""></span>
-            </div>
-          </div>
-          <div class="col s12 l6 white">
-            <h5 class="center-align">Join a game</h5>
-
-            <div id="room-area" class="input-field col s12" onClick="document.querySelector('#room').focus();">
-              <input id="room" type="text" pattern="[A-Za-z]{4}" class="validate" required="" aria-required="true">
-              <label for="text">The room number</label>
-              <span class="helper-text" data-error="4 characters. Only letters" data-success=""></span>
-            </div>
-            <div class="input-field col s12 center-align">
-              <a id="rejoindre" class="waves-effect waves-light btn-small disabled" onClick="joinRoom();">JOIN</a>
-            </div>
-
-          </div>
-          <div class="col s12 l6">
-
-            <h5 class="center-align">Start a new game</h5>
-            <div class="input-field col s12 select">
-              <select id="language" required="" aria-required="true" onchange="createChecks();">
-                <option value="" disabled selected>Choose a language</option>
-                <option value="english">English</option>
-                <option value="french">French</option>
-                <option value="spanish">Spanish</option>
-              </select>
-            </div>
-            <div class="input-field col s12 center-align">
-              <a id="creation" class="waves-effect waves-light btn-small disabled" onClick="createRoom();">CREATE</a>
-            </div>
-
-          </div>
-        </form>
-      </div>
-    </div>
+    
   </main>
 
   <audio id="beep1" src="/sound/beep1.wav"></audio> 
@@ -77,10 +33,6 @@
   <!-- Modal Structure -->
   <div id="modal1" class="modal bottom-sheet">
     <div class="modal-content">
-      <h5>How to play WhoFakesIt</h5>
-      <p>A bunch of text</p>
-      <h5>How to add content</h5>
-      <p>A bunch of text </p>
     </div>
   </div>
 
@@ -96,7 +48,6 @@
   </footer>
 
   <script>
-    console.log(document.querySelector('#nickname'));
     let vh = window.innerHeight;
     document.documentElement.style.setProperty('--vh', `${vh}px`);
   </script>
@@ -111,7 +62,7 @@
   <!-- Materialize -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-  <!-- Load db vars -->
+  <!-- Load JS -->
  
   <script src="/js/views.js"></script>
   <script src="/js/cards_face.js"></script>
@@ -120,8 +71,8 @@
   <script src="/js/cards_raise.js"></script>
   <script src="/js/cards_word.js"></script>
 
-  <script src="/js/functions.js"></script>
   <script src="/js/forms.js"></script>
+  <script src="/js/functions.js"></script>
 
   <script src="/static/game.js"></script>
 
@@ -140,9 +91,8 @@
   - Leader doit pouvoir skip un joueur si deco pour continuer la partie sans lui
   - Ajouter listener window pour capter entrée OU entrée de mobile,
     et envoyer le bon bouton en fonction du champ selectionné
-  - Finir apres tant de rounds, sur party draw
-  - Implementer nouveau jeu : dire un mot sur telle phrase
+  - Implementer finale random : mot ou dessin
   - Modifier et balancer le systeme de score
-  - Adapter la langue de l'accueil
+  - Ajouter option explicit a la creation de room
 
 -->

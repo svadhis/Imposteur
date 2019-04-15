@@ -149,10 +149,12 @@ socket.on('viewclient', function(room) {
 		let choosing = '';
 		let userChoosing = room.playerscore[room.toplay].nickname;
 		let gameList = '';
-		if (userChoosing === username) {
-			choosing = elem.player[lang];
-			userChoosing = '';
-			gameList = `
+
+		if (room.round < ifc.config.rounds) {
+			if (userChoosing === username) {
+				choosing = elem.player[lang];
+				userChoosing = '';
+				gameList = `
 		
 				<div class="col s6 center-align">
 					<img id="raise" class="game" src="/img/raiseq.jpg" onClick="chooseGame(raise);">
@@ -171,9 +173,14 @@ socket.on('viewclient', function(room) {
 				</div>
 			
 			`;
-		} else {
-			userChoosing = `<h3>${userChoosing}</h3>`;
-			choosing = elem.others[lang];
+			} else {
+				userChoosing = `<h3>${userChoosing}</h3>`;
+				choosing = elem.others[lang];
+			}
+		} else if (room.round === ifc.config.rounds) {
+			// Start finale
+			myRoom.view = 'word';
+			sendGame();
 		}
 
 		let rankingPos = '';
@@ -193,9 +200,7 @@ socket.on('viewclient', function(room) {
 		templateCol(1, 1, 12, `${userChoosing}<h3>${choosing}</h3>`, 'white');
 		templateCol(1, 2, 12, gameList);
 
-		document.querySelector('footer a').innerHTML = '#' + room.number.toUpperCase();
-		document.querySelector('footer i').innerHTML = 'exit_to_app';
-		document.querySelector('.modal-content').innerHTML = `
+		let playerScore = `
 		<div class="row ${mainText}">
 			<div class="col s3">
 				<ul>${rankingPos}</ul>
@@ -208,32 +213,60 @@ socket.on('viewclient', function(room) {
 			</div>
 		</div>
 		`;
+
+		document.querySelector('footer a').innerHTML = '#' + room.number.toUpperCase();
+		document.querySelector('footer i').innerHTML = 'exit_to_app';
+		document.querySelector('.modal-content').innerHTML = playerScore;
+
+		// End game
+		if (room.round > ifc.config.rounds) {
+			templateRow(1, 1, 'center-align white');
+
+			templateCol(1, 1, 12, `<h4>${ifc.ingame.over[lang]}</h4>`);
+			document.querySelector('main').innerHTML += playerScore;
+		}
 	}
 
 	// Starting game template
-	if (room.view === 'raise' || room.view === 'point' || room.view === 'count' || room.view === 'face') {
-		templateRow(1, 1, 'center-align');
+	if (
+		room.view === 'raise' ||
+		room.view === 'point' ||
+		room.view === 'count' ||
+		room.view === 'face' ||
+		room.view === 'word'
+	) {
+		templateRow(1, 2, 'center-align');
 
 		templateCol(1, 1, 12, `<img class="poster" src="/img/${room.view}q.jpg">`);
 		templateCol(1, 2, 10, `<h4>${ifc.gamelist[room.view + 'q'].detail[lang]}</h4>`, 'offset-s1 left-align');
-	}
-
-	// Starting finale template
-	if (room.view === 'word') {
-		templateRow(1, 2, 'center-align');
-
-		templateCol(1, 1, 12, `<img class="poster" src="/img/wordq.jpg">`);
-		templateCol(1, 2, 10, `<h4>${ifc.gamelist.wordq.detail[lang]}</h4>`, 'offset-s1 left-align');
-
-		timerBar(6);
-		let qLength = questions[myRoom.view + 'q'].length;
-		baseTimer = setTimeout(function() {
-			let chooseData = {
-				room: myRoom,
-				qlength: qLength
-			};
-			socket.emit('currentgame', chooseData);
-		}, 6200);
+		if (room.view === 'word') {
+			if (room.playerlist[0] === username) {
+				let sound = document.querySelector('#beep1');
+				let sound2 = document.querySelector('#beep2');
+				let sound3 = document.querySelector('#button');
+				setTimeout(function() {
+					sound2.play();
+					setTimeout(function() {
+						sound.play();
+						setTimeout(function() {
+							sound2.play();
+							setTimeout(function() {
+								sound.play();
+								setTimeout(function() {
+									sound2.play();
+									setTimeout(function() {
+										sound3.play();
+									}, 300); //600
+								}, 300); //300
+							}, 300); //300
+						}, 300); //300
+					}, 300); //300
+				}, 300); //300
+			}
+			timerBar(6);
+		} else {
+			timerBar(3);
+		}
 	}
 
 	// Question template

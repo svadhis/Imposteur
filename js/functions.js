@@ -122,15 +122,20 @@ function chooseGame(e) {
 	e.style.outline = '6px solid ' + cssColor;
 	document.querySelector('#choice').innerText = ifc.gamelist[e.id + 'q'][lang] + '...';
 	document.querySelector('#timer').innerHTML = divTimer;
-	let qLength = questions[myRoom.view + 'q'].length;
 	timerBar(2);
 	baseTimer = setTimeout(function() {
-		let chooseData = {
-			room: myRoom,
-			qlength: qLength
-		};
-		socket.emit('currentgame', chooseData);
+		sendGame();
 	}, 2100);
+}
+
+//Send chosen game
+function sendGame() {
+	let qLength = questions[myRoom.view + 'q'].length;
+	let chooseData = {
+		room: myRoom,
+		qlength: qLength
+	};
+	socket.emit('currentgame', chooseData);
 }
 
 //Countdown

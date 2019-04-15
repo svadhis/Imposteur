@@ -1,5 +1,6 @@
 var ifc = {
 	config: {
+		rounds: 5,
 		maincolor: 8, // from 0 to 8
 		playercolors: [
 			'purple',
@@ -12,6 +13,58 @@ var ifc = {
 			'deep-orange',
 			'brown'
 		]
+	},
+	home: {
+		nicknamelabel: {
+			french: 'Ton pseudo',
+			english: 'Your nickname',
+			spanish: 'Tu nombre'
+		},
+		nicknameerror: {
+			french: '3 caractères minimum. Uniquement des lettres et/ou chiffres',
+			english: '3 characters minimum. Only letters and/or numbers',
+			spanish: '3 caracteros como minimo. Solo letras y/o numleros'
+		},
+		joingame: {
+			french: 'Rejoindre une partie',
+			english: 'Join a game',
+			spanish: 'Entrar en un salon'
+		},
+		roomlabel: {
+			french: 'ID du salon',
+			english: 'Room ID',
+			spanish: 'ID del salon'
+		},
+		roomerror: {
+			french: '4 caractères. Uniquement des lettres',
+			english: '4 characters. Only letters',
+			spanish: '4 caracteros. Solo letras'
+		},
+		joinbutton: {
+			french: 'REJOINDRE',
+			english: 'JOIN',
+			spanish: 'ENTRAR'
+		},
+		startgame: {
+			french: 'Démarrer une nouvelle partie',
+			english: 'Start a new game',
+			spanish: 'Empezar un nuevo juego'
+		},
+		chooselanguage: {
+			french: 'Choisir une langue',
+			english: 'Choose a language',
+			spanish: 'Elegir un idioma'
+		},
+		createbutton: {
+			french: 'DEMARRER',
+			english: 'START',
+			spanish: 'EMPEZAR'
+		},
+		modal: {
+			french: 'Un jeu fun en Javascript pour jouer sur smartphone en local avec tes amis',
+			english: 'A fun JavaScript game to play locally with your friends on your smartphones',
+			spanish: ''
+		}
 	},
 	faker: {
 		youare: {
@@ -83,7 +136,7 @@ var ifc = {
 			english: 'Only one word',
 			spanish: '',
 			detail: {
-				french: "Tu vas devoir n'exprimer qu'un seul mot, qui doit être different de celui des autres",
+				french: "Tu vas devoir n'exprimer qu'un seul mot",
 				english: 'You will have to express only one word...',
 				spanish: ''
 			}
@@ -190,6 +243,11 @@ var ifc = {
 			french: "L'imposteur court toujours",
 			english: 'The faker is still running',
 			spanish: 'El impostor sigue corriendo'
+		},
+		over: {
+			french: 'La partie est terminée',
+			english: 'The game is over',
+			spanish: 'El juego esta acabado'
 		}
 	}
 };

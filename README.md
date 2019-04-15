@@ -2,7 +2,7 @@
 
 A fun JavaScript game to play locally with your friends on your smartphones.
 
-Available in english, french and spanish.
+Available in french, ready for multilingual support.
 
 <!-- ## Getting Started
 

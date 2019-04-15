@@ -80,9 +80,9 @@ io.on('connection', function(socket) {
 
 	// Join room
 	socket.on('joinroom', function(data) {
-		if (data.nickname !== 'toplay') {
-			let roomNumber = data.number;
-			if (rooms[roomNumber]) {
+		let roomNumber = data.number;
+		if (rooms[roomNumber]) {
+			if (!rooms[roomNumber].playerlist.includes(data.nickname)) {
 				if (rooms[roomNumber].open === 1 || rooms[roomNumber].players.includes(data.nickname)) {
 					// Max players
 					if (rooms[roomNumber].playerlist.length < 8) {
@@ -113,10 +113,10 @@ io.on('connection', function(socket) {
 					socket.emit('closed');
 				}
 			} else {
-				socket.emit('noroom');
+				socket.emit('noname');
 			}
 		} else {
-			socket.emit('noname');
+			socket.emit('noroom');
 		}
 	});
 
@@ -178,7 +178,7 @@ io.on('connection', function(socket) {
 
 	// Current game
 	socket.on('currentgame', function(data) {
-		console.log('Round: ' + rooms[data.room.number].round);
+		let questionTimeout = 3200;
 		// Prepare next player to choose game
 		if (rooms[data.room.number].toplay < rooms[data.room.number].players.length - 1) {
 			rooms[data.room.number].toplay++;
@@ -189,6 +189,9 @@ io.on('connection', function(socket) {
 		rooms[data.room.number].randomq = Math.floor(Math.random() * (data.qlength - 1));
 
 		rooms[data.room.number].view = data.room.view;
+		if (data.room.view === 'word') {
+			questionTimeout = 6200;
+		}
 		io.to(data.room.number).emit('viewclient', rooms[data.room.number]);
 		//Then sending the question
 		setTimeout(function() {
@@ -197,7 +200,7 @@ io.on('connection', function(socket) {
 			setTimeout(function() {
 				io.to(data.room.number).emit('countdown', rooms[data.room.number]);
 			}, 8200); //8200
-		}, 3200); //3200
+		}, questionTimeout); //3200 or 6200
 	});
 
 	//Start vote
@@ -275,12 +278,9 @@ io.on('connection', function(socket) {
 					setTimeout(function() {
 						actualRoom.foundfaker = 0;
 						actualRoom.vote = [];
-						// Choose number of rounds
-						if (actualRoom.round < 0) {
-							actualRoom.view = 'choosegame';
-						} else {
-							actualRoom.view = 'word';
-						}
+
+						actualRoom.view = 'choosegame';
+
 						io.to(data.room.number).emit('viewclient', actualRoom);
 					}, scoreTimer); //6200 or 200
 				}, 6200); //6200
