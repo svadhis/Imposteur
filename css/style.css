@@ -118,3 +118,8 @@ main {
 .dropdown-content li > span {
 	color: var(--maincolor, black);
 }
+
+i.exit {
+	margin-top: 9px;
+	font-size: 2rem;
+}

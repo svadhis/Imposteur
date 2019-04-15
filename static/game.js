@@ -115,6 +115,7 @@ socket.on('viewclient', function(room) {
 		templateCol(1, 4, 12, ownerOnly);
 
 		document.querySelector('footer a').innerHTML = ifc.footerlobby.title[lang];
+		document.querySelector('footer i').innerHTML = 'exit_to_app';
 		document.querySelector('.modal-content').innerHTML = `
 		<div class="video-container">
 			<iframe src="//www.youtube.com/embed/
@@ -193,6 +194,7 @@ socket.on('viewclient', function(room) {
 		templateCol(1, 2, 12, gameList);
 
 		document.querySelector('footer a').innerHTML = '#' + room.number.toUpperCase();
+		document.querySelector('footer i').innerHTML = 'exit_to_app';
 		document.querySelector('.modal-content').innerHTML = `
 		<div class="row ${mainText}">
 			<div class="col s3">
