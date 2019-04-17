@@ -60,7 +60,7 @@ document.querySelector('main').innerHTML = `
 	`;
 
 document.querySelector('.modal-content').innerHTML = `
-	<h5>WhoFakesIt</h5>
+	<h5 class="center-align">WhoFakesIt</h5>
 	<p>${ifc.home.modal[lang]}</p>
 	`;
 

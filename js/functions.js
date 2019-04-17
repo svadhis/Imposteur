@@ -216,20 +216,20 @@ function howTo(page) {
 		beforeAction = '';
 	}
 
-	if (page === 2) {
+	if (page === 5) {
 		nextColor = 'grey-text text-lighten-2';
 		nextAction = '';
 	}
 
 	document.querySelector('.modal-content').innerHTML = `
 		<div class="row center-align">
-			<div class="col s1 ${beforeColor}" ${beforeAction}>
+			<div class="col s2 ${beforeColor}" ${beforeAction}>
 				<p><i class="material-icons" ${beforeAction}>navigate_before</i></p>
 			</div>
-			<div class="col s10">
+			<div class="col s8">
 				<h5>${ifc.howto[page].title[lang]}</h5>
 			</div>
-			<div class="col s1 ${nextColor}" ${nextAction}>
+			<div class="col s2 ${nextColor}" ${nextAction}>
 				<p><i class="material-icons" ${nextAction}>navigate_next</i></p>
 			</div>
 			<div class="col s12">

@@ -78,11 +78,6 @@ var ifc = {
 			french: 'Comment jouer ?',
 			english: 'How to play ?',
 			spanish: 'Como se juega ?'
-		},
-		content: {
-			french: 'DLzxrzFCyOs', // youtube link ID
-			english: 'DLzxrzFCyOs',
-			spanish: 'DLzxrzFCyOs'
 		}
 	},
 	footergame: {
@@ -263,10 +258,11 @@ var ifc = {
 				spanish: ''
 			},
 			text: {
-				french:
-					"Les joueurs doivent se placer de manière à pouvoir s'observer correctement. La meilleure solution est généralement de se placer en rond.",
-				english: '',
-				spanish: ''
+				french: `Les joueurs doivent se placer de manière à pouvoir s'observer correctement. La meilleure solution est généralement de se placer en rond.<br><br>
+						Une fois que tous les joueurs ont rejoint le salon, le leader peut lancer la partie.
+						`,
+				english: ``,
+				spanish: ``
 			}
 		},
 		2: {
@@ -276,14 +272,77 @@ var ifc = {
 				spanish: ''
 			},
 			image: {
-				french: 'img/countq.jpg',
+				french: '',
 				english: '',
 				spanish: ''
 			},
 			text: {
+				french: `Chaque tour démarre par la séléction d'un jeu par un des joueurs choisi aléatoirement. Les jeux sont au nombre de 4 : </p>
+						<p class="center-align"><b>
+						Lève la main <br>
+						Pointe la personne <br>
+						Lève autant de doigts <br>
+						Fais ta tête</b>
+						`,
+				english: ``,
+				spanish: ``
+			}
+		},
+		3: {
+			title: {
+				french: "Déroulement d'un tour",
+				english: '',
+				spanish: ''
+			},
+			image: {
 				french: '',
 				english: '',
 				spanish: ''
+			},
+			text: {
+				french: `Chaque joueur recevra une consigne, et devra effectuer l'action adéquate (lever la main, pointer, etc...) à la fin du décompte.<br><br>
+						A chaque tour, un joueur choisi au hasard sera l'IMPOSTEUR : il ne recevra pas la consigne, et devra, à la fin du décompte, improviser pour paraitre
+						le moins suspect possible !
+						`,
+				english: ``,
+				spanish: ``
+			}
+		},
+		4: {
+			title: {
+				french: 'Débat',
+				english: '',
+				spanish: ''
+			},
+			image: {
+				french: '',
+				english: '',
+				spanish: ''
+			},
+			text: {
+				french: `A la fin du tour, un joueur choisi au hasard devra lire la consigne à voix haute pour tout le monde, afin que l'IMPOSTEUR en prenne connaissance.<br><br>
+						A ce moment là, le débat peut commencer ! Tous les coups sont permis pour l'IMPOSTEUR, qui devra faire en sorte qu'au moins la moitié de ses compères ne l'identifient pas.<br><br>
+						`,
+				english: ``,
+				spanish: ``
+			}
+		},
+		5: {
+			title: {
+				french: 'Vote',
+				english: '',
+				spanish: ''
+			},
+			image: {
+				french: '',
+				english: '',
+				spanish: ''
+			},
+			text: {
+				french: `Une fois le débat terminé et les votes effectués, si l'IMPOSTEUR est parvenu à ses fins, il ne sera pas démasqué, et continuera de l'être pour un maximum de 3 tours afin de gagner de plus en plus de points.
+						`,
+				english: ``,
+				spanish: ``
 			}
 		}
 	}

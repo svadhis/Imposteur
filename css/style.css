@@ -10,7 +10,7 @@
 	font-size: 2.2rem;
 }
 
-.font2 h1 {
+h1 {
 	font-size: 7.5rem;
 }
 
@@ -18,8 +18,12 @@ h5 {
 	font-size: 1.4rem;
 }
 
+p {
+	font-size: 1.1rem;
+}
+
 span {
-	font-size: 1.2rem;
+	font-size: 1.3rem;
 }
 
 span.bigger {
@@ -30,7 +34,7 @@ span.big {
 	font-size: 15rem;
 }
 
-.font2 ul {
+ul {
 	font-size: 1.6rem;
 }
 
@@ -72,8 +76,8 @@ main {
 }
 
 #modal1 {
-	max-height: 25vh;
-	min-height: 25vh;
+	max-height: 30vh;
+	min-height: 30vh;
 }
 
 #myProgress {
@@ -127,6 +131,6 @@ i.exit {
 
 img.howto {
 	width: 75vw;
-	height: 25vh;
+	height: 45vw;
 	outline: 2px solid var(--maincolor, black);
 }
