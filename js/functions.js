@@ -204,3 +204,40 @@ function countdown(data) {
 		}, 800); // 800
 	}, 800); // 800
 }
+
+function howTo(page) {
+	let beforeColor = '';
+	let nextColor = '';
+	let beforeAction = `onClick="howTo(${page - 1})"`;
+	let nextAction = `onClick="howTo(${page + 1})"`;
+
+	if (page === 1) {
+		beforeColor = 'grey-text text-lighten-2';
+		beforeAction = '';
+	}
+
+	if (page === 2) {
+		nextColor = 'grey-text text-lighten-2';
+		nextAction = '';
+	}
+
+	document.querySelector('.modal-content').innerHTML = `
+		<div class="row center-align">
+			<div class="col s1 ${beforeColor}" ${beforeAction}>
+				<p><i class="material-icons" ${beforeAction}>navigate_before</i></p>
+			</div>
+			<div class="col s10">
+				<h5>${ifc.howto[page].title[lang]}</h5>
+			</div>
+			<div class="col s1 ${nextColor}" ${nextAction}>
+				<p><i class="material-icons" ${nextAction}>navigate_next</i></p>
+			</div>
+			<div class="col s12">
+				<img class="howto" src="${ifc.howto[page].image[lang]}">
+			</div>
+			<div class="col s12 left-align">
+				<p>${ifc.howto[page].text[lang]}</p>
+			</div>
+		</div>
+		`;
+}

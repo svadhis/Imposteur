@@ -72,7 +72,8 @@ main {
 }
 
 #modal1 {
-	min-height: 65vh;
+	max-height: 25vh;
+	min-height: 25vh;
 }
 
 #myProgress {
@@ -122,4 +123,10 @@ main {
 i.exit {
 	margin-top: 9px;
 	font-size: 2rem;
+}
+
+img.howto {
+	width: 75vw;
+	height: 25vh;
+	outline: 2px solid var(--maincolor, black);
 }

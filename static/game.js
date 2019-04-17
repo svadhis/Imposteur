@@ -116,12 +116,9 @@ socket.on('viewclient', function(room) {
 
 		document.querySelector('footer a').innerHTML = ifc.footerlobby.title[lang];
 		document.querySelector('footer i').innerHTML = 'exit_to_app';
-		document.querySelector('.modal-content').innerHTML = `
-		<div class="video-container">
-			<iframe src="//www.youtube.com/embed/
-			${ifc.footerlobby.content[lang]}" frameborder="0" allowfullscreen></iframe>
-      	</div>	
-		`;
+		document.querySelector('#modal1').style.minHeight = '85vh';
+
+		howTo(1);
 	}
 
 	// Start template
@@ -216,6 +213,7 @@ socket.on('viewclient', function(room) {
 
 		document.querySelector('footer a').innerHTML = '#' + room.number.toUpperCase();
 		document.querySelector('footer i').innerHTML = 'exit_to_app';
+		document.querySelector('#modal1').style.minHeight = '65vh';
 		document.querySelector('.modal-content').innerHTML = playerScore;
 
 		// End game

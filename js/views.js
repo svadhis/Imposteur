@@ -61,8 +61,8 @@ var ifc = {
 			spanish: 'EMPEZAR'
 		},
 		modal: {
-			french: 'Un jeu fun en Javascript pour jouer sur smartphone en local avec tes amis',
-			english: 'A fun JavaScript game to play locally with your friends on your smartphones',
+			french: 'Un jeu fun de 3 à 9 joueurs, pour jouer sur smartphone en local avec tes amis',
+			english: 'A fun game from 3 to 9 players, to play locally with your friends on your smartphones',
 			spanish: ''
 		}
 	},
@@ -248,6 +248,43 @@ var ifc = {
 			french: 'La partie est terminée',
 			english: 'The game is over',
 			spanish: 'El juego esta acabado'
+		}
+	},
+	howto: {
+		1: {
+			title: {
+				french: 'Placement',
+				english: '',
+				spanish: ''
+			},
+			image: {
+				french: '',
+				english: '',
+				spanish: ''
+			},
+			text: {
+				french:
+					"Les joueurs doivent se placer de manière à pouvoir s'observer correctement. La meilleure solution est généralement de se placer en rond.",
+				english: '',
+				spanish: ''
+			}
+		},
+		2: {
+			title: {
+				french: 'La sélection du jeu',
+				english: '',
+				spanish: ''
+			},
+			image: {
+				french: 'img/countq.jpg',
+				english: '',
+				spanish: ''
+			},
+			text: {
+				french: '',
+				english: '',
+				spanish: ''
+			}
 		}
 	}
 };
