@@ -301,7 +301,7 @@ var ifc = {
 			},
 			text: {
 				french: `Chaque joueur recevra une consigne, et devra effectuer l'action adéquate (lever la main, pointer, etc...) à la fin du décompte.<br><br>
-						A chaque tour, un joueur choisi au hasard sera l'IMPOSTEUR : il ne recevra pas la consigne, et devra, à la fin du décompte, improviser pour paraitre
+						A chaque tour, un joueur choisi au hasard sera l'<b>imposteur</b> : il ne recevra pas la consigne, et devra, à la fin du décompte, improviser pour paraitre
 						le moins suspect possible !
 						`,
 				english: ``,
@@ -320,8 +320,8 @@ var ifc = {
 				spanish: ''
 			},
 			text: {
-				french: `A la fin du tour, un joueur choisi au hasard devra lire la consigne à voix haute pour tout le monde, afin que l'IMPOSTEUR en prenne connaissance.<br><br>
-						A ce moment là, le débat peut commencer ! Tous les coups sont permis pour l'IMPOSTEUR, qui devra faire en sorte qu'au moins la moitié de ses compères ne l'identifient pas.<br><br>
+				french: `A la fin du tour, un joueur choisi au hasard devra lire la consigne à voix haute pour tout le monde, afin que l'<b>imposteur</b> en prenne connaissance.<br><br>
+						A ce moment là, le débat peut commencer ! Tous les coups sont permis pour l'<b>imposteur</b>, qui devra faire en sorte qu'au moins la moitié des autres joueurs ne l'identifient pas.<br><br>
 						`,
 				english: ``,
 				spanish: ``
@@ -339,7 +339,8 @@ var ifc = {
 				spanish: ''
 			},
 			text: {
-				french: `Une fois le débat terminé et les votes effectués, si l'IMPOSTEUR est parvenu à ses fins, il ne sera pas démasqué, et continuera de l'être pour un maximum de 3 tours afin de gagner de plus en plus de points.
+				french: `Une fois le débat terminé, tous les joueurs votent pour désigner celui qu'ils pensent être l'<b>imposteur</b>, pendant que celui-ci fait semblant de voter...<br><br>
+						Si l'<b>imposteur</b> est parvenu à tromper la majorité, il ne sera pas démasqué, et continuera de jouer ce rôle pour un maximum de 3 tours, afin de gagner de plus en plus de points.
 						`,
 				english: ``,
 				spanish: ``
