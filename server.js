@@ -86,7 +86,7 @@ io.on('connection', function(socket) {
 			if (!rooms[roomNumber].playerlist.includes(data.nickname)) {
 				if (rooms[roomNumber].open === 1 || rooms[roomNumber].players.includes(data.nickname)) {
 					// Max players
-					if (rooms[roomNumber].playerlist.length < 8) {
+					if (rooms[roomNumber].playerlist.length < 10) {
 						rooms[roomNumber].playerlist.push(data.nickname);
 
 						users[data.nickname] = {
