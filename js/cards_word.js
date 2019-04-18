@@ -15,7 +15,7 @@ var cardsWord = [
 		spanish: ''
 	},
 	{
-		french: 'de plus de 10 lettres',
+		french: "d'au moins 4 syllabes",
 		english: '',
 		spanish: ''
 	},
@@ -26,6 +26,26 @@ var cardsWord = [
 	},
 	{
 		french: 'pour résumer Star Wars',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'en espagnol',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'qui veut rien dire du tout',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'qui rime avec peinture',
+		english: '',
+		spanish: ''
+	},
+	{
+		french: 'qui soit le mot "mot"',
 		english: '',
 		spanish: ''
 	}

@@ -10,7 +10,7 @@ var cardsCount = [
 		spanish: ''
 	},
 	{
-		french: "que d'épisodes de Malcolm que tu pourrais voir avant que ça te saoule",
+		french: "que d'épisodes de Walking Dead que tu pourrais voir avant que ça te saoule",
 		english: '',
 		spanish: ''
 	},
@@ -25,7 +25,7 @@ var cardsCount = [
 		spanish: ''
 	},
 	{
-		french: "qu'un manchot -_-'",
+		french: "qu'un manchot (-_-')",
 		english: '',
 		spanish: ''
 	},

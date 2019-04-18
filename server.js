@@ -56,7 +56,8 @@ io.on('connection', function(socket) {
 				randomq: 0,
 				toplay: 0,
 				foundfaker: 0,
-				vote: []
+				vote: [],
+				list: []
 			};
 
 			users[data.nickname] = {
@@ -186,7 +187,20 @@ io.on('connection', function(socket) {
 			rooms[data.room.number].toplay === 0;
 		}
 
-		rooms[data.room.number].randomq = Math.floor(Math.random() * (data.qlength - 1));
+		// Genrate random question ID, different from previous rounds
+		let randomInt = 0;
+
+		function randomQ() {
+			randomInt = Math.floor(Math.random() * data.qlength);
+			if (rooms[data.room.number].list.includes(randomInt)) {
+				randomQ();
+			} else {
+				rooms[data.room.number].list.push(randomInt);
+				rooms[data.room.number].randomq = randomInt;
+			}
+		}
+
+		randomQ();
 
 		rooms[data.room.number].view = data.room.view;
 		if (data.room.view === 'word') {

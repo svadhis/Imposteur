@@ -15,11 +15,6 @@ var cardsRaise = [
 		spanish: ''
 	},
 	{
-		french: 'si tu as déjà vomi et fait caca en même temps',
-		english: '',
-		spanish: ''
-	},
-	{
 		french: 'si tu portes des lunettes',
 		english: '',
 		spanish: ''
@@ -40,7 +35,7 @@ var cardsRaise = [
 		spanish: ''
 	},
 	{
-		french: 'et fais coucou (^_^)/',
+		french: 'et fais coucou (^o^)/',
 		english: '',
 		spanish: ''
 	},
@@ -70,7 +65,7 @@ var cardsRaise = [
 		spanish: ''
 	},
 	{
-		french: 'si tu portes des strings',
+		french: 'si tu portes pas de sous-vêtement',
 		english: '',
 		spanish: ''
 	}

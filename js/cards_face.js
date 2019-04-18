@@ -1,10 +1,5 @@
 var cardsFace = [
 	{
-		french: 'si tu mangeais du caca',
-		english: '',
-		spanish: ''
-	},
-	{
 		french: 'quand Léonardo meurt dans Titanic',
 		english: '',
 		spanish: ''
@@ -60,12 +55,12 @@ var cardsFace = [
 		spanish: ''
 	},
 	{
-		french: 'de super héros',
+		french: 'de constipé (>_<)',
 		english: '',
 		spanish: ''
 	},
 	{
-		french: '',
+		french: 'de super heros',
 		english: '',
 		spanish: ''
 	}

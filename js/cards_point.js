@@ -30,7 +30,7 @@ var cardsPoint = [
 		spanish: ''
 	},
 	{
-		french: 'qui te pointe X_X',
+		french: 'qui te pointe (o_O)',
 		english: '',
 		spanish: ''
 	},
