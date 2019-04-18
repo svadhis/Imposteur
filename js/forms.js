@@ -7,6 +7,22 @@ if (Cookies.get('language')) {
 	lang = 'french';
 }
 
+// Handle enter keypress
+
+function handleEnterRoom(e) {
+	var keycode = e.keyCode ? e.keyCode : e.which;
+	if (keycode == '13') {
+		joinRoom();
+	}
+}
+
+function handleEnterNickname(e) {
+	var keycode = e.keyCode ? e.keyCode : e.which;
+	if (keycode == '13') {
+		document.querySelector('#room').focus();
+	}
+}
+
 // Initial template
 document.querySelector('main').innerHTML = `
 	<div id="main">
@@ -16,7 +32,7 @@ document.querySelector('main').innerHTML = `
 
 					<div id="nickname-area" class="input-field col s12" onClick="document.querySelector('#nickname').focus();">
 						<input id="nickname" type="text" pattern="[A-Za-z0-9]{3,}" class="validate" required=""
-							aria-required="true">
+							aria-required="true" onkeypress="handleEnterNickname(event)">
 						<label for="text">${ifc.home.nicknamelabel[lang]}</label>
 						<span class="helper-text" data-error="${ifc.home.nicknameerror[lang]}"
 							data-success=""></span>
@@ -26,7 +42,7 @@ document.querySelector('main').innerHTML = `
 					<h5 class="center-align">${ifc.home.joingame[lang]}</h5>
 
 					<div id="room-area" class="input-field col s12" onClick="document.querySelector('#room').focus();">
-						<input id="room" type="text" pattern="[A-Za-z]{4}" class="validate" required="" aria-required="true">
+						<input id="room" type="text" pattern="[A-Za-z]{4}" class="validate" required="" aria-required="true" onkeypress="handleEnterRoom(event)">
 						<label for="text">${ifc.home.roomlabel[lang]}</label>
 						<span class="helper-text" data-error="4 characters. Only letters" data-success=""></span>
 					</div>

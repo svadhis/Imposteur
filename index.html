@@ -1,10 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
+<html>
 
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<head>
 
   <title>A Multiplayer Game</title>
 
@@ -15,6 +11,8 @@
   <!-- Materialize -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
+  <!--Let browser know website is optimized for mobile-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="stylesheet" type="text/css" href="/css/style.css">
 
   <script src="/socket.io/socket.io.js"></script>
@@ -43,7 +41,7 @@
       <div class="copyright col offset-s2 s8 center-align">
         <a class="white-text modal-trigger" href="#modal1">WhoFakesIt</a>
       </div>
-      <div class="copyright col s2 center-align" onClick="location.reload();">
+      <div class="copyright col s2 center-align">
         <i class="exit material-icons white-text" onClick="location.reload();"></i>
       </div>
     </div>
@@ -79,6 +77,7 @@
   <script src="/static/game.js"></script>
 
   <script>
+    // Modals
     $(document).ready(function () {
       $('.modal').modal();
     });
