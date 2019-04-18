@@ -118,7 +118,7 @@ socket.on('viewclient', function(room) {
 		document.querySelector('footer i').innerHTML = 'exit_to_app';
 		document.querySelector('#modal1').style.minHeight = '85vh';
 
-		howTo(1);
+		howTo(0);
 	}
 
 	// Start template

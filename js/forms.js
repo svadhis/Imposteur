@@ -76,7 +76,7 @@ document.querySelector('main').innerHTML = `
 	`;
 
 document.querySelector('.modal-content').innerHTML = `
-	<h5 class="center-align">WhoFakesIt</h5>
+	<h5 class="center-align">WhoFakesIt v${ifc.config.version}</h5>
 	<p>${ifc.home.modal[lang]}</p>
 	`;
 

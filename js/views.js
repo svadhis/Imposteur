@@ -1,5 +1,6 @@
 var ifc = {
 	config: {
+		version: '0.6.1',
 		rounds: 5,
 		maincolor: 8, // from 0 to 8
 		playercolors: [
@@ -245,18 +246,14 @@ var ifc = {
 			spanish: 'El juego esta acabado'
 		}
 	},
-	howto: {
-		1: {
+	howto: [
+		{
 			title: {
 				french: 'Placement',
 				english: '',
 				spanish: ''
 			},
-			image: {
-				french: '',
-				english: '',
-				spanish: ''
-			},
+			image: '',
 			text: {
 				french: `Les joueurs doivent se placer de manière à pouvoir s'observer correctement. La meilleure solution est généralement de se placer en rond.<br><br>
 						Une fois que tous les joueurs ont rejoint le salon, le leader peut lancer la partie.
@@ -265,17 +262,13 @@ var ifc = {
 				spanish: ``
 			}
 		},
-		2: {
+		{
 			title: {
 				french: 'La sélection du jeu',
 				english: '',
 				spanish: ''
 			},
-			image: {
-				french: '',
-				english: '',
-				spanish: ''
-			},
+			image: '',
 			text: {
 				french: `Chaque tour démarre par la séléction d'un jeu par un des joueurs choisi aléatoirement. Les jeux sont au nombre de 4 : </p>
 						<p class="center-align"><b>
@@ -288,17 +281,13 @@ var ifc = {
 				spanish: ``
 			}
 		},
-		3: {
+		{
 			title: {
 				french: "Déroulement d'un tour",
 				english: '',
 				spanish: ''
 			},
-			image: {
-				french: '',
-				english: '',
-				spanish: ''
-			},
+			image: '',
 			text: {
 				french: `Chaque joueur recevra une consigne, et devra effectuer l'action adéquate (lever la main, pointer, etc...) à la fin du décompte.<br><br>
 						A chaque tour, un joueur choisi au hasard sera l'<b>imposteur</b> : il ne recevra pas la consigne, et devra, à la fin du décompte, improviser pour paraitre
@@ -308,17 +297,13 @@ var ifc = {
 				spanish: ``
 			}
 		},
-		4: {
+		{
 			title: {
 				french: 'Débat',
 				english: '',
 				spanish: ''
 			},
-			image: {
-				french: '',
-				english: '',
-				spanish: ''
-			},
+			image: '',
 			text: {
 				french: `A la fin du tour, un joueur choisi au hasard devra lire la consigne à voix haute pour tout le monde, afin que l'<b>imposteur</b> en prenne connaissance.<br><br>
 						A ce moment là, le débat peut commencer ! Tous les coups sont permis pour l'<b>imposteur</b>, qui devra faire en sorte qu'au moins la moitié des autres joueurs ne l'identifient pas.<br><br>
@@ -327,17 +312,13 @@ var ifc = {
 				spanish: ``
 			}
 		},
-		5: {
+		{
 			title: {
 				french: 'Vote',
 				english: '',
 				spanish: ''
 			},
-			image: {
-				french: '',
-				english: '',
-				spanish: ''
-			},
+			image: '',
 			text: {
 				french: `Une fois le débat terminé, tous les joueurs votent pour désigner celui qu'ils pensent être l'<b>imposteur</b>, pendant que celui-ci fait semblant de voter...<br><br>
 						Si l'<b>imposteur</b> est parvenu à tromper la majorité, il ne sera pas démasqué, et continuera de jouer ce rôle pour un maximum de 3 tours, afin de gagner de plus en plus de points.
@@ -346,5 +327,5 @@ var ifc = {
 				spanish: ``
 			}
 		}
-	}
+	]
 };

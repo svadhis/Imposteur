@@ -211,12 +211,12 @@ function howTo(page) {
 	let beforeAction = `onClick="howTo(${page - 1})"`;
 	let nextAction = `onClick="howTo(${page + 1})"`;
 
-	if (page === 1) {
+	if (page === 0) {
 		beforeColor = 'grey-text text-lighten-2';
 		beforeAction = '';
 	}
 
-	if (page === 5) {
+	if (page === ifc.howto.length - 1) {
 		nextColor = 'grey-text text-lighten-2';
 		nextAction = '';
 	}
