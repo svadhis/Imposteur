@@ -1,4 +1,4 @@
-# WhoFakesIt
+# Imposteur
 
 A fun JavaScript game to play locally with your friends on your smartphones.
 

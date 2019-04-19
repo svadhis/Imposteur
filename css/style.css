@@ -79,6 +79,13 @@ main {
 	*/
 }
 
+#canvas {
+	display: block;
+	border: 1px solid black;
+	width: 90vw;
+	height: 90vw;
+}
+
 #modal1 {
 	max-height: 30vh;
 	min-height: 30vh;

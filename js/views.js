@@ -1,7 +1,7 @@
 var ifc = {
 	config: {
-		version: '0.6.1',
-		rounds: 5,
+		version: '0.6.2a',
+		rounds: 0, // 5
 		maincolor: 8, // from 0 to 8
 		playercolors: [
 			'purple',
@@ -244,6 +244,11 @@ var ifc = {
 			french: 'La partie est terminée',
 			english: 'The game is over',
 			spanish: 'El juego esta acabado'
+		},
+		thanks: {
+			french: 'Merci !',
+			english: 'Thank you !',
+			spanish: 'Gracias !'
 		}
 	},
 	howto: [
