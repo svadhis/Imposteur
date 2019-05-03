@@ -1,6 +1,6 @@
 var ifc = {
     config: {
-        version: "0.6.3a",
+        version: "0.6.4a",
         rounds: 5, // 5
         maincolor: 8, // from 0 to 8
         playercolors: ["purple", "pink", "indigo", "light-blue", "teal", "light-green", "amber", "deep-orange", "brown"]
